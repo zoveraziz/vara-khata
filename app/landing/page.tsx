@@ -541,67 +541,104 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3.5 Section: How it Works (মাত্র ৩টি ধাপে শুরু করুন) */}
-      <section className="py-20 bg-white border-y border-slate-200 relative z-10">
+      {/* 3.5 Section: How it Works (মাত্র ৩টি ধাপে শুরু করুন) - Modern Differentiated Style */}
+      <section className="py-24 bg-white border-y border-slate-200 relative z-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center max-w-2xl mx-auto space-y-2 mb-16">
-            <span className="text-xs sm:text-sm font-bold text-emerald-700 tracking-wider">
-              কীভাবে কাজ করে
-            </span>
+          <div className="text-center max-w-2xl mx-auto space-y-3 mb-14">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200/80">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
+              <span>সহজ ও দ্রুত অনবোর্ডিং</span>
+            </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
               মাত্র ৩টি ধাপে শুরু করুন
             </h2>
+            <p className="text-slate-600 text-sm sm:text-base font-medium">
+              কোনো জটিলতা নেই, ১ মিনিটেই রেডি হয়ে যাবে আপনার বাড়ি বা মার্কেটের ডিজিটাল খাতা
+            </p>
           </div>
 
-          <div className="relative">
-            {/* Horizontal Connecting Dashed Line for Desktop */}
-            <div className="hidden md:block absolute top-6 left-1/6 right-1/6 h-0.5 border-t-2 border-dashed border-emerald-300 z-0" />
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 relative z-10">
-              
-              {/* Step 1 */}
-              <div className="text-center space-y-3 flex flex-col items-center">
-                <div className="w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg shadow-sm ring-4 ring-white">
-                  ১
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            
+            {/* Step 1 Card */}
+            <div className="relative rounded-3xl p-7 sm:p-8 bg-slate-50/70 border border-slate-200 hover:border-emerald-300 hover:bg-white hover:shadow-md transition-all group flex flex-col justify-between space-y-6">
+              <div>
+                <div className="flex items-center justify-between mb-5">
+                  <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 shadow-2xs text-emerald-800 flex items-center justify-center font-black text-xl group-hover:bg-emerald-800 group-hover:text-white transition-all">
+                    ১
+                  </div>
+                  <span className="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-slate-200/70 text-slate-700 group-hover:bg-emerald-100 group-hover:text-emerald-900 transition-colors">
+                    ধাপ ০১
+                  </span>
                 </div>
-                <h3 className="text-lg font-black text-slate-900 pt-1">
+
+                <h3 className="text-xl font-black text-slate-900 mb-2">
                   অ্যাকাউন্ট খুলুন
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed max-w-xs mx-auto font-medium">
-                  মোবাইল নম্বর বা ইমেইল দিয়ে OTP-এর মাধ্যমে কয়েক সেকেন্ডেই লগইন করুন।
+                <p className="text-sm text-slate-700 leading-relaxed font-medium">
+                  মোবাইল নম্বর বা ইমেইল দিয়ে OTP-এর মাধ্যমে মাত্র ৩০ সেকেন্ডে কোনো ক্রেডিট কার্ড ছাড়াই ফ্রি অ্যাকাউন্ট তৈরি করুন।
                 </p>
               </div>
 
-              {/* Step 2 */}
-              <div className="text-center space-y-3 flex flex-col items-center">
-                <div className="w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg shadow-sm ring-4 ring-white">
-                  ২
+              <div className="pt-4 border-t border-slate-200 flex items-center gap-2 text-xs font-bold text-emerald-800">
+                <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
+                <span>তাত্ক্ষণিক ওটিপি ভেরিফিকেশন</span>
+              </div>
+            </div>
+
+            {/* Step 2 Card */}
+            <div className="relative rounded-3xl p-7 sm:p-8 bg-slate-50/70 border border-slate-200 hover:border-emerald-300 hover:bg-white hover:shadow-md transition-all group flex flex-col justify-between space-y-6">
+              <div>
+                <div className="flex items-center justify-between mb-5">
+                  <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 shadow-2xs text-emerald-800 flex items-center justify-center font-black text-xl group-hover:bg-emerald-800 group-hover:text-white transition-all">
+                    ২
+                  </div>
+                  <span className="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-slate-200/70 text-slate-700 group-hover:bg-emerald-100 group-hover:text-emerald-900 transition-colors">
+                    ধাপ ০২
+                  </span>
                 </div>
-                <h3 className="text-lg font-black text-slate-900 pt-1">
+
+                <h3 className="text-xl font-black text-slate-900 mb-2">
                   প্রপার্টি যোগ করুন
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed max-w-xs mx-auto font-medium">
-                  আপনার বাড়ি বা মার্কেট, ফ্ল্যাট এবং ভাড়াটিয়াদের তথ্য যোগ করুন।
+                <p className="text-sm text-slate-700 leading-relaxed font-medium">
+                  আপনার বাড়ি, মার্কেট বা ভবনের নাম দিন এবং ফ্ল্যাট নম্বর ও ভাড়াটিয়াদের তথ্য ও মোবাইল নম্বর যুক্ত করুন।
                 </p>
               </div>
 
-              {/* Step 3 */}
-              <div className="text-center space-y-3 flex flex-col items-center">
-                <div className="w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg shadow-sm ring-4 ring-white">
-                  ৩
+              <div className="pt-4 border-t border-slate-200 flex items-center gap-2 text-xs font-bold text-emerald-800">
+                <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
+                <span>আনলিমিটেড ফ্ল্যাট ও ইউনিট যোগ</span>
+              </div>
+            </div>
+
+            {/* Step 3 Card */}
+            <div className="relative rounded-3xl p-7 sm:p-8 bg-slate-50/70 border border-slate-200 hover:border-emerald-300 hover:bg-white hover:shadow-md transition-all group flex flex-col justify-between space-y-6">
+              <div>
+                <div className="flex items-center justify-between mb-5">
+                  <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 shadow-2xs text-emerald-800 flex items-center justify-center font-black text-xl group-hover:bg-emerald-800 group-hover:text-white transition-all">
+                    ৩
+                  </div>
+                  <span className="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-slate-200/70 text-slate-700 group-hover:bg-emerald-100 group-hover:text-emerald-900 transition-colors">
+                    ধাপ ০৩
+                  </span>
                 </div>
-                <h3 className="text-lg font-black text-slate-900 pt-1">
+
+                <h3 className="text-xl font-black text-slate-900 mb-2">
                   বিল তৈরি ও আদায়
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed max-w-xs mx-auto font-medium">
-                  প্রতি মাসে এক ক্লিকে বিল তৈরি করুন এবং পেমেন্ট আদায়ের হিসাব রাখুন।
+                <p className="text-sm text-slate-700 leading-relaxed font-medium">
+                  প্রতি মাসের ১ তারিখে এক ক্লিকে স্বয়ংক্রিয় বিল তৈরি, হোয়াটসঅ্যাপে রসিদ প্রেরণ ও ভাড়ার হিসাব রাখুন।
                 </p>
               </div>
 
+              <div className="pt-4 border-t border-slate-200 flex items-center gap-2 text-xs font-bold text-emerald-800">
+                <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
+                <span>১ ক্লিকে হোয়াটসঅ্যাপ মানি রিসিট</span>
+              </div>
             </div>
-          </div>
 
+          </div>
         </div>
       </section>
 
