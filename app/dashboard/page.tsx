@@ -472,26 +472,26 @@ export default function DashboardPage() {
               }
             })();
             return (
-              <div key={pay.id} className="py-3 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className={`w-9 h-9 rounded-xl border flex items-center justify-center font-bold text-base shadow-sm ${methodDetails.style}`} title={methodDetails.label}>
+              <div key={pay.id} className="py-3 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className={`w-9 h-9 rounded-xl border flex items-center justify-center font-bold text-base shadow-sm shrink-0 ${methodDetails.style}`} title={methodDetails.label}>
                     {methodDetails.icon}
                   </div>
-                  <div>
-                    <div className="font-bold text-slate-900 text-sm">
+                  <div className="min-w-0">
+                    <div className="font-bold text-slate-900 text-sm truncate">
                       {tenant?.name} ({flat?.name})
                     </div>
-                    <div className="text-xs text-slate-500">
+                    <div className="text-xs text-slate-500 truncate">
                       রশিদ নং: {pay.receiptNo} | তারিখ: {pay.date} | গ্রহণকারী: {pay.collectedBy}
                     </div>
-                    {pay.remarks && <div className="text-[11px] text-slate-400 italic">নোট: {pay.remarks}</div>}
+                    {pay.remarks && <div className="text-[11px] text-slate-400 italic truncate">নোট: {pay.remarks}</div>}
                   </div>
                 </div>
-                <div className="text-right">
-                  <span className="font-extrabold text-base text-emerald-700 block">
+                <div className="text-right shrink-0 whitespace-nowrap">
+                  <span className="font-extrabold text-base text-emerald-700 block whitespace-nowrap">
                     + ৳ {pay.amount.toLocaleString()}
                   </span>
-                  <span className={`inline-block text-[11px] font-semibold px-2 py-0.5 rounded-md border mt-0.5 ${methodDetails.style}`}>
+                  <span className={`inline-block text-[11px] font-semibold px-2 py-0.5 rounded-md border mt-0.5 whitespace-nowrap ${methodDetails.style}`}>
                     {methodDetails.label}
                   </span>
                 </div>
