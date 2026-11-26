@@ -112,11 +112,8 @@ export default function HomePage() {
               ভ
             </div>
             <div className="flex flex-col">
-              <span className="font-black text-xl sm:text-2xl text-slate-900 tracking-tight leading-none flex items-center gap-1.5">
+              <span className="font-black text-xl sm:text-2xl text-slate-900 tracking-tight leading-none">
                 ভাড়া খাতা
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
-                  গ্রিন হাউস
-                </span>
               </span>
               <span className="text-[11px] font-semibold text-emerald-700 tracking-wider block mt-0.5">
                 বাড়িওয়ালাদের ডিজিটাল সহকারী
@@ -124,31 +121,11 @@ export default function HomePage() {
             </div>
           </Link>
 
-          {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center gap-7 text-sm font-semibold text-slate-600">
-            <a href="#story" className="hover:text-emerald-700 transition-colors">
-              খাতা বনাম ডিজিটাল
-            </a>
-            <a href="#bento" className="hover:text-emerald-700 transition-colors flex items-center gap-1.5">
-              <span>অল-ইন-ওয়ান ফিচার</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            </a>
-            <a href="#calculator" className="hover:text-emerald-700 transition-colors">
-              মিটার ও আয় ক্যালকুলেটর
-            </a>
-            <a href="#pricing" className="hover:text-emerald-700 transition-colors">
-              প্যাকেজসমূহ
-            </a>
-            <a href="#faq" className="hover:text-emerald-700 transition-colors">
-              প্রশ্নোত্তর
-            </a>
-          </nav>
-
-          {/* Header Action Buttons */}
-          <div className="hidden sm:flex items-center gap-3">
+          {/* Action Buttons (Only 2 buttons as requested) */}
+          <div className="flex items-center gap-2.5 sm:gap-3">
             <Link
               href="/dashboard"
-              className="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100/80 border border-emerald-200 transition-all flex items-center gap-1.5 shadow-2xs hover:border-emerald-300"
+              className="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition-all flex items-center gap-1.5 shadow-2xs hover:border-emerald-300"
             >
               <Sparkles className="w-4 h-4 text-emerald-600" />
               <span>লাইভ ডেমো</span>
@@ -156,81 +133,13 @@ export default function HomePage() {
 
             <Link
               href="/login"
-              className="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 transition-all shadow-md shadow-emerald-700/20 hover:shadow-emerald-700/30 flex items-center gap-1.5 group"
+              className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 transition-all shadow-md shadow-emerald-700/20 hover:shadow-emerald-700/30 flex items-center gap-1.5 group"
             >
               <span>লগইন / শুরু করুন</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMobileNavOpen(!mobileNavOpen)}
-            className="lg:hidden p-2 text-slate-700 hover:text-emerald-700 rounded-xl bg-slate-100 border border-slate-200 focus:outline-none"
-            aria-label="Toggle navigation menu"
-          >
-            {mobileNavOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
         </div>
-
-        {/* Mobile Navigation Drawer */}
-        {mobileNavOpen && (
-          <div className="lg:hidden bg-white/98 border-b border-emerald-100 px-4 pt-3 pb-6 space-y-3 animate-in fade-in slide-in-from-top-2 duration-150 shadow-lg">
-            <nav className="flex flex-col space-y-2 text-base font-semibold text-slate-700">
-              <a
-                href="#story"
-                onClick={() => setMobileNavOpen(false)}
-                className="px-3 py-2 rounded-lg hover:bg-emerald-50 text-slate-800"
-              >
-                খাতা বনাম ডিজিটাল
-              </a>
-              <a
-                href="#bento"
-                onClick={() => setMobileNavOpen(false)}
-                className="px-3 py-2 rounded-lg hover:bg-emerald-50 text-slate-800"
-              >
-                অল-ইন-ওয়ান ফিচার
-              </a>
-              <a
-                href="#calculator"
-                onClick={() => setMobileNavOpen(false)}
-                className="px-3 py-2 rounded-lg hover:bg-emerald-50 text-slate-800"
-              >
-                মিটার ও আয় ক্যালকুলেটর
-              </a>
-              <a
-                href="#pricing"
-                onClick={() => setMobileNavOpen(false)}
-                className="px-3 py-2 rounded-lg hover:bg-emerald-50 text-slate-800"
-              >
-                প্যাকেজসমূহ
-              </a>
-              <a
-                href="#faq"
-                onClick={() => setMobileNavOpen(false)}
-                className="px-3 py-2 rounded-lg hover:bg-emerald-50 text-slate-800"
-              >
-                প্রশ্নোত্তর
-              </a>
-            </nav>
-            <div className="pt-3 border-t border-slate-100 flex flex-col gap-2">
-              <Link
-                href="/dashboard"
-                onClick={() => setMobileNavOpen(false)}
-                className="w-full py-2.5 rounded-xl text-center font-bold text-sm bg-emerald-50 border border-emerald-200 text-emerald-800"
-              >
-                ✨ সরাসরি লাইভ ডেমো দেখুন
-              </Link>
-              <Link
-                href="/login"
-                onClick={() => setMobileNavOpen(false)}
-                className="w-full py-2.5 rounded-xl text-center font-bold text-sm bg-emerald-600 text-white"
-              >
-                লগইন / শুরু করুন →
-              </Link>
-            </div>
-          </div>
-        )}
       </header>
 
       {/* 2. Hero Section (Bright, Fresh White & Emerald) */}
@@ -386,68 +295,68 @@ export default function HomePage() {
                     </div>
 
                     <div className="overflow-x-auto">
-                      <table className="w-full text-left text-xs sm:text-sm">
-                        <thead className="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200">
+                      <table className="w-full text-left text-xs sm:text-sm border-collapse divide-y divide-slate-200">
+                        <thead className="bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
                           <tr>
-                            <th className="py-2.5 px-3 sm:px-4">ফ্ল্যাট ও ভাড়াটিয়া</th>
-                            <th className="py-2.5 px-3 sm:px-4">মূল ভাড়া</th>
-                            <th className="py-2.5 px-3 sm:px-4">বিদ্যুৎ (সাব-মিটার)</th>
-                            <th className="py-2.5 px-3 sm:px-4">মোট বিল</th>
-                            <th className="py-2.5 px-3 sm:px-4">পেমেন্ট মেথড</th>
+                            <th className="py-2.5 px-3 sm:px-4 border-r border-slate-200">ফ্ল্যাট ও ভাড়াটিয়া</th>
+                            <th className="py-2.5 px-3 sm:px-4 border-r border-slate-200">মূল ভাড়া</th>
+                            <th className="py-2.5 px-3 sm:px-4 border-r border-slate-200">বিদ্যুৎ (সাব-মিটার)</th>
+                            <th className="py-2.5 px-3 sm:px-4 border-r border-slate-200">মোট বিল</th>
+                            <th className="py-2.5 px-3 sm:px-4 border-r border-slate-200">পেমেন্ট মেথড</th>
                             <th className="py-2.5 px-3 sm:px-4">স্ট্যাটাস</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-100 text-slate-700">
-                          <tr className="hover:bg-slate-50/60">
-                            <td className="py-3 px-3 sm:px-4 font-bold text-slate-900">
+                        <tbody className="divide-y divide-slate-200 text-slate-700">
+                          <tr className="hover:bg-slate-50/80 transition-colors">
+                            <td className="py-3 px-3 sm:px-4 font-bold text-slate-900 border-r border-slate-200">
                               ফ্ল্যাট ১-এ (আব্দুল আজিজ)
                             </td>
-                            <td className="py-3 px-3 sm:px-4">৳ ১৮,০০০</td>
-                            <td className="py-3 px-3 sm:px-4 text-emerald-700 font-semibold">৳ ১,২০০ (১২০ ইউনিট)</td>
-                            <td className="py-3 px-3 sm:px-4 font-black text-slate-900">৳ ২১,১৮০</td>
-                            <td className="py-3 px-3 sm:px-4">
-                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-bold">
+                            <td className="py-3 px-3 sm:px-4 border-r border-slate-200 font-medium">৳ ১৮,০০০</td>
+                            <td className="py-3 px-3 sm:px-4 text-emerald-700 font-semibold border-r border-slate-200">৳ ১,২০০ (১২০ ইউনিট)</td>
+                            <td className="py-3 px-3 sm:px-4 font-black text-slate-900 border-r border-slate-200">৳ ২১,১৮০</td>
+                            <td className="py-3 px-3 sm:px-4 border-r border-slate-200">
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-bold">
                                 💵 ক্যাশ
                               </span>
                             </td>
                             <td className="py-3 px-3 sm:px-4">
-                              <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs">
+                              <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs">
                                 পরিশোধিত
                               </span>
                             </td>
                           </tr>
 
-                          <tr className="hover:bg-slate-50/60">
-                            <td className="py-3 px-3 sm:px-4 font-bold text-slate-900">
+                          <tr className="hover:bg-slate-50/80 transition-colors">
+                            <td className="py-3 px-3 sm:px-4 font-bold text-slate-900 border-r border-slate-200">
                               ফ্ল্যাট ২-বি (তানভীর আহমেদ)
                             </td>
-                            <td className="py-3 px-3 sm:px-4">৳ ১৬,০০০</td>
-                            <td className="py-3 px-3 sm:px-4 text-emerald-700 font-semibold">৳ ১,৩৫০ (১৩৫ ইউনিট)</td>
-                            <td className="py-3 px-3 sm:px-4 font-black text-slate-900">৳ ১৯,৯৮০</td>
-                            <td className="py-3 px-3 sm:px-4">
-                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-pink-50 text-pink-700 border border-pink-200 text-xs font-bold">
+                            <td className="py-3 px-3 sm:px-4 border-r border-slate-200 font-medium">৳ ১৬,০০০</td>
+                            <td className="py-3 px-3 sm:px-4 text-emerald-700 font-semibold border-r border-slate-200">৳ ১,৩৫০ (১৩৫ ইউনিট)</td>
+                            <td className="py-3 px-3 sm:px-4 font-black text-slate-900 border-r border-slate-200">৳ ১৯,৯৮০</td>
+                            <td className="py-3 px-3 sm:px-4 border-r border-slate-200">
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-pink-50 text-pink-700 border border-pink-200 text-xs font-bold">
                                 📱 বিকাশ
                               </span>
                             </td>
                             <td className="py-3 px-3 sm:px-4">
-                              <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs">
+                              <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs">
                                 পরিশোধিত
                               </span>
                             </td>
                           </tr>
 
-                          <tr className="hover:bg-slate-50/60">
-                            <td className="py-3 px-3 sm:px-4 font-bold text-slate-900">
+                          <tr className="hover:bg-slate-50/80 transition-colors">
+                            <td className="py-3 px-3 sm:px-4 font-bold text-slate-900 border-r border-slate-200">
                               ফ্ল্যাট ৩-সি (কবীর হোসেন)
                             </td>
-                            <td className="py-3 px-3 sm:px-4">৳ ২০,০০০</td>
-                            <td className="py-3 px-3 sm:px-4 text-emerald-700 font-semibold">৳ ১,১০০ (১১০ ইউনিট)</td>
-                            <td className="py-3 px-3 sm:px-4 font-black text-rose-700">৳ ২৩,৭৮০</td>
-                            <td className="py-3 px-3 sm:px-4">
-                              <span className="text-slate-400 text-xs font-semibold">বকেয়া</span>
+                            <td className="py-3 px-3 sm:px-4 border-r border-slate-200 font-medium">৳ ২০,০০০</td>
+                            <td className="py-3 px-3 sm:px-4 text-emerald-700 font-semibold border-r border-slate-200">৳ ১,১০০ (১১০ ইউনিট)</td>
+                            <td className="py-3 px-3 sm:px-4 font-black text-rose-700 border-r border-slate-200">৳ ২৩,৭৮০</td>
+                            <td className="py-3 px-3 sm:px-4 border-r border-slate-200">
+                              <span className="text-slate-500 text-xs font-semibold">বকেয়া</span>
                             </td>
                             <td className="py-3 px-3 sm:px-4">
-                              <span className="px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 font-bold text-xs animate-pulse">
+                              <span className="px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 font-bold text-xs animate-pulse">
                                 বকেয়া (এসএমএস প্রেরিত)
                               </span>
                             </td>
@@ -585,19 +494,19 @@ export default function HomePage() {
           {/* Social Proof Stats Bar */}
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto pt-8 border-t border-emerald-100">
             <div className="text-center p-3">
-              <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-emerald-700 block">৩,৫০০+</span>
+              <span className="text-xl sm:text-2xl lg:text-3xl font-black text-emerald-700 block whitespace-nowrap">৩,৫০০+</span>
               <span className="text-xs sm:text-sm text-slate-600 font-semibold mt-1 block">নিবন্ধিত বাড়িওয়ালা</span>
             </div>
             <div className="text-center p-3">
-              <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-teal-700 block">৳ ৪.৫ কোটি+</span>
+              <span className="text-xl sm:text-2xl lg:text-3xl font-black text-teal-700 block whitespace-nowrap">৳ ৪.৫ কোটি+</span>
               <span className="text-xs sm:text-sm text-slate-600 font-semibold mt-1 block">ভাড়া আদায় সম্পন্ন</span>
             </div>
             <div className="text-center p-3">
-              <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-emerald-600 block">৯৮.৫%</span>
+              <span className="text-xl sm:text-2xl lg:text-3xl font-black text-emerald-600 block whitespace-nowrap">৯৮.৫%</span>
               <span className="text-xs sm:text-sm text-slate-600 font-semibold mt-1 block">সময়মতো বিল আদায়</span>
             </div>
             <div className="text-center p-3">
-              <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-amber-600 block">৪.৯ ★★★★★</span>
+              <span className="text-xl sm:text-2xl lg:text-3xl font-black text-amber-600 block whitespace-nowrap">৪.৯ ★★★★★</span>
               <span className="text-xs sm:text-sm text-slate-600 font-semibold mt-1 block">ইউজার রিভিউ রেটিং</span>
             </div>
           </div>
@@ -929,35 +838,39 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
             
             {/* Free Tier */}
-            <div className="rounded-3xl p-7 bg-white border border-slate-200 flex flex-col justify-between space-y-6 shadow-sm">
+            <div className="rounded-3xl p-8 bg-gradient-to-b from-white to-emerald-50/70 border-2 border-emerald-600 shadow-xl shadow-emerald-700/10 flex flex-col justify-between space-y-6 relative">
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-slate-800 text-white font-black text-[11px] uppercase tracking-wider shadow-sm">
+                শুরু করার জন্য
+              </div>
+
               <div className="space-y-4">
-                <div className="inline-block px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold">
-                  শুরু করার জন্য
+                <div className="inline-block px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
+                  ছোট বাড়ির জন্য
                 </div>
                 <h4 className="text-2xl font-black text-slate-900">ফ্রি ট্রায়াল</h4>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-black text-slate-900">৳ ০</span>
                   <span className="text-xs text-slate-500">/আজীবন ফ্রি</span>
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
+                <p className="text-xs text-slate-600 leading-relaxed min-h-[36px]">
                   যাদের ৩টি পর্যন্ত ফ্ল্যাট রয়েছে এবং সম্পূর্ণ নিশ্চিন্তে ডিজিটাল খাতা শুরু করতে চান।
                 </p>
 
-                <ul className="space-y-2.5 text-xs text-slate-700 pt-3 border-t border-slate-100">
+                <ul className="space-y-2.5 text-xs text-slate-700 pt-3 border-t border-emerald-100">
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-600" />
-                    <span>সর্বোচ্চ ৩টি ফ্ল্যাট পরিচালনা</span>
+                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span><strong>সর্বোচ্চ ৩টি ফ্ল্যাট</strong> পরিচালনা</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-600" />
+                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>ডিজিটাল মানি রিসিট তৈরি</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-600" />
+                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>সাব-মিটার ক্যালকুলেটর</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-600" />
+                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>ডিএমপি পুলিশ ফরম ডাউনলোড</span>
                   </li>
                 </ul>
@@ -965,9 +878,9 @@ export default function HomePage() {
 
               <Link
                 href="/register"
-                className="w-full py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-center text-xs block transition-all"
+                className="w-full py-3.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-center text-sm block transition-all shadow-md shadow-emerald-800/25"
               >
-                ফ্রিতে শুরু করুন
+                ফ্রিতে শুরু করুন →
               </Link>
             </div>
 
@@ -986,29 +899,29 @@ export default function HomePage() {
                   <span className="text-4xl font-black text-emerald-700">৳ ৩৯৯</span>
                   <span className="text-xs text-slate-500">/প্রতি মাস</span>
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
+                <p className="text-xs text-slate-600 leading-relaxed min-h-[36px]">
                   ৪ থেকে ১০টি ফ্ল্যাট থাকা বাড়িওয়ালাদের জন্য নিখুঁত স্বয়ংক্রিয় সমাধান।
                 </p>
 
                 <ul className="space-y-2.5 text-xs text-slate-700 pt-3 border-t border-emerald-100">
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-600" />
+                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span><strong>১০টি ফ্ল্যাট</strong> পর্যন্ত সম্পূর্ণ নিয়ন্ত্রণ</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-600" />
+                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span><strong>স্বয়ংক্রিয় ১-৫ তারিখ এসএমএস রিমাইন্ডার</strong></span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-600" />
+                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>হোয়াটসঅ্যাপে ১-ক্লিক ভাড়ার রশিদ প্রেরণ</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-600" />
+                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>বকেয়া ট্র্যাকিং ও অডিট স্টেটমেন্ট</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-600" />
+                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>প্রাধান্যভিত্তিক ফোন সাপোর্ট</span>
                   </li>
                 </ul>
@@ -1023,35 +936,39 @@ export default function HomePage() {
             </div>
 
             {/* Enterprise Tier */}
-            <div className="rounded-3xl p-7 bg-white border border-slate-200 flex flex-col justify-between space-y-6 shadow-sm">
+            <div className="rounded-3xl p-8 bg-gradient-to-b from-white to-emerald-50/70 border-2 border-emerald-600 shadow-xl shadow-emerald-700/10 flex flex-col justify-between space-y-6 relative">
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-teal-800 text-white font-black text-[11px] uppercase tracking-wider shadow-sm">
+                বড় ভবন ও সমিতি
+              </div>
+
               <div className="space-y-4">
-                <div className="inline-block px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold">
-                  বড় ভবন ও সমিতি
+                <div className="inline-block px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
+                  কমপ্লেক্স ও সমিতির জন্য
                 </div>
                 <h4 className="text-2xl font-black text-slate-900">এপার্টমেন্ট সমিতি</h4>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-black text-slate-900">৳ ৯৯৯</span>
                   <span className="text-xs text-slate-500">/প্রতি মাস</span>
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
+                <p className="text-xs text-slate-600 leading-relaxed min-h-[36px]">
                   ১১ থেকে ৩০+ ফ্ল্যাট এবং অ্যাপার্টমেন্ট কমিটির সম্পূর্ণ ফিনান্সিয়াল ম্যানেজমেন্ট।
                 </p>
 
-                <ul className="space-y-2.5 text-xs text-slate-700 pt-3 border-t border-slate-100">
+                <ul className="space-y-2.5 text-xs text-slate-700 pt-3 border-t border-emerald-100">
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-600" />
-                    <span>আনলিমিটেড ফ্ল্যাট ও একাধিক বিল্ডিং</span>
+                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span><strong>আনলিমিটেড ফ্ল্যাট</strong> ও একাধিক বিল্ডিং</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-600" />
+                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>কমিটি ও ম্যানেজারের আলাদা রোল ও পারমিশন</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-600" />
+                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>মাসিক অডিট ও ব্যাংক স্টেটমেন্ট রিপোর্ট</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-600" />
+                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>ডেডিকেটেড অ্যাকাউন্ট ম্যানেজার</span>
                   </li>
                 </ul>
@@ -1059,9 +976,9 @@ export default function HomePage() {
 
               <Link
                 href="/register"
-                className="w-full py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-center text-xs block transition-all"
+                className="w-full py-3.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-center text-sm block transition-all shadow-md shadow-emerald-800/25"
               >
-                সমিতি প্ল্যান নিন
+                সমিতি প্ল্যান নিন →
               </Link>
             </div>
 
