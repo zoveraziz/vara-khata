@@ -156,7 +156,7 @@ export default function HomePage() {
 
           {/* Headline */}
           <div className="text-center max-w-4xl mx-auto space-y-4 sm:space-y-6">
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.2] text-slate-900">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.28] sm:leading-[1.2] text-slate-900">
               হাতে লেখা খাতার দিন শেষ,{' '}
               <br className="hidden sm:inline" />
               <span className="bg-gradient-to-r from-emerald-700 via-emerald-600 to-teal-600 bg-clip-text text-transparent">
@@ -164,7 +164,7 @@ export default function HomePage() {
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg lg:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto font-normal">
+            <p className="text-sm sm:text-base lg:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto font-normal">
               মাসের ১-১০ তারিখের ভাড়া চাওয়ার অস্বস্তি, বিদ্যুৎ সাব-মিটারের জটিল ইউনিট প্যাঁচ আর ছেঁড়া রশিদের দিন শেষ। 
               মোবাইল থেকেই তৈরি করুন অটো-বিল, পাঠান সম্মানজনক হোয়াটসঅ্যাপ রিমাইন্ডার ও ডিজিটাল মানি রিসিট।
             </p>
@@ -536,14 +536,14 @@ export default function HomePage() {
       <section id="story" className="py-20 bg-white border-y border-emerald-100 relative z-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center max-w-3xl mx-auto space-y-3 mb-12">
-            <h2 className="text-xs font-black tracking-widest text-emerald-700 uppercase">
+          <div className="text-center max-w-3xl mx-auto space-y-2.5 mb-12">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-200">
               তুলনামূলক বাস্তব চিত্র
-            </h2>
-            <h3 className="text-2xl sm:text-4xl font-black text-slate-900">
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
               হাতে লেখা খাতার ঝামেলা বনাম আধুনিক ‘ভাড়া খাতা’
-            </h3>
-            <p className="text-slate-600 text-sm sm:text-base">
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
               প্রতি মাসের হিসাব মেলানো নিয়ে অযথা মানসিক চাপ নেওয়ার দিন কি সত্যি এখনও মেনে নেওয়া যায়?
             </p>
           </div>
@@ -620,14 +620,14 @@ export default function HomePage() {
       <section id="bento" className="py-24 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
-            <h2 className="text-xs font-black tracking-widest text-emerald-700 uppercase">
+          <div className="text-center max-w-3xl mx-auto space-y-2.5 mb-14">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-200">
               প্রিমিয়াম বেন্টো ফিচার গ্রিড
-            </h2>
-            <h3 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900">
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
               একটি মাত্র অ্যাপে আপনার বাড়ির প্রতিটি সমাধান
-            </h3>
-            <p className="text-slate-600 text-sm sm:text-base">
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
               প্রতিটি টুল তৈরি করা হয়েছে বাংলাদেশের বাড়িওয়ালাদের বাস্তব অভিজ্ঞতার ওপর ভিত্তি করে।
             </p>
           </div>
@@ -756,14 +756,14 @@ export default function HomePage() {
       <section id="calculator" className="py-20 bg-emerald-50/50 border-y border-emerald-200/80 relative z-10">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center max-w-2xl mx-auto space-y-3 mb-12">
-            <h2 className="text-xs font-black tracking-widest text-emerald-800 uppercase">
+          <div className="text-center max-w-2xl mx-auto space-y-2.5 mb-12">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-200">
               সঞ্চয় ও লাভ ক্যালকুলেটর
-            </h2>
-            <h3 className="text-2xl sm:text-4xl font-black text-slate-900">
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
               আপনার কত সময় ও টাকা বাঁচবে?
-            </h3>
-            <p className="text-slate-600 text-sm">
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
               নিচের স্লাইডারটি টেনে আপনার বাড়ির ফ্ল্যাট সংখ্যা সিলেক্ট করে ফলাফল দেখুন।
             </p>
           </div>
@@ -841,14 +841,14 @@ export default function HomePage() {
       <section id="pricing" className="py-24 relative z-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center max-w-2xl mx-auto space-y-3 mb-16">
-            <h2 className="text-xs font-black tracking-widest text-emerald-700 uppercase">
+          <div className="text-center max-w-2xl mx-auto space-y-2.5 mb-14">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-200">
               স্বচ্ছ ও সাশ্রয়ী প্যাকেজ
-            </h2>
-            <h3 className="text-2xl sm:text-4xl font-black text-slate-900">
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
               ছোট বা বড়—যেকোনো বাড়ির জন্য সেরা প্ল্যান
-            </h3>
-            <p className="text-slate-600 text-sm">
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
               কোনো লুকানো চার্জ নেই। ৩টি ফ্ল্যাট পর্যন্ত আজীবন বিনামূল্যে ব্যবহার করুন।
             </p>
           </div>
@@ -1008,13 +1008,13 @@ export default function HomePage() {
       <section id="faq" className="py-20 bg-emerald-50/40 border-t border-emerald-100 relative z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center space-y-3 mb-12">
-            <h2 className="text-xs font-black tracking-widest text-emerald-700 uppercase">
+          <div className="text-center space-y-2.5 mb-12">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-200">
               সাধারণ জিজ্ঞাসা
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
+              আপনার মনের কিছু প্রশ্নের উত্তর
             </h2>
-            <h3 className="text-2xl sm:text-4xl font-black text-slate-900">
-              আপনার মনের কিছু সম্ভাব্য প্রশ্নের উত্তর
-            </h3>
           </div>
 
           <div className="space-y-3">
@@ -1054,9 +1054,9 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-3xl p-8 sm:p-14 bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-700 text-center space-y-6 shadow-xl relative overflow-hidden">
             <div className="max-w-2xl mx-auto space-y-3">
-              <h3 className="text-2xl sm:text-4xl font-black text-white leading-tight">
-                আজই বাড়িভাড়া ব্যবস্থাপনাকে ডিজিটাল ও সহজ করুন
-              </h3>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-snug tracking-tight">
+                বাড়িভাড়া ব্যবস্থাপনাকে ডিজিটাল ও সহজ করুন
+              </h2>
               <p className="text-emerald-100 text-sm sm:text-base leading-relaxed">
                 আর কোনো জটিল খাতার হিসাব বা বিল নিয়ে ভুল বোঝাবুঝি নয়। মাত্র ২ মিনিটে আপনার ভবনের ফ্ল্যাটগুলো যোগ করে নিশ্চিন্ত থাকুন।
               </p>
