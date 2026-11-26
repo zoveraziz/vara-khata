@@ -125,19 +125,19 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* Top Banner & Quick Actions */}
-      <div className="bg-gradient-to-br from-emerald-950 via-slate-900 to-emerald-950 rounded-3xl p-6 sm:p-8 text-white shadow-md border border-emerald-900/30 relative overflow-hidden">
+      {/* Top Banner & Quick Actions (Rich Deep Forest Green, Zero Glare) */}
+      <div className="bg-gradient-to-r from-emerald-800 via-emerald-800 to-teal-800 rounded-3xl p-6 sm:p-8 text-white shadow-md border border-emerald-700/60 relative overflow-hidden">
         <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 transform skew-x-12 pointer-events-none"></div>
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 bg-emerald-700/80 text-emerald-200 px-3 py-1 rounded-full text-xs font-medium mb-2 border border-emerald-600/50">
-              <Calendar className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-2 bg-emerald-900/60 text-emerald-100 px-3 py-1 rounded-full text-xs font-semibold mb-2.5 border border-emerald-600/60 shadow-2xs">
+              <Calendar className="w-3.5 h-3.5 text-emerald-200" />
               <span>চলতি মাস: নভেম্বর ২০২৬</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
+            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white drop-shadow-2xs">
               {activeProperty?.name}
             </h1>
-            <p className="text-emerald-100 text-xs sm:text-sm mt-1 max-w-xl">
+            <p className="text-emerald-50 text-xs sm:text-sm mt-1 max-w-xl font-medium leading-relaxed">
               {activeProperty?.address} — খাতা-কলম ছাড়াই সব ফ্ল্যাটের ভাড়া ও বিলের স্বয়ংক্রিয় হিসাব।
             </p>
           </div>
@@ -145,7 +145,7 @@ export default function DashboardPage() {
           <div className="flex flex-wrap gap-2.5">
             <button
               onClick={handleGenerateBills}
-              className="flex items-center gap-2 bg-white hover:bg-emerald-50 text-emerald-900 font-bold px-4 py-2.5 rounded-xl text-sm shadow-lg transition active:scale-95"
+              className="flex items-center gap-2 bg-white hover:bg-emerald-50 text-emerald-900 font-extrabold px-4 py-2.5 rounded-xl text-sm shadow-md transition active:scale-95"
             >
               <Receipt className="w-4 h-4 text-emerald-700" />
               <span>এক ক্লিকে মাসের বিল জেনারেট</span>
@@ -153,7 +153,7 @@ export default function DashboardPage() {
 
             <Link
               href="/tenants/new"
-              className="flex items-center gap-1.5 bg-emerald-700/90 hover:bg-emerald-600 text-white font-semibold px-3.5 py-2.5 rounded-xl text-sm border border-emerald-500/50 transition"
+              className="flex items-center gap-1.5 bg-emerald-900/70 hover:bg-emerald-900 text-white font-bold px-3.5 py-2.5 rounded-xl text-sm border border-emerald-600/60 transition shadow-2xs"
             >
               <Plus className="w-4 h-4" />
               <span>নতুন ভাড়াটিয়া</span>
