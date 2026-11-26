@@ -126,7 +126,7 @@ export default function DashboardPage() {
       )}
 
       {/* Top Banner & Quick Actions */}
-      <div className="bg-gradient-to-r from-emerald-800 to-teal-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+      <div className="bg-gradient-to-br from-emerald-950 via-slate-900 to-emerald-950 rounded-3xl p-6 sm:p-8 text-white shadow-md border border-emerald-900/30 relative overflow-hidden">
         <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 transform skew-x-12 pointer-events-none"></div>
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
@@ -232,7 +232,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Auto-Reminder Quick Status Banner */}
-      <div className="bg-gradient-to-r from-emerald-50 via-teal-50 to-blue-50 border border-emerald-200/80 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-2xs">
+      <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-2xs">
         <div className="flex items-center gap-3.5">
           <div className="w-10 h-10 rounded-2xl bg-emerald-700 text-white flex items-center justify-center shrink-0 shadow-sm">
             <Bell className="w-5 h-5" />
@@ -328,9 +328,16 @@ export default function DashboardPage() {
                     <tr key={bill.id} className="hover:bg-slate-50/70 transition">
                       {/* Flat & Tenant Info */}
                       <td className="py-3.5 px-4 whitespace-nowrap">
-                        <div className="font-extrabold text-sm text-slate-900">{flat?.name}</div>
-                        <div className="text-xs text-slate-700 font-bold">{tenant?.name}</div>
-                        <div className="text-[11px] text-slate-600 font-mono font-semibold">{tenant?.phone}</div>
+                        <div className="flex items-center gap-2.5">
+                          <span className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200/80 font-black text-xs flex items-center justify-center shrink-0">
+                            {flat?.name?.replace(/[^a-zA-Z0-9]/g, '').slice(-2) || 'FL'}
+                          </span>
+                          <div>
+                            <div className="font-extrabold text-sm text-slate-900">{flat?.name}</div>
+                            <div className="text-xs text-slate-700 font-bold">{tenant?.name}</div>
+                            <div className="text-[11px] text-slate-600 font-mono font-semibold">{tenant?.phone}</div>
+                          </div>
+                        </div>
                       </td>
 
                       {/* Base Rent */}

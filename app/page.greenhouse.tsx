@@ -163,7 +163,7 @@ export default function HomePage() {
             </h1>
 
             <p className="text-sm sm:text-base lg:text-lg text-slate-700 leading-relaxed max-w-2xl mx-auto font-medium">
-              মাসের ১-১০ তারিখের ভাড়া চাওয়ার অস্বস্তি, বিদ্যুৎ সাব-মিটারের জটিল ইউনিট প্যাঁচ আর ছেঁড়া রশিদের দিন শেষ। 
+              মাসের ১-১০ তারিখের ভাড়া চাওয়ার অস্বস্তি আর হিসাবের দিন শেষ। 
               মোবাইল থেকেই তৈরি করুন অটো-বিল, পাঠান সম্মানজনক হোয়াটসঅ্যাপ রিমাইন্ডার ও ডিজিটাল মানি রিসিট।
             </p>
 
@@ -184,22 +184,6 @@ export default function HomePage() {
                 <Sparkles className="w-5 h-5 text-emerald-700" />
                 <span>সরাসরি লাইভ ডেমো দেখুন (১ ক্লিকে)</span>
               </Link>
-            </div>
-
-            {/* Micro Trust Indicators */}
-            <div className="flex flex-wrap items-center justify-center gap-6 pt-3 text-xs sm:text-sm font-bold text-slate-700">
-              <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
-                <span>কোনো ক্রেডিট কার্ড লাগে না</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
-                <span>৩টি ইউনিট সম্পূর্ণ ফ্রি</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
-                <span>১ মিনিটে রেডি</span>
-              </div>
             </div>
           </div>
 
@@ -290,92 +274,116 @@ export default function HomePage() {
                     </div>
 
                     <div className="overflow-x-auto">
-                      <table className="w-full min-w-[760px] whitespace-nowrap text-left text-xs sm:text-sm border-collapse divide-y divide-slate-200">
-                        <thead className="bg-slate-50 text-slate-800 font-extrabold border-b border-slate-200">
-                          <tr>
-                            <th className="py-3 px-3 sm:px-4 border-r border-slate-200 whitespace-nowrap">ফ্ল্যাট ও ভাড়াটিয়া</th>
-                            <th className="py-3 px-3 sm:px-4 border-r border-slate-200 whitespace-nowrap">মূল ভাড়া</th>
-                            <th className="py-3 px-3 sm:px-4 border-r border-slate-200 whitespace-nowrap">বিদ্যুৎ (সাব-মিটার)</th>
-                            <th className="py-3 px-3 sm:px-4 border-r border-slate-200 whitespace-nowrap">মোট বিল</th>
-                            <th className="py-3 px-3 sm:px-4 border-r border-slate-200 whitespace-nowrap">পেমেন্ট মেথড</th>
-                            <th className="py-3 px-3 sm:px-4 whitespace-nowrap">স্ট্যাটাস</th>
+                      <table className="w-full min-w-[760px] whitespace-nowrap text-left text-xs sm:text-sm border-collapse">
+                        <thead>
+                          <tr className="bg-slate-50/80 text-slate-700 font-bold border-b border-slate-200">
+                            <th className="py-3 px-4 whitespace-nowrap">ফ্ল্যাট ও ভাড়াটিয়া</th>
+                            <th className="py-3 px-4 whitespace-nowrap">মূল ভাড়া</th>
+                            <th className="py-3 px-4 whitespace-nowrap">বিদ্যুৎ (সাব-মিটার)</th>
+                            <th className="py-3 px-4 whitespace-nowrap">মোট বিল</th>
+                            <th className="py-3 px-4 whitespace-nowrap">পেমেন্ট মেথড</th>
+                            <th className="py-3 px-4 whitespace-nowrap text-right">স্ট্যাটাস</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-200 text-slate-800">
+                        <tbody className="divide-y divide-slate-100 text-slate-800">
                           <tr className="hover:bg-slate-50/80 transition-colors">
-                            <td className="py-3.5 px-3 sm:px-4 border-r border-slate-200 whitespace-nowrap">
-                              <div className="font-bold text-slate-900">ফ্ল্যাট ১-এ (1A)</div>
-                              <div className="text-[11px] text-slate-600 font-medium">মোঃ রফিকুল ইসলাম (ব্যাংকার)</div>
+                            <td className="py-3.5 px-4 whitespace-nowrap">
+                              <div className="flex items-center gap-2.5">
+                                <span className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200/80 font-black text-xs flex items-center justify-center shrink-0">
+                                  1A
+                                </span>
+                                <div>
+                                  <div className="font-bold text-slate-900">ফ্ল্যাট ১-এ (1A)</div>
+                                  <div className="text-[11px] text-slate-600 font-medium">মোঃ রফিকুল ইসলাম (ব্যাংকার)</div>
+                                </div>
+                              </div>
                             </td>
-                            <td className="py-3.5 px-3 sm:px-4 border-r border-slate-200 font-bold text-slate-900 whitespace-nowrap">
+                            <td className="py-3.5 px-4 font-bold text-slate-900 whitespace-nowrap">
                               ৳ ১৮,০০০
                             </td>
-                            <td className="py-3.5 px-3 sm:px-4 border-r border-slate-200 whitespace-nowrap">
+                            <td className="py-3.5 px-4 whitespace-nowrap">
                               <span className="text-emerald-800 font-bold">৳ ১,২০০</span>
                               <span className="text-[11px] text-slate-600 block">(১২০ ইউনিট)</span>
                             </td>
-                            <td className="py-3.5 px-3 sm:px-4 border-r border-slate-200 font-black text-slate-900 whitespace-nowrap">
+                            <td className="py-3.5 px-4 font-black text-slate-900 whitespace-nowrap">
                               ৳ ২১,১৮০
                             </td>
-                            <td className="py-3.5 px-3 sm:px-4 border-r border-slate-200 whitespace-nowrap">
-                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 font-bold text-xs border border-slate-200">
+                            <td className="py-3.5 px-4 whitespace-nowrap">
+                              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 font-bold text-xs border border-slate-200">
                                 💵 ক্যাশ
                               </span>
                             </td>
-                            <td className="py-3.5 px-3 sm:px-4 whitespace-nowrap">
+                            <td className="py-3.5 px-4 whitespace-nowrap text-right">
                               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 font-bold text-xs border border-emerald-200">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
                                 পরিশোধিত
                               </span>
                             </td>
                           </tr>
 
                           <tr className="hover:bg-slate-50/80 transition-colors">
-                            <td className="py-3.5 px-3 sm:px-4 border-r border-slate-200 whitespace-nowrap">
-                              <div className="font-bold text-slate-900">ফ্ল্যাট ২-বি (2B)</div>
-                              <div className="text-[11px] text-slate-600 font-medium">তানভীর আহমেদ (ব্যবসায়ী)</div>
+                            <td className="py-3.5 px-4 whitespace-nowrap">
+                              <div className="flex items-center gap-2.5">
+                                <span className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200/80 font-black text-xs flex items-center justify-center shrink-0">
+                                  2B
+                                </span>
+                                <div>
+                                  <div className="font-bold text-slate-900">ফ্ল্যাট ২-বি (2B)</div>
+                                  <div className="text-[11px] text-slate-600 font-medium">তানভীর আহমেদ (ব্যবসায়ী)</div>
+                                </div>
+                              </div>
                             </td>
-                            <td className="py-3.5 px-3 sm:px-4 border-r border-slate-200 font-bold text-slate-900 whitespace-nowrap">
+                            <td className="py-3.5 px-4 font-bold text-slate-900 whitespace-nowrap">
                               ৳ ১৬,০০০
                             </td>
-                            <td className="py-3.5 px-3 sm:px-4 border-r border-slate-200 whitespace-nowrap">
+                            <td className="py-3.5 px-4 whitespace-nowrap">
                               <span className="text-emerald-800 font-bold">৳ ১,৩৫০</span>
                               <span className="text-[11px] text-slate-600 block">(১৩৫ ইউনিট)</span>
                             </td>
-                            <td className="py-3.5 px-3 sm:px-4 border-r border-slate-200 font-black text-slate-900 whitespace-nowrap">
+                            <td className="py-3.5 px-4 font-black text-slate-900 whitespace-nowrap">
                               ৳ ১৯,৯৮০
                             </td>
-                            <td className="py-3.5 px-3 sm:px-4 border-r border-slate-200 whitespace-nowrap">
-                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-pink-50 text-pink-800 font-bold text-xs border border-pink-200">
+                            <td className="py-3.5 px-4 whitespace-nowrap">
+                              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-pink-50 text-pink-800 font-bold text-xs border border-pink-200">
                                 📱 বিকাশ
                               </span>
                             </td>
-                            <td className="py-3.5 px-3 sm:px-4 whitespace-nowrap">
+                            <td className="py-3.5 px-4 whitespace-nowrap text-right">
                               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 font-bold text-xs border border-emerald-200">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
                                 পরিশোধিত
                               </span>
                             </td>
                           </tr>
 
                           <tr className="hover:bg-slate-50/80 transition-colors">
-                            <td className="py-3.5 px-3 sm:px-4 border-r border-slate-200 whitespace-nowrap">
-                              <div className="font-bold text-slate-900">ফ্ল্যাট ৩-সি (3C)</div>
-                              <div className="text-[11px] text-slate-600 font-medium">ইঞ্জি. কবির হোসেন (প্রকৌশলী)</div>
+                            <td className="py-3.5 px-4 whitespace-nowrap">
+                              <div className="flex items-center gap-2.5">
+                                <span className="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 border border-slate-200 font-black text-xs flex items-center justify-center shrink-0">
+                                  3C
+                                </span>
+                                <div>
+                                  <div className="font-bold text-slate-900">ফ্ল্যাট ৩-সি (3C)</div>
+                                  <div className="text-[11px] text-slate-600 font-medium">ইঞ্জি. কবির হোসেন (প্রকৌশলী)</div>
+                                </div>
+                              </div>
                             </td>
-                            <td className="py-3.5 px-3 sm:px-4 border-r border-slate-200 font-bold text-slate-900 whitespace-nowrap">
+                            <td className="py-3.5 px-4 font-bold text-slate-900 whitespace-nowrap">
                               ৳ ২০,০০০
                             </td>
-                            <td className="py-3.5 px-3 sm:px-4 border-r border-slate-200 whitespace-nowrap">
+                            <td className="py-3.5 px-4 whitespace-nowrap">
                               <span className="text-emerald-800 font-bold">৳ ১,১০০</span>
                               <span className="text-[11px] text-slate-600 block">(১১০ ইউনিট)</span>
                             </td>
-                            <td className="py-3.5 px-3 sm:px-4 border-r border-slate-200 font-black text-rose-700 whitespace-nowrap">
+                            <td className="py-3.5 px-4 font-black text-rose-700 whitespace-nowrap">
                               ৳ ২৩,৭৮০
                             </td>
-                            <td className="py-3.5 px-3 sm:px-4 border-r border-slate-200 whitespace-nowrap">
+                            <td className="py-3.5 px-4 whitespace-nowrap">
                               <span className="text-slate-500 font-bold text-xs">বকেয়া</span>
                             </td>
-                            <td className="py-3.5 px-3 sm:px-4 whitespace-nowrap">
+                            <td className="py-3.5 px-4 whitespace-nowrap text-right">
                               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-rose-50 text-rose-800 font-bold text-xs border border-rose-200">
+                                <span className="w-1.5 h-1.5 rounded-full bg-rose-600"></span>
                                 বকেয়া (এসএমএস প্রেরিত)
                               </span>
                             </td>
