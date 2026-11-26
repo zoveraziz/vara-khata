@@ -837,14 +837,16 @@ export default function HomePage() {
             
             {/* Slider Control */}
             <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <label className="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-2">
-                  <Building2 className="w-5 h-5 text-emerald-800" />
+              <div className="flex justify-between items-center gap-3">
+                <label className="text-xs sm:text-base font-bold text-slate-900 flex items-center gap-1.5 sm:gap-2 leading-tight">
+                  <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-800 shrink-0" />
                   <span>আপনার ভবনে মোট ফ্ল্যাট / ইউনিট সংখ্যা:</span>
                 </label>
-                <span className="text-2xl sm:text-3xl font-black text-slate-900 bg-slate-50 px-4 py-1.5 rounded-xl border border-slate-200 shadow-2xs whitespace-nowrap">
-                  {flatCount}টি
-                </span>
+                <div className="shrink-0 flex items-center justify-center min-w-[72px] sm:min-w-[85px] px-3 sm:px-4 py-1.5 rounded-xl bg-slate-50 border border-slate-200 shadow-2xs">
+                  <span className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 whitespace-nowrap select-none">
+                    {flatCount}টি
+                  </span>
+                </div>
               </div>
 
               <input
