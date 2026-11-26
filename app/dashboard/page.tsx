@@ -167,15 +167,15 @@ export default function DashboardPage() {
         {/* Total Collected */}
         <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">আদায়কৃত ভাড়া</span>
-            <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+            <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">আদায়কৃত ভাড়া</span>
+            <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center">
               <Wallet className="w-5 h-5" />
             </div>
           </div>
           <p className="text-2xl font-black text-slate-900 mt-2">
             ৳ {totalCollected.toLocaleString()}
           </p>
-          <div className="mt-2 flex items-center gap-2 text-xs text-emerald-700 font-semibold">
+          <div className="mt-2 flex items-center gap-2 text-xs text-emerald-800 font-bold">
             <TrendingUp className="w-3.5 h-3.5" />
             <span>সংগ্রহের হার: {collectionRate}%</span>
           </div>
@@ -184,15 +184,15 @@ export default function DashboardPage() {
         {/* Total Due */}
         <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">মোট বকেয়া</span>
-            <div className="w-9 h-9 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center">
+            <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">মোট বকেয়া</span>
+            <div className="w-9 h-9 rounded-xl bg-rose-100 text-rose-800 flex items-center justify-center">
               <AlertTriangle className="w-5 h-5" />
             </div>
           </div>
           <p className="text-2xl font-black text-rose-600 mt-2">
             ৳ {totalDue.toLocaleString()}
           </p>
-          <p className="mt-2 text-xs text-slate-500">
+          <p className="mt-2 text-xs text-slate-700 font-medium">
             পূর্বের বকেয়া সহ চলতি মাসের বাকি টাকা
           </p>
         </div>
@@ -200,16 +200,16 @@ export default function DashboardPage() {
         {/* Flats Occupancy */}
         <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">ফ্ল্যাট পরিসংখ্যান</span>
-            <div className="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center">
+            <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">ফ্ল্যাট পরিসংখ্যান</span>
+            <div className="w-9 h-9 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center">
               <Building className="w-5 h-5" />
             </div>
           </div>
           <div className="flex items-baseline gap-2 mt-2">
             <span className="text-2xl font-black text-slate-900">{occupiedCount}</span>
-            <span className="text-sm font-semibold text-slate-500">/ {propertyFlats.length} টি ভাড়া হয়েছে</span>
+            <span className="text-sm font-bold text-slate-700">/ {propertyFlats.length} টি ভাড়া হয়েছে</span>
           </div>
-          <p className="mt-2 text-xs text-amber-700 font-semibold">
+          <p className="mt-2 text-xs text-amber-800 font-bold">
             {vacantCount} টি ফ্ল্যাট বর্তমানে খালি রয়েছে
           </p>
         </div>
@@ -217,15 +217,15 @@ export default function DashboardPage() {
         {/* Total Invoiced */}
         <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">মোট ভাড়ার দাবি</span>
-            <div className="w-9 h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center">
+            <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">মোট ভাড়ার দাবি</span>
+            <div className="w-9 h-9 rounded-xl bg-purple-100 text-purple-800 flex items-center justify-center">
               <Receipt className="w-5 h-5" />
             </div>
           </div>
           <p className="text-2xl font-black text-slate-900 mt-2">
             ৳ {totalBilled.toLocaleString()}
           </p>
-          <p className="mt-2 text-xs text-slate-500">
+          <p className="mt-2 text-xs text-slate-700 font-medium">
             ভাড়া + বিদ্যুৎ + গ্যাস + ইউটিলিটি
           </p>
         </div>
@@ -276,33 +276,33 @@ export default function DashboardPage() {
               <Receipt className="w-5 h-5 text-emerald-700" />
               চলতি মাসের ভাড়ার হিসাব ও কালেকশন
             </h2>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="text-xs text-slate-700 font-medium mt-0.5">
               টাকা পাওয়া মাত্রই ‘পেমেন্ট গ্রহণ’ বাটনে ক্লিক করে সাথে সাথে কনফার্ম করুন।
             </p>
           </div>
 
           <div className="w-full sm:w-auto relative">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+            <Search className="w-4 h-4 text-slate-500 absolute left-3 top-2.5" />
             <input
               type="text"
               placeholder="ফ্ল্যাট বা ভাড়াটিয়া খুঁজুন..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full sm:w-64 pl-9 pr-3.5 py-1.5 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              className="w-full sm:w-64 pl-9 pr-3.5 py-1.5 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-900 font-medium"
             />
           </div>
         </div>
 
         {/* Table Content */}
-        <div className="sm:hidden px-4 py-2 bg-emerald-50/70 border-b border-emerald-100 text-[11px] text-emerald-800 font-semibold flex items-center justify-between">
+        <div className="sm:hidden px-4 py-2 bg-emerald-50 border-b border-emerald-200 text-[11px] text-emerald-900 font-bold flex items-center justify-between">
           <span>👉 সম্পূর্ণ টেবিল পাশাপাশি দেখতে ডানে স্ক্রোল করুন</span>
-          <span className="text-[10px] font-bold bg-white px-2 py-0.5 rounded border border-emerald-200">৭টি কলাম</span>
+          <span className="text-[10px] font-black bg-white px-2 py-0.5 rounded border border-emerald-300">৭টি কলাম</span>
         </div>
 
         <div className="overflow-x-auto w-full">
           <table className="w-full min-w-[960px] text-left text-xs border-collapse">
             <thead>
-              <tr className="bg-slate-50 text-slate-700 border-b border-slate-200 font-bold uppercase tracking-wider whitespace-nowrap">
+              <tr className="bg-slate-100 text-slate-900 border-b border-slate-300 font-extrabold uppercase tracking-wider whitespace-nowrap">
                 <th className="py-3 px-4 whitespace-nowrap">ফ্ল্যাট ও ভাড়াটিয়া</th>
                 <th className="py-3 px-4 whitespace-nowrap">মূল ভাড়া</th>
                 <th className="py-3 px-4 whitespace-nowrap">সাব-মিটার বিদ্যুৎ</th>
@@ -315,7 +315,7 @@ export default function DashboardPage() {
             <tbody className="divide-y divide-slate-100">
               {filteredBills.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-12 text-center text-slate-400 font-medium">
+                  <td colSpan={7} className="py-12 text-center text-slate-500 font-bold">
                     কোনো ভাড়ার বিল পাওয়া যায়নি। উপরের "এক ক্লিকে মাসের বিল জেনারেট" বাটনে ক্লিক করুন।
                   </td>
                 </tr>
@@ -329,12 +329,12 @@ export default function DashboardPage() {
                       {/* Flat & Tenant Info */}
                       <td className="py-3.5 px-4 whitespace-nowrap">
                         <div className="font-extrabold text-sm text-slate-900">{flat?.name}</div>
-                        <div className="text-xs text-slate-600 font-medium">{tenant?.name}</div>
-                        <div className="text-[11px] text-slate-400 font-mono">{tenant?.phone}</div>
+                        <div className="text-xs text-slate-700 font-bold">{tenant?.name}</div>
+                        <div className="text-[11px] text-slate-600 font-mono font-semibold">{tenant?.phone}</div>
                       </td>
 
                       {/* Base Rent */}
-                      <td className="py-3.5 px-4 font-bold text-slate-800 whitespace-nowrap">
+                      <td className="py-3.5 px-4 font-bold text-slate-900 whitespace-nowrap">
                         ৳ {bill.baseRent.toLocaleString()}
                       </td>
 
@@ -345,7 +345,7 @@ export default function DashboardPage() {
                             <div className="font-bold text-slate-900">
                               ৳ {bill.electricityBill.toLocaleString()}
                             </div>
-                            <div className="text-[11px] text-slate-500">
+                            <div className="text-[11px] text-slate-700 font-medium">
                               {bill.electricityUnits} ইউনিট (@৳{bill.unitPrice})
                             </div>
                           </div>
@@ -365,26 +365,26 @@ export default function DashboardPage() {
                           ৳ {bill.totalAmount.toLocaleString()}
                         </div>
                         {bill.previousDue > 0 && (
-                          <div className="text-[10px] text-rose-600 font-bold">
+                          <div className="text-[10px] text-rose-700 font-extrabold">
                             (বকেয়া: +৳{bill.previousDue.toLocaleString()})
                           </div>
                         )}
-                        <div className="text-[10px] text-slate-500">
+                        <div className="text-[10px] text-slate-700 font-medium">
                           গ্যাস: ৳{bill.gasBill} | কমন: ৳{bill.waterBill + bill.serviceCharge}
                         </div>
                       </td>
 
                       {/* Paid & Due */}
                       <td className="py-3.5 px-4 whitespace-nowrap">
-                        <div className="text-emerald-700 font-bold">
+                        <div className="text-emerald-800 font-bold">
                           আদায়: ৳ {bill.paidAmount.toLocaleString()}
                         </div>
                         {bill.dueAmount > 0 ? (
-                          <div className="text-rose-600 font-extrabold text-xs">
+                          <div className="text-rose-700 font-extrabold text-xs">
                             বাকি: ৳ {bill.dueAmount.toLocaleString()}
                           </div>
                         ) : (
-                          <div className="text-slate-400 text-[11px]">কোনো বাকি নেই</div>
+                          <div className="text-slate-500 font-bold text-[11px]">কোনো বাকি নেই</div>
                         )}
                       </td>
 
@@ -408,7 +408,7 @@ export default function DashboardPage() {
                           {bill.dueAmount > 0 && (
                             <button
                               onClick={() => setSelectedBillForPayment(bill)}
-                              className="inline-flex items-center gap-1 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-xs shadow-sm transition active:scale-95 shrink-0"
+                              className="inline-flex items-center gap-1 px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg font-bold text-xs shadow-sm transition active:scale-95 shrink-0"
                             >
                               <CreditCard className="w-3.5 h-3.5" />
                               <span>পেমেন্ট গ্রহণ</span>
@@ -418,9 +418,9 @@ export default function DashboardPage() {
                           <button
                             onClick={() => setSelectedBillForReceipt(bill)}
                             title="রশিদ দেখুন বা WhatsApp-এ পাঠান"
-                            className="inline-flex items-center gap-1 px-2.5 py-1.5 border border-slate-300 hover:bg-slate-100 text-slate-700 rounded-lg font-semibold text-xs transition shrink-0"
+                            className="inline-flex items-center gap-1 px-2.5 py-1.5 border border-slate-300 hover:bg-slate-100 text-slate-800 rounded-lg font-bold text-xs transition shrink-0"
                           >
-                            <FileText className="w-3.5 h-3.5 text-slate-600" />
+                            <FileText className="w-3.5 h-3.5 text-slate-700" />
                             <span>রশিদ</span>
                           </button>
                         </div>
@@ -442,11 +442,11 @@ export default function DashboardPage() {
               <CheckCircle className="w-5 h-5 text-emerald-600" />
               সম্প্রতি গৃহীত পেমেন্ট হিস্ট্রি
             </h3>
-            <p className="text-xs text-slate-500">নগদ, বিকাশ, নগদ ও ব্যাংকের মাধ্যমে গৃহীত ভাড়ার তালিকা</p>
+            <p className="text-xs text-slate-700 font-medium">নগদ, বিকাশ, নগদ ও ব্যাংকের মাধ্যমে গৃহীত ভাড়ার তালিকা</p>
           </div>
           <Link
             href="/payments"
-            className="text-xs font-bold text-emerald-700 hover:underline flex items-center gap-1"
+            className="text-xs font-bold text-emerald-800 hover:underline flex items-center gap-1"
           >
             <span>সব দেখুন</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -460,15 +460,15 @@ export default function DashboardPage() {
             const methodDetails = (() => {
               switch (pay.method?.toLowerCase()) {
                 case "cash":
-                  return { label: "ক্যাশ", icon: "💵", style: "bg-emerald-50 text-emerald-700 border-emerald-200" };
+                  return { label: "ক্যাশ", icon: "💵", style: "bg-emerald-50 text-emerald-800 border-emerald-200" };
                 case "bkash":
-                  return { label: "বিকাশ", icon: "📱", style: "bg-pink-50 text-pink-700 border-pink-200" };
+                  return { label: "বিকাশ", icon: "📱", style: "bg-pink-50 text-pink-800 border-pink-200" };
                 case "nagad":
-                  return { label: "নগদ", icon: "🟠", style: "bg-orange-50 text-orange-700 border-orange-200" };
+                  return { label: "নগদ", icon: "🟠", style: "bg-orange-50 text-orange-800 border-orange-200" };
                 case "bank":
-                  return { label: "ব্যাংক", icon: "🏦", style: "bg-blue-50 text-blue-700 border-blue-200" };
+                  return { label: "ব্যাংক", icon: "🏦", style: "bg-blue-50 text-blue-800 border-blue-200" };
                 default:
-                  return { label: pay.method, icon: "💳", style: "bg-slate-50 text-slate-700 border-slate-200" };
+                  return { label: pay.method, icon: "💳", style: "bg-slate-50 text-slate-800 border-slate-200" };
               }
             })();
             return (
@@ -481,10 +481,10 @@ export default function DashboardPage() {
                     <div className="font-bold text-slate-900 text-sm truncate">
                       {tenant?.name} ({flat?.name})
                     </div>
-                    <div className="text-xs text-slate-500 truncate">
+                    <div className="text-xs text-slate-700 font-medium truncate">
                       রশিদ নং: {pay.receiptNo} | তারিখ: {pay.date} | গ্রহণকারী: {pay.collectedBy}
                     </div>
-                    {pay.remarks && <div className="text-[11px] text-slate-400 italic truncate">নোট: {pay.remarks}</div>}
+                    {pay.remarks && <div className="text-[11px] text-slate-600 font-medium italic truncate">নোট: {pay.remarks}</div>}
                   </div>
                 </div>
                 <div className="text-right shrink-0 whitespace-nowrap">

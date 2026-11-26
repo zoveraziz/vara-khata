@@ -153,7 +153,7 @@ export default function Navbar() {
         </div>
 
         {/* Row 2: Dedicated Navigation Tab Bar */}
-        <div className="bg-slate-100/80 border-b border-slate-200/90 py-2.5 hidden md:block">
+        <div className="bg-slate-100/90 border-b border-slate-200 py-2.5 hidden md:block">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <nav className="flex items-center gap-2.5 overflow-x-auto no-scrollbar">
               {navItems.map((item) => {
@@ -165,11 +165,11 @@ export default function Navbar() {
                     href={item.href}
                     className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all border shadow-2xs ${
                       isActive
-                        ? 'bg-white text-emerald-900 border-emerald-400 shadow-sm font-extrabold ring-1 ring-emerald-400/40'
-                        : 'bg-white/80 text-slate-600 border-slate-200/90 hover:bg-white hover:text-slate-900 hover:border-slate-300'
+                        ? 'bg-white text-emerald-900 border-emerald-500 shadow-sm font-black ring-1 ring-emerald-500/40'
+                        : 'bg-white text-slate-800 border-slate-200 hover:bg-slate-50 hover:text-slate-950 hover:border-slate-300 font-bold'
                     }`}
                   >
-                    <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-emerald-600' : 'text-slate-400'}`} />
+                    <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-emerald-700' : 'text-slate-700'}`} />
                     <span className="whitespace-nowrap">{item.name}</span>
                   </Link>
                 );
@@ -192,16 +192,16 @@ export default function Navbar() {
                   className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition ${
                     isActive
                       ? 'bg-emerald-50 text-emerald-900 border border-emerald-300 font-extrabold'
-                      : 'text-slate-600 hover:bg-slate-50'
+                      : 'text-slate-800 font-bold hover:bg-slate-50'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-emerald-600' : 'text-slate-400'}`} />
+                  <Icon className={`w-4 h-4 ${isActive ? 'text-emerald-700' : 'text-slate-700'}`} />
                   <span className="whitespace-nowrap">{item.name}</span>
                 </Link>
               );
             })}
             <div className="pt-2 border-t border-slate-100 flex justify-between items-center px-3">
-              <span className="text-xs font-bold text-slate-800">{currentUser?.name}</span>
+              <span className="text-xs font-bold text-slate-900">{currentUser?.name}</span>
               <button
                 onClick={logout}
                 className="text-xs font-bold text-red-600 flex items-center gap-1"
