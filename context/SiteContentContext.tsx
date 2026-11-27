@@ -15,8 +15,8 @@ interface SiteContentContextType {
 
 const SiteContentContext = createContext<SiteContentContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'vara_khata_custom_site_content_v3';
-const TIME_KEY = 'vara_khata_site_content_updated_at_v3';
+const STORAGE_KEY = 'vara_khata_custom_site_content_v5';
+const TIME_KEY = 'vara_khata_site_content_updated_at_v5';
 
 export function SiteContentProvider({ children }: { children: React.ReactNode }) {
   const [content, setContent] = useState<SiteContentType>(defaultContent);
