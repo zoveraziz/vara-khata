@@ -3,6 +3,7 @@ import './globals.css';
 import { Hind_Siliguri } from 'next/font/google';
 import { AuthProvider } from '@/context/AuthContext';
 import { AppProvider } from '@/context/AppContext';
+import { SiteContentProvider } from '@/context/SiteContentContext';
 import AppShell from '@/components/AppShell';
 
 const hindSiliguri = Hind_Siliguri({
@@ -29,7 +30,9 @@ export default function RootLayout({
       >
         <AuthProvider>
           <AppProvider>
-            <AppShell>{children}</AppShell>
+            <SiteContentProvider>
+              <AppShell>{children}</AppShell>
+            </SiteContentProvider>
           </AppProvider>
         </AuthProvider>
       </body>

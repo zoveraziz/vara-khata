@@ -19,9 +19,10 @@ import {
   Menu,
   X,
 } from 'lucide-react';
-import { siteContent } from '@/config/siteContent';
+import { useSiteContent } from '@/context/SiteContentContext';
 
 export default function HomePage() {
+  const { content: siteContent } = useSiteContent();
   // 1. Mobile Menu Dropdown State
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 

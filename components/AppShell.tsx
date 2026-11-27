@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Navbar from './Navbar';
 
@@ -11,7 +12,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     pathname === '/landing' ||
     pathname === '/login' ||
     pathname === '/register' ||
-    pathname === '/receipt';
+    pathname === '/receipt' ||
+    pathname === '/admin';
 
   if (isPublicPage) {
     return <main className="flex-1 w-full">{children}</main>;
@@ -27,6 +29,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
           <p>
             © ২০২৬ <strong className="text-slate-800 font-bold">ভাড়া খাতা (VaraKhata)</strong> — বাংলাদেশের বাড়িওয়ালা ও মার্কেট মালিকদের বিশ্বস্ত সহচর।
+            <Link href="/admin" className="text-slate-400 hover:text-emerald-700 underline text-[11px] ml-3 transition-colors">
+              অ্যাডমিন প্যানেল
+            </Link>
           </p>
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500"></span>

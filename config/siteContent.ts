@@ -290,6 +290,7 @@ export const siteContent = {
       { label: 'ড্যাশবোর্ড', href: '/dashboard' },
       { label: 'টু-লেট লিস্টিং', href: '/to-let' },
       { label: 'হেল্প সেন্টার', href: '#faq' },
+      { label: 'অ্যাডমিন কন্ট্রোল', href: '/admin' },
     ],
   },
 };
