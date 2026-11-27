@@ -11,6 +11,7 @@ import {
   MessageCircle,
   Receipt,
   ShieldCheck,
+  Check,
   ChevronDown,
   Clock,
   Printer,
@@ -819,16 +820,97 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* 7. Section: Pricing Matrix */}
+      <section id="pricing" className="py-24 relative z-10 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center max-w-2xl mx-auto space-y-2.5 mb-14">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-bold border border-slate-200">
+              {siteContent.pricing.badge}
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
+              {siteContent.pricing.title}
+            </h2>
+            <p className="text-slate-700 text-sm sm:text-base leading-relaxed font-medium">
+              {siteContent.pricing.subtitle}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+            {siteContent.pricing.plans.map((plan, idx) => (
+              <div
+                key={idx}
+                className={`rounded-3xl p-8 flex flex-col justify-between space-y-6 relative transition-all ${
+                  plan.isPopular
+                    ? 'bg-white border-2 border-emerald-600 shadow-md ring-4 ring-emerald-50'
+                    : 'bg-slate-50 border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-md'
+                }`}
+              >
+                <div
+                  className={`absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-white font-black text-[11px] uppercase tracking-wider shadow-sm ${
+                    plan.isPopular ? 'bg-emerald-800' : 'bg-slate-800'
+                  }`}
+                >
+                  {plan.badgeTop}
+                </div>
+
+                <div className="space-y-4">
+                  <div
+                    className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${
+                      plan.isPopular
+                        ? 'bg-emerald-50 text-emerald-800 border border-emerald-200/60'
+                        : 'bg-white text-slate-800 border border-slate-200'
+                    }`}
+                  >
+                    {plan.audience}
+                  </div>
+                  <h4 className="text-2xl font-black text-slate-900">{plan.name}</h4>
+                  <div className="flex items-baseline gap-1">
+                    <span
+                      className={`text-4xl font-black ${
+                        plan.isPopular ? 'text-emerald-800' : 'text-slate-900'
+                      }`}
+                    >
+                      {plan.price}
+                    </span>
+                    <span className="text-xs text-slate-600 font-bold">{plan.period}</span>
+                  </div>
+                  <p className="text-xs text-slate-700 leading-relaxed min-h-[36px] font-medium">
+                    {plan.description}
+                  </p>
+
+                  <ul className="space-y-2.5 text-xs text-slate-800 font-medium pt-3 border-t border-slate-200">
+                    {plan.features.map((feat, fIdx) => (
+                      <li key={fIdx} className="flex items-center gap-2">
+                        <Check className="w-4 h-4 text-emerald-700 shrink-0" />
+                        <span>{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <Link
+                  href="/register"
+                  className="w-full py-3.5 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-center text-sm block transition-all shadow-xs"
+                >
+                  {plan.ctaText}
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* 8. Section: FAQ Accordion */}
       <section id="faq" className="py-20 bg-[#f8fafc] border-t border-slate-200 relative z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center space-y-2.5 mb-12">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-bold border border-slate-200">
-              সাধারণ জিজ্ঞাসা
+              প্রশ্নোত্তর
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
-              আপনার মনের কিছু প্রশ্নের উত্তর
+              সাধারণ জিজ্ঞাসা
             </h2>
           </div>
 
