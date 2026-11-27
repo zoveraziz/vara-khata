@@ -69,19 +69,6 @@ export default function HomePage() {
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-6">
-            {(siteContent.header.navLinks || []).map((link, idx) => (
-              <a
-                key={idx}
-                href={link.href}
-                className="text-xs sm:text-sm font-bold text-slate-700 hover:text-emerald-800 transition-colors"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-
           {/* Desktop Action Buttons */}
           <div className="hidden sm:flex items-center gap-2.5 sm:gap-3">
             <Link
@@ -102,7 +89,7 @@ export default function HomePage() {
           </div>
 
           {/* Mobile Hamburger Toggle Button */}
-          <div className="lg:hidden flex items-center">
+          <div className="sm:hidden flex items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-xl text-slate-800 hover:bg-slate-100 border border-slate-200 transition-colors"
@@ -115,21 +102,7 @@ export default function HomePage() {
 
         {/* Mobile Dropdown Panel */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-slate-200 bg-white px-4 py-4 space-y-3 shadow-lg animate-in slide-in-from-top-2 duration-150">
-            {/* Mobile Nav Links */}
-            <div className="flex flex-col space-y-1 pb-2 border-b border-slate-100">
-              {(siteContent.header.navLinks || []).map((link, idx) => (
-                <a
-                  key={idx}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="px-3 py-2 rounded-lg text-sm font-bold text-slate-800 hover:bg-slate-50 hover:text-emerald-800 transition-colors"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-
+          <div className="sm:hidden border-t border-slate-200 bg-white px-4 py-4 space-y-2.5 shadow-lg animate-in slide-in-from-top-2 duration-150">
             <Link
               href="/dashboard"
               onClick={() => setMobileMenuOpen(false)}
@@ -150,286 +123,310 @@ export default function HomePage() {
         )}
       </header>
 
-      {/* 2. Hero Section (Modern Split 2-Column Layout like rentcollector.xyz) */}
-      <section id="hero" className="relative pt-8 pb-14 lg:pt-16 lg:pb-20 overflow-hidden z-10">
+      {/* 2. Hero Section (Eye-friendly, Calm & High Contrast Text) */}
+      <section className="relative pt-12 pb-16 lg:pt-20 lg:pb-28 overflow-hidden z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          {/* Eyebrow Pill */}
+          <div className="flex justify-center mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 text-slate-800 text-xs sm:text-sm font-bold shadow-2xs">
+              <Sparkles className="w-4 h-4 text-emerald-700" />
+              <span>{siteContent.hero.trustPill}</span>
+            </div>
+          </div>
+
+          {/* Headline */}
+          <div className="text-center max-w-4xl mx-auto space-y-4 sm:space-y-6">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.28] sm:leading-[1.2] text-slate-900">
+              {siteContent.hero.titleLine1}{' '}
+              <br className="hidden sm:inline" />
+              <span className="text-emerald-800">
+                {siteContent.hero.titleHighlight}
+              </span>
+            </h1>
+
+            <p className="text-sm sm:text-base lg:text-lg text-slate-700 leading-relaxed max-w-2xl mx-auto font-medium">
+              {siteContent.hero.subtitle}
+            </p>
+
+            {/* CTAs */}
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4">
+              <Link
+                href="/register"
+                className="w-full sm:w-auto px-7 py-3.5 rounded-2xl font-bold text-base text-white bg-emerald-800 hover:bg-emerald-900 shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 group"
+              >
+                <span>{siteContent.hero.primaryCta}</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+
+              <Link
+                href="/dashboard"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-2xl font-bold text-base text-slate-900 bg-white hover:bg-slate-50 border border-slate-300 shadow-2xs transition-all flex items-center justify-center gap-2 hover:border-slate-400"
+              >
+                <Sparkles className="w-5 h-5 text-emerald-700" />
+                <span>{siteContent.hero.secondaryCta}</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* 3. Centerpiece Interactive Showcase */}
+          <div className="mt-12 max-w-5xl mx-auto">
             
-            {/* LEFT COLUMN: Smart, punchy value proposition, CTAs & social proof */}
-            <div className="lg:col-span-6 xl:col-span-6 space-y-5 text-left">
-              
-              {/* Trust Pill */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200/90 text-emerald-900 text-xs sm:text-sm font-bold shadow-2xs">
-                <Sparkles className="w-4 h-4 text-emerald-700 shrink-0" />
-                <span>{siteContent.hero.trustPill}</span>
-              </div>
-
-              {/* Main Heading */}
-              <h1 className="text-3xl sm:text-4xl lg:text-[2.65rem] xl:text-[3rem] font-black tracking-tight leading-[1.22] sm:leading-[1.18] text-slate-900">
-                {siteContent.hero.titleLine1}{' '}
-                <span className="text-emerald-800 block sm:inline lg:block xl:inline">
-                  {siteContent.hero.titleHighlight}
-                </span>
-              </h1>
-
-              {/* Smart Subtitle */}
-              <p className="text-sm sm:text-base lg:text-lg text-slate-700 leading-relaxed font-medium max-w-xl">
-                {siteContent.hero.subtitle}
-              </p>
-
-              {/* CTAs */}
-              <div className="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
-                <Link
-                  href="/register"
-                  className="px-6 sm:px-7 py-3.5 rounded-2xl font-bold text-sm sm:text-base text-white bg-emerald-800 hover:bg-emerald-900 shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 group"
+            {/* View Selector Tabs (Segment-Control Style, Zero Glare) */}
+            <div className="flex justify-center mb-5">
+              <div className="bg-slate-200/70 p-1 rounded-2xl border border-slate-200 flex items-center gap-1 sm:gap-1.5">
+                <button
+                  onClick={() => setHeroView('dashboard')}
+                  className={`px-3.5 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+                    heroView === 'dashboard'
+                      ? 'bg-white text-slate-900 shadow-2xs border border-slate-200/80'
+                      : 'text-slate-700 hover:text-slate-950'
+                  }`}
                 >
-                  <span>{siteContent.hero.primaryCta}</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
+                  <Building2 className={`w-4 h-4 ${heroView === 'dashboard' ? 'text-emerald-700' : 'text-slate-600'}`} />
+                  <span>{siteContent.hero.tabDashboard}</span>
+                </button>
 
-                <Link
-                  href="/dashboard"
-                  className="px-5 sm:px-6 py-3.5 rounded-2xl font-bold text-sm sm:text-base text-slate-900 bg-white hover:bg-slate-50 border border-slate-300 shadow-2xs transition-all flex items-center justify-center gap-2 hover:border-slate-400"
+                <button
+                  onClick={() => setHeroView('whatsapp')}
+                  className={`px-3.5 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+                    heroView === 'whatsapp'
+                      ? 'bg-white text-slate-900 shadow-2xs border border-slate-200/80'
+                      : 'text-slate-700 hover:text-slate-950'
+                  }`}
                 >
-                  <Sparkles className="w-4 h-4 text-emerald-700" />
-                  <span>{siteContent.hero.secondaryCta}</span>
-                </Link>
+                  <MessageCircle className={`w-4 h-4 ${heroView === 'whatsapp' ? 'text-emerald-700' : 'text-slate-600'}`} />
+                  <span>{siteContent.hero.tabWhatsapp}</span>
+                </button>
               </div>
-
-              {/* Key Benefits Checklist & Social Proof */}
-              <div className="pt-2 space-y-3">
-                <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs sm:text-sm font-bold text-slate-700">
-                  <span className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
-                    ৩টি ফ্ল্যাট আজীবন ফ্রি
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
-                    কোনো ক্রেডিট কার্ড লাগে না
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
-                    মাত্র ২ মিনিটে রেডি
-                  </span>
-                </div>
-
-                <div className="inline-flex items-center gap-2 text-xs sm:text-sm text-slate-700 font-bold bg-slate-100/80 px-3 py-1.5 rounded-xl border border-slate-200">
-                  <span className="text-amber-600 font-black">★★★★★ ৪.৯</span>
-                  <span className="text-slate-400">•</span>
-                  <span>৩,৫০০+ বাড়িওয়ালার নির্ভরতা</span>
-                </div>
-              </div>
-
             </div>
 
-            {/* RIGHT COLUMN: Interactive Live Mockup Card (Dashboard & WhatsApp) */}
-            <div className="lg:col-span-6 xl:col-span-6 w-full">
-              <div className="relative rounded-3xl bg-white border border-slate-200 shadow-md p-4 sm:p-5 overflow-hidden">
-                
-                {/* Card Top Bar with macOS dots and view toggle */}
-                <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-100">
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-2.5 h-2.5 rounded-full bg-rose-400/80"></span>
-                      <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80"></span>
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/80"></span>
+            {/* Showcase Stage Card (Clean Matte White, Neutral Subtle Border) */}
+            <div className="relative rounded-3xl bg-white border border-slate-200 shadow-md p-4 sm:p-7 overflow-hidden">
+              
+              {/* VIEW 1: Landlord Dashboard Preview */}
+              {heroView === 'dashboard' && (
+                <div className="space-y-5 animate-in fade-in duration-200">
+                  {/* Top Stats Row (Single line twelve flats '১২টি') */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                    <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                      <span className="text-xs text-slate-700 block font-bold">চলতি মাসের আদায়</span>
+                      <span className="text-lg sm:text-2xl font-black text-slate-900 block mt-1 whitespace-nowrap">৳ ১,৮৫,৪০০</span>
+                      <span className="text-[11px] text-emerald-800 font-bold mt-0.5 inline-block whitespace-nowrap">↑ ৯৪% আদায় সম্পন্ন</span>
                     </div>
-                    <div className="h-3.5 w-px bg-slate-200 mx-1"></div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="relative flex h-2 w-2">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
-                      </span>
-                      <span className="text-xs font-black text-slate-800">
-                        {heroView === 'dashboard' ? 'লাইভ খতিয়ান (জুন ২০২৬)' : 'হোয়াটসঅ্যাপ রসিদ'}
-                      </span>
+                    <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                      <span className="text-xs text-slate-700 block font-bold">মোট বকেয়া</span>
+                      <span className="text-lg sm:text-2xl font-black text-rose-700 block mt-1 whitespace-nowrap">৳ ১২,৫০০</span>
+                      <span className="text-[11px] text-rose-700 font-bold mt-0.5 inline-block whitespace-nowrap">১টি ফ্ল্যাট বকেয়া</span>
+                    </div>
+                    <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                      <span className="text-xs text-slate-700 block font-bold">মোট ফ্ল্যাট ও ইউনিট</span>
+                      <span className="text-lg sm:text-2xl font-black text-slate-900 block mt-1 whitespace-nowrap">১২টি</span>
+                      <span className="text-[11px] text-slate-700 font-bold mt-0.5 inline-block whitespace-nowrap">১০০% ভাড়াটিয়া যুক্ত</span>
+                    </div>
+                    <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                      <span className="text-xs text-slate-700 block font-bold">অটো-রিমাইন্ডার</span>
+                      <span className="text-lg sm:text-2xl font-black text-slate-900 block mt-1 whitespace-nowrap">সক্রিয়</span>
+                      <span className="text-[11px] text-emerald-800 font-bold mt-0.5 inline-block whitespace-nowrap">১-৫ তারিখ স্বয়ংক্রিয়</span>
                     </div>
                   </div>
 
-                  {/* Segmented View Switcher */}
-                  <div className="bg-slate-100 p-0.5 rounded-xl border border-slate-200 flex items-center gap-1 text-xs">
-                    <button
-                      onClick={() => setHeroView('dashboard')}
-                      className={`px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-1.5 ${
-                        heroView === 'dashboard'
-                          ? 'bg-white text-slate-900 shadow-2xs border border-slate-200/80'
-                          : 'text-slate-600 hover:text-slate-900'
-                      }`}
-                    >
-                      <Building2 className="w-3.5 h-3.5 text-emerald-700" />
-                      <span>{siteContent.hero.tabDashboard}</span>
-                    </button>
-                    <button
-                      onClick={() => setHeroView('whatsapp')}
-                      className={`px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-1.5 ${
-                        heroView === 'whatsapp'
-                          ? 'bg-white text-slate-900 shadow-2xs border border-slate-200/80'
-                          : 'text-slate-600 hover:text-slate-900'
-                      }`}
-                    >
-                      <MessageCircle className="w-3.5 h-3.5 text-emerald-700" />
-                      <span>{siteContent.hero.tabWhatsapp}</span>
-                    </button>
-                  </div>
-                </div>
-
-                {/* VIEW 1: Landlord Dashboard Preview */}
-                {heroView === 'dashboard' && (
-                  <div className="space-y-4 pt-3 animate-in fade-in duration-200">
-                    {/* Top KPI metric tiles (3 columns) */}
-                    <div className="grid grid-cols-3 gap-2.5">
-                      <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                        <span className="text-[11px] text-slate-600 block font-bold">চলতি আদায়</span>
-                        <span className="text-base sm:text-lg font-black text-slate-900 block mt-0.5 whitespace-nowrap">৳ ১,৮৫,৪০০</span>
-                        <span className="text-[10px] text-emerald-800 font-bold mt-0.5 inline-block whitespace-nowrap">↑ ৯৪% সম্পন্ন</span>
-                      </div>
-                      <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                        <span className="text-[11px] text-slate-600 block font-bold">মোট বকেয়া</span>
-                        <span className="text-base sm:text-lg font-black text-rose-700 block mt-0.5 whitespace-nowrap">৳ ১২,৫০০</span>
-                        <span className="text-[10px] text-rose-700 font-bold mt-0.5 inline-block whitespace-nowrap">১টি ফ্ল্যাট বাকি</span>
-                      </div>
-                      <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                        <span className="text-[11px] text-slate-600 block font-bold">ফ্ল্যাট ও ইউনিট</span>
-                        <span className="text-base sm:text-lg font-black text-slate-900 block mt-0.5 whitespace-nowrap">১২টি</span>
-                        <span className="text-[10px] text-slate-600 font-bold mt-0.5 inline-block whitespace-nowrap">১০০% ভাড়াটিয়া</span>
-                      </div>
-                    </div>
-
-                    {/* Unit Status Rows */}
-                    <div className="space-y-2 pt-1">
-                      {/* Flat 1A */}
-                      <div className="p-2.5 rounded-xl bg-slate-50/90 hover:bg-slate-50 border border-slate-200/80 flex items-center justify-between gap-3 text-xs">
-                        <div className="flex items-center gap-2.5">
-                          <span className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 font-black text-[11px] flex items-center justify-center shrink-0">
-                            1A
-                          </span>
-                          <div>
-                            <div className="font-bold text-slate-900">ফ্ল্যাট ১-এ • মোঃ রফিকুল ইসলাম</div>
-                            <div className="text-[10px] text-slate-600">মূল ভাড়া ৳ ১৮,০০০ + বিদ্যুৎ ৳ ১,২০০</div>
-                          </div>
-                        </div>
-                        <div className="text-right shrink-0">
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 font-bold text-[11px] border border-emerald-200">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-                            পরিশোধিত (ক্যাশ)
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Flat 2B */}
-                      <div className="p-2.5 rounded-xl bg-slate-50/90 hover:bg-slate-50 border border-slate-200/80 flex items-center justify-between gap-3 text-xs">
-                        <div className="flex items-center gap-2.5">
-                          <span className="w-7 h-7 rounded-lg bg-pink-50 text-pink-800 border border-pink-200 font-black text-[11px] flex items-center justify-center shrink-0">
-                            2B
-                          </span>
-                          <div>
-                            <div className="font-bold text-slate-900">ফ্ল্যাট ২-বি • তানভীর আহমেদ</div>
-                            <div className="text-[10px] text-slate-600">মূল ভাড়া ৳ ১৬,০০০ + বিদ্যুৎ ৳ ১,৩৫০</div>
-                          </div>
-                        </div>
-                        <div className="text-right shrink-0">
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 font-bold text-[11px] border border-emerald-200">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-                            পরিশোধিত (বিকাশ)
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Flat 3C */}
-                      <div className="p-2.5 rounded-xl bg-slate-50/90 hover:bg-slate-50 border border-slate-200/80 flex items-center justify-between gap-3 text-xs">
-                        <div className="flex items-center gap-2.5">
-                          <span className="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 border border-slate-200 font-black text-[11px] flex items-center justify-center shrink-0">
-                            3C
-                          </span>
-                          <div>
-                            <div className="font-bold text-slate-900">ফ্ল্যাট ৩-সি • ইঞ্জি. কবির হোসেন</div>
-                            <div className="text-[10px] text-rose-700 font-bold">বকেয়া ৳ ২৩,৭৮০ (বিলসহ)</div>
-                          </div>
-                        </div>
-                        <div className="text-right shrink-0">
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-rose-50 text-rose-800 font-bold text-[11px] border border-rose-200">
-                            <span className="w-1.5 h-1.5 rounded-full bg-rose-600"></span>
-                            বকেয়া (এসএমএস প্রেরিত)
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Live Toast Pill */}
-                    <div className="p-2.5 rounded-xl bg-emerald-50/90 border border-emerald-200/80 flex items-center justify-between gap-2 text-xs">
+                  {/* Dashboard Table Mockup */}
+                  <div className="rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-2xs">
+                    <div className="px-4 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <Zap className="w-4 h-4 text-emerald-700 shrink-0" />
-                        <span className="font-bold text-emerald-900 text-[11px] sm:text-xs">
-                          বিকাশ থেকে ৳ ১৬,০০০ আদায় সফল • স্বয়ংক্রিয় রসিদ প্রস্তুত
-                        </span>
+                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-600" />
+                        <span className="text-xs font-black text-slate-900">{siteContent.hero.tableTitle}</span>
                       </div>
-                      <Link href="/dashboard" className="font-black text-emerald-800 hover:underline text-[11px] shrink-0">
+                      <Link href="/dashboard" className="text-xs font-bold text-emerald-800 hover:underline">
                         {siteContent.hero.tableLink}
                       </Link>
                     </div>
-                  </div>
-                )}
 
-                {/* VIEW 2: Tenant WhatsApp Bill & Receipt */}
-                {heroView === 'whatsapp' && (
-                  <div className="pt-3 animate-in fade-in duration-200 space-y-3">
-                    <div className="bg-slate-50 rounded-2xl border border-slate-200 p-3 sm:p-4 space-y-3">
-                      <div className="flex items-center justify-between border-b border-slate-200 pb-2">
-                        <div className="flex items-center gap-2">
-                          <div className="w-7 h-7 rounded-full bg-emerald-800 flex items-center justify-center font-bold text-white text-[11px]">
-                            VK
-                          </div>
-                          <div>
-                            <div className="font-bold text-xs text-slate-900">ভাড়া খাতা অটো-হোয়াটসঅ্যাপ</div>
-                            <div className="text-[10px] text-emerald-800 font-bold">অনলাইন • ভেরিফাইড মেসেজ</div>
-                          </div>
-                        </div>
-                        <span className="text-[10px] text-slate-500 font-medium">আজ সকাল ৯:৩০</span>
-                      </div>
+                    <div className="overflow-x-auto">
+                      <table className="w-full min-w-[760px] whitespace-nowrap text-left text-xs sm:text-sm border-collapse">
+                        <thead>
+                          <tr className="bg-slate-50/80 text-slate-700 font-bold border-b border-slate-200">
+                            <th className="py-3 px-4 whitespace-nowrap">ফ্ল্যাট ও ভাড়াটিয়া</th>
+                            <th className="py-3 px-4 whitespace-nowrap">মূল ভাড়া</th>
+                            <th className="py-3 px-4 whitespace-nowrap">বিদ্যুৎ (সাব-মিটার)</th>
+                            <th className="py-3 px-4 whitespace-nowrap">মোট বিল</th>
+                            <th className="py-3 px-4 whitespace-nowrap">পেমেন্ট মেথড</th>
+                            <th className="py-3 px-4 whitespace-nowrap text-right">স্ট্যাটাস</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100 text-slate-800">
+                          <tr className="hover:bg-slate-50/80 transition-colors">
+                            <td className="py-3.5 px-4 whitespace-nowrap">
+                              <div className="flex items-center gap-2.5">
+                                <span className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200/80 font-black text-xs flex items-center justify-center shrink-0">
+                                  1A
+                                </span>
+                                <div>
+                                  <div className="font-bold text-slate-900">ফ্ল্যাট ১-এ (1A)</div>
+                                  <div className="text-[11px] text-slate-600 font-medium">মোঃ রফিকুল ইসলাম (ব্যাংকার)</div>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="py-3.5 px-4 font-bold text-slate-900 whitespace-nowrap">
+                              ৳ ১৮,০০০
+                            </td>
+                            <td className="py-3.5 px-4 whitespace-nowrap">
+                              <span className="text-emerald-800 font-bold">৳ ১,২০০</span>
+                              <span className="text-[11px] text-slate-600 block">(১২০ ইউনিট)</span>
+                            </td>
+                            <td className="py-3.5 px-4 font-black text-slate-900 whitespace-nowrap">
+                              ৳ ২১,১৮০
+                            </td>
+                            <td className="py-3.5 px-4 whitespace-nowrap">
+                              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 font-bold text-xs border border-slate-200">
+                                💵 ক্যাশ
+                              </span>
+                            </td>
+                            <td className="py-3.5 px-4 whitespace-nowrap text-right">
+                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 font-bold text-xs border border-emerald-200">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                                পরিশোধিত
+                              </span>
+                            </td>
+                          </tr>
 
-                      <div className="bg-white border border-slate-200 rounded-xl p-3 space-y-2 text-xs text-slate-800 leading-relaxed">
-                        <p className="font-bold text-slate-900">
-                          আসসালামু আলাইকুম মোঃ আব্দুল আজিজ ভাই,
-                        </p>
-                        <p className="text-slate-700 text-[11px]">
-                          আপনার <strong className="text-slate-900">ফ্ল্যাট ১-এ</strong> এর <strong className="text-slate-900">জুন ২০২৬</strong> মাসের ভাড়ার বিবরণী প্রস্তুত হয়েছে:
-                        </p>
-                        <div className="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-1 font-mono text-[11px]">
-                          <div className="flex justify-between">
-                            <span className="text-slate-600">মূল বাড়িভাড়া:</span>
-                            <span className="font-bold text-slate-900">৳ ১৮,০০০</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-slate-600">সাব-মিটার বিদ্যুৎ (১২০ ইউনিট):</span>
-                            <span className="font-bold text-emerald-800">৳ ১,২০০</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-slate-600">গ্যাস ও সার্ভিস চার্জ:</span>
-                            <span className="font-bold text-slate-900">৳ ২,৫৮০</span>
-                          </div>
-                          <div className="border-t border-slate-200 pt-1 flex justify-between font-bold text-xs">
-                            <span className="text-slate-900">সর্বমোট প্রদেয়:</span>
-                            <span className="text-emerald-800">৳ ২১,৭৮০</span>
-                          </div>
-                        </div>
-                        <div className="pt-0.5">
-                          <span className="inline-block px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-900 border border-emerald-200 font-bold text-[11px]">
-                            🔗 varakhata-bd.vercel.app/receipt/001
-                          </span>
-                        </div>
-                      </div>
+                          <tr className="hover:bg-slate-50/80 transition-colors">
+                            <td className="py-3.5 px-4 whitespace-nowrap">
+                              <div className="flex items-center gap-2.5">
+                                <span className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200/80 font-black text-xs flex items-center justify-center shrink-0">
+                                  2B
+                                </span>
+                                <div>
+                                  <div className="font-bold text-slate-900">ফ্ল্যাট ২-বি (2B)</div>
+                                  <div className="text-[11px] text-slate-600 font-medium">তানভীর আহমেদ (ব্যবসায়ী)</div>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="py-3.5 px-4 font-bold text-slate-900 whitespace-nowrap">
+                              ৳ ১৬,০০০
+                            </td>
+                            <td className="py-3.5 px-4 whitespace-nowrap">
+                              <span className="text-emerald-800 font-bold">৳ ১,৩৫০</span>
+                              <span className="text-[11px] text-slate-600 block">(১৩৫ ইউনিট)</span>
+                            </td>
+                            <td className="py-3.5 px-4 font-black text-slate-900 whitespace-nowrap">
+                              ৳ ১৯,৯৮০
+                            </td>
+                            <td className="py-3.5 px-4 whitespace-nowrap">
+                              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-pink-50 text-pink-800 font-bold text-xs border border-pink-200">
+                                📱 বিকাশ
+                              </span>
+                            </td>
+                            <td className="py-3.5 px-4 whitespace-nowrap text-right">
+                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 font-bold text-xs border border-emerald-200">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                                পরিশোধিত
+                              </span>
+                            </td>
+                          </tr>
+
+                          <tr className="hover:bg-slate-50/80 transition-colors">
+                            <td className="py-3.5 px-4 whitespace-nowrap">
+                              <div className="flex items-center gap-2.5">
+                                <span className="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 border border-slate-200 font-black text-xs flex items-center justify-center shrink-0">
+                                  3C
+                                </span>
+                                <div>
+                                  <div className="font-bold text-slate-900">ফ্ল্যাট ৩-সি (3C)</div>
+                                  <div className="text-[11px] text-slate-600 font-medium">ইঞ্জি. কবির হোসেন (প্রকৌশলী)</div>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="py-3.5 px-4 font-bold text-slate-900 whitespace-nowrap">
+                              ৳ ২০,০০০
+                            </td>
+                            <td className="py-3.5 px-4 whitespace-nowrap">
+                              <span className="text-emerald-800 font-bold">৳ ১,১০০</span>
+                              <span className="text-[11px] text-slate-600 block">(১১০ ইউনিট)</span>
+                            </td>
+                            <td className="py-3.5 px-4 font-black text-rose-700 whitespace-nowrap">
+                              ৳ ২৩,৭৮০
+                            </td>
+                            <td className="py-3.5 px-4 whitespace-nowrap">
+                              <span className="text-slate-500 font-bold text-xs">বকেয়া</span>
+                            </td>
+                            <td className="py-3.5 px-4 whitespace-nowrap text-right">
+                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-rose-50 text-rose-800 font-bold text-xs border border-rose-200">
+                                <span className="w-1.5 h-1.5 rounded-full bg-rose-600"></span>
+                                বকেয়া (এসএমএস প্রেরিত)
+                              </span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
-                )}
+                </div>
+              )}
 
-              </div>
+              {/* VIEW 2: Tenant WhatsApp Bill & Receipt */}
+              {heroView === 'whatsapp' && (
+                <div className="max-w-md mx-auto bg-slate-50 rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-sm space-y-4 animate-in fade-in duration-200">
+                  <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-full bg-emerald-800 flex items-center justify-center font-bold text-white text-xs">
+                        VK
+                      </div>
+                      <div>
+                        <div className="font-bold text-sm text-slate-900">ভাড়া খাতা অটো-এসএমএস / WhatsApp</div>
+                        <div className="text-[10px] text-emerald-800 font-bold">অনলাইন • ভেরিফাইড সার্ভিস</div>
+                      </div>
+                    </div>
+                    <span className="text-[10px] text-slate-500 font-medium">আজ সকাল ৯:৩০</span>
+                  </div>
+
+                  <div className="bg-white border border-slate-200 rounded-2xl p-4 space-y-3 text-xs sm:text-sm text-slate-800 leading-relaxed shadow-2xs">
+                    <p className="font-bold text-slate-900">
+                      আসসালামু আলাইকুম মোঃ আব্দুল আজিজ ভাই,
+                    </p>
+                    <p className="text-slate-700">
+                      আপনার <strong className="text-slate-900">ফ্ল্যাট ১-এ (বাড়ি নং ১২, ধানমন্ডি)</strong> এর চলতি <strong className="text-slate-900">জুন ২০২৬</strong> মাসের ভাড়ার বিবরণী প্রস্তুত হয়েছে:
+                    </p>
+                    <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1.5 font-mono text-xs">
+                      <div className="flex justify-between">
+                        <span className="text-slate-600">মাসিক মূল বাড়িভাড়া:</span>
+                        <span className="font-bold text-slate-900">৳ ১৮,০০০</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-slate-600">সাব-মিটার বিদ্যুৎ (১২০ ইউনিট):</span>
+                        <span className="font-bold text-emerald-800">৳ ১,২০০</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-slate-600">গ্যাস বিল:</span>
+                        <span className="font-bold text-slate-900">৳ ১,০৮০</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-slate-600">সার্ভিস চার্জ / দারোয়ান:</span>
+                        <span className="font-bold text-slate-900">৳ ১,৫০০</span>
+                      </div>
+                      <div className="border-t border-slate-200 pt-1.5 flex justify-between text-sm font-bold">
+                        <span className="text-slate-900">সর্বমোট প্রদেয়:</span>
+                        <span className="text-emerald-800">৳ ২১,৭৮০</span>
+                      </div>
+                    </div>
+                    <p className="text-[11px] text-slate-600 font-medium">
+                      টাকা পরিশোধের শেষ তারিখ: ১০ জুন ২০২৬। ডিজিটাল মানি রিসিট দেখতে নিচে ক্লিক করুন:
+                    </p>
+                    <div className="pt-1">
+                      <span className="inline-block px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-900 border border-emerald-200 font-bold text-xs">
+                        🔗 varakhata-bd.vercel.app/receipt/001
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
             </div>
-
           </div>
 
-          {/* Social Proof Stats Bar (Positioned cleanly under the split hero) */}
-          <div className="mt-12 lg:mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 border-t border-slate-200">
+          {/* Social Proof Stats Bar */}
+          <div className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto pt-8 border-t border-slate-200">
             {siteContent.stats.map((stat, idx) => (
               <div key={idx} className="text-center p-3">
                 <span
@@ -452,7 +449,7 @@ export default function HomePage() {
       </section>
 
       {/* 3.5 Section: How it Works (মাত্র ৩টি ধাপে শুরু করুন) */}
-      <section id="how" className="py-24 bg-white border-y border-slate-200 relative z-10">
+      <section className="py-24 bg-white border-y border-slate-200 relative z-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center max-w-2xl mx-auto space-y-3 mb-14">
@@ -503,7 +500,7 @@ export default function HomePage() {
       </section>
 
       {/* 4. Section: Before vs After Interactive Story */}
-      <section id="benefits" className="py-20 bg-[#f8fafc] border-b border-slate-200 relative z-10">
+      <section id="story" className="py-20 bg-[#f8fafc] border-b border-slate-200 relative z-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center max-w-3xl mx-auto space-y-2.5 mb-12">
@@ -567,7 +564,7 @@ export default function HomePage() {
       </section>
 
       {/* 5. Section: Luxury Bento Grid Layout ("অল-ইন-ওয়ান সমাধান") */}
-      <section id="features" className="py-24 relative z-10 bg-white">
+      <section id="bento" className="py-24 relative z-10 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center max-w-3xl mx-auto space-y-2.5 mb-14">
