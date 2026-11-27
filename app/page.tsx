@@ -11,7 +11,6 @@ import {
   MessageCircle,
   Receipt,
   ShieldCheck,
-  Check,
   ChevronDown,
   Clock,
   Printer,
@@ -28,24 +27,16 @@ export default function HomePage() {
   // 1. Mobile Menu Dropdown State
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // 2. Interactive States for Live In-Hero Previews
-  const [heroView, setHeroView] = useState<'dashboard' | 'whatsapp' | 'meter'>('dashboard');
+  // 2. Interactive States for Live In-Hero Previews (Dashboard & WhatsApp Receipt)
+  const [heroView, setHeroView] = useState<'dashboard' | 'whatsapp'>('dashboard');
 
   // 3. Interactive ROI Calculator States
   const [flatCount, setFlatCount] = useState<number>(12);
 
-  // 4. Sub-meter Interactive Calculator in Hero
-  const [prevMeter, setPrevMeter] = useState<number>(1420);
-  const [currMeter, setCurrMeter] = useState<number>(1540);
-  const [unitRate, setUnitRate] = useState<number>(10);
-
-  // 5. FAQ Accordion State
+  // 4. FAQ Accordion State
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   // Derived Calculations
-  const usedUnits = Math.max(0, currMeter - prevMeter);
-  const calculatedElectricBill = usedUnits * unitRate;
-
   const hoursSaved = Math.max(4, Math.round(flatCount * 0.8));
   const phoneHassleSaved = Math.max(6, Math.round(flatCount * 1.5));
 
@@ -205,18 +196,6 @@ export default function HomePage() {
                 >
                   <MessageCircle className={`w-4 h-4 ${heroView === 'whatsapp' ? 'text-emerald-700' : 'text-slate-600'}`} />
                   <span>{siteContent.hero.tabWhatsapp}</span>
-                </button>
-
-                <button
-                  onClick={() => setHeroView('meter')}
-                  className={`px-3.5 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
-                    heroView === 'meter'
-                      ? 'bg-white text-slate-900 shadow-2xs border border-slate-200/80'
-                      : 'text-slate-700 hover:text-slate-950'
-                  }`}
-                >
-                  <Zap className={`w-4 h-4 ${heroView === 'meter' ? 'text-amber-600' : 'text-slate-600'}`} />
-                  <span>{siteContent.hero.tabMeter}</span>
                 </button>
               </div>
             </div>
@@ -436,69 +415,6 @@ export default function HomePage() {
                     <div className="pt-1">
                       <span className="inline-block px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-900 border border-emerald-200 font-bold text-xs">
                         🔗 varakhata-bd.vercel.app/receipt/001
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* VIEW 3: Live Sub-Meter Calculator Tool */}
-              {heroView === 'meter' && (
-                <div className="max-w-xl mx-auto bg-white rounded-2xl border border-slate-200 p-5 sm:p-7 shadow-sm space-y-5 animate-in fade-in duration-200">
-                  <div className="text-center space-y-1">
-                    <h3 className="text-lg font-black text-slate-900 flex items-center justify-center gap-2">
-                      <Zap className="w-5 h-5 text-amber-600" />
-                      <span>লাইভ সাব-মিটার বিদ্যুৎ বিল ক্যালকুলেটর</span>
-                    </h3>
-                    <p className="text-xs text-slate-600 font-medium">
-                      রিডিং টাইপ করে নিজেই পরীক্ষা করুন কীভাবে ১ সেকেন্ডে নিখুঁত হিসাব তৈরি হয়
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <div>
-                      <label className="text-xs font-bold text-slate-800 block mb-1">
-                        পূর্বের রিডিং
-                      </label>
-                      <input
-                        type="number"
-                        value={prevMeter}
-                        onChange={(e) => setPrevMeter(Number(e.target.value))}
-                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-mono text-sm focus:outline-none focus:border-emerald-700 focus:bg-white"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-xs font-bold text-slate-800 block mb-1">
-                        বর্তমান রিডিং
-                      </label>
-                      <input
-                        type="number"
-                        value={currMeter}
-                        onChange={(e) => setCurrMeter(Number(e.target.value))}
-                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-mono text-sm focus:outline-none focus:border-emerald-700 focus:bg-white"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-xs font-bold text-slate-800 block mb-1">
-                        প্রতি ইউনিট রেট (৳)
-                      </label>
-                      <input
-                        type="number"
-                        value={unitRate}
-                        onChange={(e) => setUnitRate(Number(e.target.value))}
-                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-mono text-sm focus:outline-none focus:border-emerald-700 focus:bg-white"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-                    <div>
-                      <span className="text-xs text-slate-700 font-bold block">ব্যবহৃত ইউনিট: {toBengaliNum(usedUnits)} টি</span>
-                      <span className="text-sm font-black text-slate-900 mt-0.5 block">সর্বমোট বিদ্যুৎ বিল</span>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-2xl sm:text-3xl font-black text-emerald-800">
-                        ৳ {toBengaliNum(calculatedElectricBill.toLocaleString())}
                       </span>
                     </div>
                   </div>
@@ -899,87 +815,6 @@ export default function HomePage() {
               </Link>
             </div>
 
-          </div>
-        </div>
-      </section>
-
-      {/* 7. Section: Pricing Matrix */}
-      <section id="pricing" className="py-24 relative z-10 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center max-w-2xl mx-auto space-y-2.5 mb-14">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-bold border border-slate-200">
-              {siteContent.pricing.badge}
-            </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
-              {siteContent.pricing.title}
-            </h2>
-            <p className="text-slate-700 text-sm sm:text-base leading-relaxed font-medium">
-              {siteContent.pricing.subtitle}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
-            {siteContent.pricing.plans.map((plan, idx) => (
-              <div
-                key={idx}
-                className={`rounded-3xl p-8 flex flex-col justify-between space-y-6 relative transition-all ${
-                  plan.isPopular
-                    ? 'bg-white border-2 border-emerald-600 shadow-md ring-4 ring-emerald-50'
-                    : 'bg-slate-50 border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-md'
-                }`}
-              >
-                <div
-                  className={`absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-white font-black text-[11px] uppercase tracking-wider shadow-sm ${
-                    plan.isPopular ? 'bg-emerald-800' : 'bg-slate-800'
-                  }`}
-                >
-                  {plan.badgeTop}
-                </div>
-
-                <div className="space-y-4">
-                  <div
-                    className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${
-                      plan.isPopular
-                        ? 'bg-emerald-50 text-emerald-800 border border-emerald-200/60'
-                        : 'bg-white text-slate-800 border border-slate-200'
-                    }`}
-                  >
-                    {plan.audience}
-                  </div>
-                  <h4 className="text-2xl font-black text-slate-900">{plan.name}</h4>
-                  <div className="flex items-baseline gap-1">
-                    <span
-                      className={`text-4xl font-black ${
-                        plan.isPopular ? 'text-emerald-800' : 'text-slate-900'
-                      }`}
-                    >
-                      {plan.price}
-                    </span>
-                    <span className="text-xs text-slate-600 font-bold">{plan.period}</span>
-                  </div>
-                  <p className="text-xs text-slate-700 leading-relaxed min-h-[36px] font-medium">
-                    {plan.description}
-                  </p>
-
-                  <ul className="space-y-2.5 text-xs text-slate-800 font-medium pt-3 border-t border-slate-200">
-                    {plan.features.map((feat, fIdx) => (
-                      <li key={fIdx} className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-emerald-700 shrink-0" />
-                        <span>{feat}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <Link
-                  href="/register"
-                  className="w-full py-3.5 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-center text-sm block transition-all shadow-xs"
-                >
-                  {plan.ctaText}
-                </Link>
-              </div>
-            ))}
           </div>
         </div>
       </section>
