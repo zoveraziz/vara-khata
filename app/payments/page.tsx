@@ -8,22 +8,12 @@ import {
   CreditCard,
   Printer,
   Search,
-  Filter,
   CheckCircle2,
   FileText,
-  Banknote,
-  Smartphone,
-  Landmark,
   HandCoins,
-  ArrowRight,
   ShieldCheck,
-  AlertCircle,
-  Calendar,
   X,
   History,
-  Building2,
-  UserCheck,
-  Clock,
 } from 'lucide-react';
 import ReceiptModal from '@/components/ReceiptModal';
 
@@ -88,8 +78,8 @@ export default function PaymentsPage() {
   // Manager Cash Handover States
   const [handovers, setHandovers] = useState<CashHandoverRecord[]>([]);
   const [showHandoverModal, setShowHandoverModal] = useState(false);
+  const [showHistoryModal, setShowHistoryModal] = useState(false);
   const [selectedHandoverForVoucher, setSelectedHandoverForVoucher] = useState<CashHandoverRecord | null>(null);
-  const [activeTab, setActiveTab] = useState<'payments' | 'handovers'>('payments');
 
   // Form State for Cash Handover Modal
   const [handoverAmount, setHandoverAmount] = useState<number>(0);
@@ -97,7 +87,7 @@ export default function PaymentsPage() {
   const [receivedBy, setReceivedBy] = useState<string>('বাড়িওয়ালা (মালিক)');
   const [handoverDate, setHandoverDate] = useState<string>('');
   const [handoverMethod, setHandoverMethod] = useState<'cash' | 'bank_deposit'>('cash');
-  const [handoverNote, setHandoverNote] = useState<string>('নভেম্বর মাসের সংগৃহীত নগদ ভাড়ার ক্যাশ হস্তান্তর ও হিসাব ক্লোজ');
+  const [handoverNote, setHandoverNote] = useState<string>('ভাড়ার নগদ ক্যাশ হস্তান্তর ও হিসাব ক্লোজ');
 
   // Sync handovers with LocalStorage
   useEffect(() => {
@@ -152,21 +142,9 @@ export default function PaymentsPage() {
     return matchesQuery && matchesMethod;
   });
 
-  const totalCollectedAmount = filteredPayments.reduce((acc, p) => acc + p.amount, 0);
-
-  // --- Manager Cash Calculations ---
-  // Payments where cash was collected by manager or caretaker
-  const managerCashPayments = propertyPayments.filter(
-    (p) => (p.collectedBy === 'ম্যানেজার' || p.collectedBy === 'কেয়ারটেকার') && p.method === 'cash'
-  );
-  const totalManagerCollected = managerCashPayments.reduce((sum, p) => sum + p.amount, 0);
-
   // Completed handovers for this active property
   const propertyHandovers = handovers.filter((h) => h.propertyId === activePropertyId);
   const totalHandedOver = propertyHandovers.reduce((sum, h) => sum + h.amount, 0);
-
-  // Cash currently held by manager waiting to be received by owner
-  const pendingWithManager = Math.max(0, totalManagerCollected - totalHandedOver);
 
   const handleOpenReceipt = (pay: PaymentRecord) => {
     const bill = bills.find((b) => b.id === pay.billId);
@@ -176,9 +154,9 @@ export default function PaymentsPage() {
     }
   };
 
-  // Open Handover Modal with pre-filled pending amount
+  // Open Handover Modal
   const handleStartHandover = () => {
-    setHandoverAmount(pendingWithManager > 0 ? pendingWithManager : 10000);
+    setHandoverAmount(0);
     setHandoverDate(new Date().toISOString().split('T')[0]);
     setShowHandoverModal(true);
   };
@@ -194,7 +172,7 @@ export default function PaymentsPage() {
       propertyId: activePropertyId,
       managerName: managerName.trim() || 'ম্যানেজার',
       amount: Number(handoverAmount),
-      date: handoverDate,
+      date: handoverDate || new Date().toISOString().split('T')[0],
       method: handoverMethod,
       receivedBy: receivedBy.trim() || 'বাড়িওয়ালা (মালিক)',
       voucherNo,
@@ -209,9 +187,9 @@ export default function PaymentsPage() {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm print:hidden">
+    <div className="space-y-5">
+      {/* Page Header with "মালিক কত টাকা বুঝে পাইছেন" and "ম্যানেজার থেকে ক্যাশ গ্রহণ" Button */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm print:hidden">
         <div>
           <h1 className="text-xl font-black text-slate-900 flex items-center gap-2">
             <CreditCard className="w-6 h-6 text-emerald-700" />
@@ -222,381 +200,149 @@ export default function PaymentsPage() {
           </p>
         </div>
 
-        <div className="bg-emerald-50 border border-emerald-200 px-4 py-2 rounded-xl text-right">
-          <span className="text-[11px] text-emerald-800 font-semibold block">মোট আদায়কৃত টাকা:</span>
-          <span className="text-lg font-black text-emerald-950">৳ {totalCollectedAmount.toLocaleString()}</span>
-        </div>
-      </div>
-
-      {/* --- MANAGER CASH RECONCILIATION & HANDOVER CARD --- */}
-      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 text-white p-5 sm:p-6 rounded-2xl shadow-md border border-slate-700/60 print:hidden">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 pb-4 border-b border-slate-700/70">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-emerald-400 shadow-inner">
-              <HandCoins className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-base sm:text-lg font-black tracking-tight text-white">
-                  ম্যানেজার ক্যাশ হস্তান্তর ও হিসাব সমন্বয় (Cash Handover)
-                </h2>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
-                  অ্যাক্টিভ হিসাব
-                </span>
-              </div>
-              <p className="text-xs text-slate-300 mt-0.5">
-                ম্যানেজার/কেয়ারটেকার নগদ ভাড়া তোলার পর মালিককে টাকা বুঝিয়ে দিলে এখানে ভাউচারসহ হিসাব ক্লোজ করুন।
-              </p>
-            </div>
+        {/* Action and Metric Controls */}
+        <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+          {/* মালিক কত টাকা বুঝে পাইছেন */}
+          <div className="bg-emerald-50 border border-emerald-200 px-4 py-2 rounded-xl text-left sm:text-right">
+            <span className="text-[11px] text-emerald-800 font-bold block">মালিক কত টাকা বুঝে পাইছেন:</span>
+            <span className="text-lg font-black text-emerald-950">৳ {totalHandedOver.toLocaleString()}</span>
           </div>
 
-          {/* Quick Action Button */}
+          {/* ম্যানেজার থেকে ক্যাশ গ্রহণ বাটন */}
           <button
             onClick={handleStartHandover}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-slate-950 font-black text-xs sm:text-sm rounded-xl shadow-lg shadow-emerald-950/40 transition transform active:scale-95"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs sm:text-sm rounded-xl shadow transition transform active:scale-95"
           >
-            <HandCoins className="w-4 h-4 text-slate-950" />
-            <span>ম্যানেজার থেকে ক্যাশ গ্রহণ করুন</span>
+            <HandCoins className="w-4 h-4" />
+            <span>ম্যানেজার থেকে ক্যাশ গ্রহণ</span>
           </button>
+
+          {/* Previous Handover Vouchers List Link (if any exists) */}
+          {propertyHandovers.length > 0 && (
+            <button
+              onClick={() => setShowHistoryModal(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition"
+              title="পূর্বের ক্যাশ হস্তান্তর ভাউচার তালিকা"
+            >
+              <History className="w-3.5 h-3.5" />
+              <span>ভাউচার ({propertyHandovers.length})</span>
+            </button>
+          )}
         </div>
+      </div>
 
-        {/* 3 Metric Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mt-4">
-          {/* 1. Manager Collected */}
-          <div className="bg-slate-800/80 backdrop-blur border border-slate-700/80 p-3.5 rounded-xl">
-            <div className="text-[11px] font-bold text-slate-400 flex items-center justify-between">
-              <span>ম্যানেজার কর্তৃক সংগৃহীত নগদ</span>
-              <Banknote className="w-4 h-4 text-slate-400" />
-            </div>
-            <div className="text-xl font-black text-slate-100 mt-1">
-              ৳ {totalManagerCollected.toLocaleString()}
-            </div>
-            <div className="text-[10px] text-slate-400 mt-1">
-              ভাড়াটিয়াদের নিকট থেকে সরাসরি ক্যাশ আদায়
-            </div>
-          </div>
-
-          {/* 2. Handed Over to Owner */}
-          <div className="bg-slate-800/80 backdrop-blur border border-slate-700/80 p-3.5 rounded-xl">
-            <div className="text-[11px] font-bold text-emerald-400 flex items-center justify-between">
-              <span>ইতোমধ্যে মালিকের বুঝে পাওয়া</span>
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-            </div>
-            <div className="text-xl font-black text-emerald-300 mt-1">
-              ৳ {totalHandedOver.toLocaleString()}
-            </div>
-            <div className="text-[10px] text-slate-400 mt-1">
-              {propertyHandovers.length > 0
-                ? `${propertyHandovers.length} টি ভাউচারে মালিককে পরিশোধিত`
-                : 'এখনও কোনো ক্যাশ রিসিভ করা হয়নি (০টি ভাউচার)'}
-            </div>
-          </div>
-
-          {/* 3. Pending with Manager */}
-          <div
-            className={`p-3.5 rounded-xl border transition ${
-              pendingWithManager > 0
-                ? 'bg-amber-500/15 border-amber-400/50'
-                : 'bg-emerald-500/15 border-emerald-400/40'
-            }`}
-          >
-            <div className="text-[11px] font-bold flex items-center justify-between">
-              <span className={pendingWithManager > 0 ? 'text-amber-300' : 'text-emerald-300'}>
-                {pendingWithManager > 0 ? 'বর্তমানে ম্যানেজারের হাতে জমা ক্যাশ' : 'ম্যানেজার হিসাব স্ট্যাটাস'}
-              </span>
-              {pendingWithManager > 0 ? (
-                <AlertCircle className="w-4 h-4 text-amber-400 animate-pulse" />
-              ) : (
-                <ShieldCheck className="w-4 h-4 text-emerald-400" />
-              )}
-            </div>
-            <div
-              className={`text-xl font-black mt-1 ${
-                pendingWithManager > 0 ? 'text-amber-200' : 'text-emerald-200'
+      {/* Filter and Search Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-4 rounded-2xl border border-slate-200 print:hidden">
+        <div className="flex flex-wrap gap-1.5">
+          {[
+            { id: 'all', label: 'সকল মাধ্যম' },
+            { id: 'cash', label: 'ক্যাশ (নগদ)' },
+            { id: 'bkash', label: 'বিকাশ (bKash)' },
+            { id: 'nagad', label: 'নগদ (Nagad)' },
+            { id: 'bank', label: 'ব্যাংক ট্রান্সফার' },
+          ].map((m) => (
+            <button
+              key={m.id}
+              onClick={() => setMethodFilter(m.id)}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
+                methodFilter === m.id
+                  ? 'bg-emerald-800 text-white shadow'
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
-              ৳ {pendingWithManager.toLocaleString()}
-            </div>
-            <div className="text-[10px] mt-1 text-slate-300">
-              {pendingWithManager > 0
-                ? 'মালিককে হস্তান্তর অপেক্ষমাণ'
-                : 'সকল নগদ টাকার হিসাব সম্পূর্ণ ক্লোজ'}
-            </div>
-          </div>
-        </div>
-
-        {/* Self-Managing Landlord Note */}
-        <div className="mt-4 pt-3 border-t border-slate-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-slate-300">
-          <div className="flex items-center gap-1.5">
-            <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>
-              <strong>মালিক নিজে পরিচালনা করলে:</strong> যদি আপনি নিজেই ভাড়া সংগ্রহ করেন, তবে এই অপশন ব্যবহার করার প্রয়োজন নেই।
-            </span>
-          </div>
-          <button
-            onClick={() => setActiveTab(activeTab === 'handovers' ? 'payments' : 'handovers')}
-            className="text-emerald-300 hover:text-emerald-200 font-bold underline self-start sm:self-auto"
-          >
-            {activeTab === 'handovers' ? '← ভাড়ার খতিয়ানে ফিরুন' : `হস্তান্তর ভাউচার ইতিহাস (${propertyHandovers.length}) →`}
-          </button>
-        </div>
-      </div>
-
-      {/* --- TAB SELECTOR --- */}
-      <div className="flex border-b border-slate-200 gap-6 print:hidden">
-        <button
-          onClick={() => setActiveTab('payments')}
-          className={`pb-3 text-sm font-bold border-b-2 flex items-center gap-2 transition ${
-            activeTab === 'payments'
-              ? 'border-emerald-700 text-emerald-800'
-              : 'border-transparent text-slate-500 hover:text-slate-800'
-          }`}
-        >
-          <CreditCard className="w-4 h-4" />
-          <span>ভাড়া আদায় খতিয়ান</span>
-          <span className="px-2 py-0.5 rounded-full text-xs bg-slate-100 text-slate-700 font-mono">
-            {filteredPayments.length}
-          </span>
-        </button>
-
-        <button
-          onClick={() => setActiveTab('handovers')}
-          className={`pb-3 text-sm font-bold border-b-2 flex items-center gap-2 transition ${
-            activeTab === 'handovers'
-              ? 'border-emerald-700 text-emerald-800'
-              : 'border-transparent text-slate-500 hover:text-slate-800'
-          }`}
-        >
-          <History className="w-4 h-4" />
-          <span>ম্যানেজার হস্তান্তর ভাউচার ইতিহাস</span>
-          <span className="px-2 py-0.5 rounded-full text-xs bg-emerald-100 text-emerald-800 font-mono font-bold">
-            {propertyHandovers.length}
-          </span>
-        </button>
-      </div>
-
-      {/* ================= TAB 1: PAYMENTS TABLE ================= */}
-      {activeTab === 'payments' && (
-        <div className="space-y-4">
-          {/* Filter and Search Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-4 rounded-2xl border border-slate-200 print:hidden">
-            <div className="flex flex-wrap gap-1.5">
-              {[
-                { id: 'all', label: 'সকল মাধ্যম' },
-                { id: 'cash', label: 'ক্যাশ (নগদ)' },
-                { id: 'bkash', label: 'বিকাশ (bKash)' },
-                { id: 'nagad', label: 'নগদ (Nagad)' },
-                { id: 'bank', label: 'ব্যাংক ট্রান্সফার' },
-              ].map((m) => (
-                <button
-                  key={m.id}
-                  onClick={() => setMethodFilter(m.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
-                    methodFilter === m.id
-                      ? 'bg-emerald-800 text-white shadow'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                  }`}
-                >
-                  {m.label}
-                </button>
-              ))}
-            </div>
-
-            <div className="relative w-full sm:w-64">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
-              <input
-                type="text"
-                placeholder="রশিদ নং, ভাড়াটিয়া বা নোট..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-3.5 py-1.5 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-              />
-            </div>
-          </div>
-
-          {/* Payments Table */}
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-            <div className="overflow-x-auto w-full">
-              <table className="w-full min-w-[850px] text-left text-xs border-collapse">
-                <thead>
-                  <tr className="bg-slate-50 text-slate-700 border-b border-slate-200 font-bold uppercase tracking-wider whitespace-nowrap">
-                    <th className="py-3 px-4 whitespace-nowrap">রশিদ নং ও তারিখ</th>
-                    <th className="py-3 px-4 whitespace-nowrap">ফ্ল্যাট ও ভাড়াটিয়া</th>
-                    <th className="py-3 px-4 whitespace-nowrap">মাধ্যম</th>
-                    <th className="py-3 px-4 whitespace-nowrap">আদায়কৃত টাকা</th>
-                    <th className="py-3 px-4 whitespace-nowrap">টাকা সংগ্রহকারী</th>
-                    <th className="py-3 px-4 whitespace-nowrap">নোট / ট্রানজ্যাকশন</th>
-                    <th className="py-3 px-4 text-right whitespace-nowrap">রশিদ</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  {filteredPayments.length === 0 ? (
-                    <tr>
-                      <td colSpan={7} className="py-12 text-center text-slate-400 font-medium">
-                        কোনো পেমেন্ট রেকর্ড পাওয়া যায়নি।
-                      </td>
-                    </tr>
-                  ) : (
-                    filteredPayments.map((pay) => {
-                      const flat = flats.find((f) => f.id === pay.flatId);
-                      const tenant = tenants.find((t) => t.id === pay.tenantId);
-                      const isManagerCash =
-                        (pay.collectedBy === 'ম্যানেজার' || pay.collectedBy === 'কেয়ারটেকার') &&
-                        pay.method === 'cash';
-
-                      return (
-                        <tr key={pay.id} className="hover:bg-slate-50/70 transition">
-                          <td className="py-3.5 px-4 font-mono whitespace-nowrap">
-                            <div className="font-bold text-slate-900">{pay.receiptNo}</div>
-                            <div className="text-[11px] text-slate-500 font-sans">{pay.date}</div>
-                          </td>
-
-                          <td className="py-3.5 px-4 whitespace-nowrap">
-                            <div className="font-bold text-slate-900">{flat?.name}</div>
-                            <div className="text-[11px] text-slate-500">{tenant?.name}</div>
-                          </td>
-
-                          <td className="py-3.5 px-4 whitespace-nowrap">
-                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-wide bg-slate-100 text-slate-800">
-                              {pay.method}
-                            </span>
-                          </td>
-
-                          <td className="py-3.5 px-4 font-black text-sm text-emerald-700 whitespace-nowrap">
-                            + ৳ {pay.amount.toLocaleString()}
-                          </td>
-
-                          <td className="py-3.5 px-4 whitespace-nowrap">
-                            <span
-                              className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold ${
-                                isManagerCash
-                                  ? 'bg-amber-100 text-amber-900 border border-amber-300'
-                                  : 'bg-slate-100 text-slate-700'
-                              }`}
-                            >
-                              {pay.collectedBy}
-                              {isManagerCash && <span className="text-[10px] text-amber-700">(ক্যাশ)</span>}
-                            </span>
-                          </td>
-
-                          <td className="py-3.5 px-4 text-slate-500 italic max-w-xs truncate whitespace-nowrap">
-                            {pay.remarks || '—'}
-                          </td>
-
-                          <td className="py-3.5 px-4 text-right whitespace-nowrap">
-                            <button
-                              onClick={() => handleOpenReceipt(pay)}
-                              className="inline-flex items-center gap-1 px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg font-semibold text-xs transition shrink-0"
-                            >
-                              <FileText className="w-3.5 h-3.5" />
-                              <span>রশিদ</span>
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ================= TAB 2: HANDOVER VOUCHERS LIST ================= */}
-      {activeTab === 'handovers' && (
-        <div className="space-y-4">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-white p-4 rounded-2xl border border-slate-200">
-            <div>
-              <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-emerald-600" />
-                ম্যানেজার ক্যাশ হস্তান্তর ও হিসাব ক্লোজিং ভাউচার তালিকা
-              </h3>
-              <p className="text-xs text-slate-500 mt-0.5">
-                ম্যানেজার থেকে গৃহীত সকল নগদ টাকার অফিসিয়াল ভাউচার স্লিপ।
-              </p>
-            </div>
-
-            <button
-              onClick={handleStartHandover}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-xl shadow transition"
-            >
-              <HandCoins className="w-4 h-4" />
-              <span>নতুন ক্যাশ হস্তান্তর এন্ট্রি</span>
+              {m.label}
             </button>
-          </div>
+          ))}
+        </div>
 
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-            <div className="overflow-x-auto w-full">
-              <table className="w-full min-w-[800px] text-left text-xs border-collapse">
-                <thead>
-                  <tr className="bg-slate-50 text-slate-700 border-b border-slate-200 font-bold uppercase tracking-wider whitespace-nowrap">
-                    <th className="py-3 px-4">ভাউচার নং ও তারিখ</th>
-                    <th className="py-3 px-4">হস্তান্তরকারী (ম্যানেজার)</th>
-                    <th className="py-3 px-4">গ্রহীতা (মালিক)</th>
-                    <th className="py-3 px-4">মাধ্যম</th>
-                    <th className="py-3 px-4">হস্তান্তরিত টাকা</th>
-                    <th className="py-3 px-4">বিবরণ / নোট</th>
-                    <th className="py-3 px-4 text-right">ভাউচার স্লিপ</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  {propertyHandovers.length === 0 ? (
-                    <tr>
-                      <td colSpan={7} className="py-12 text-center text-slate-400 font-medium">
-                        এখনও কোনো ক্যাশ হস্তান্তর এন্ট্রি করা হয়নি।
+        <div className="relative w-full sm:w-64">
+          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+          <input
+            type="text"
+            placeholder="রশিদ নং, ভাড়াটিয়া বা নোট..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-9 pr-3.5 py-1.5 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+          />
+        </div>
+      </div>
+
+      {/* Payments Table */}
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div className="overflow-x-auto w-full">
+          <table className="w-full min-w-[850px] text-left text-xs border-collapse">
+            <thead>
+              <tr className="bg-slate-50 text-slate-700 border-b border-slate-200 font-bold uppercase tracking-wider whitespace-nowrap">
+                <th className="py-3 px-4 whitespace-nowrap">রশিদ নং ও তারিখ</th>
+                <th className="py-3 px-4 whitespace-nowrap">ফ্ল্যাট ও ভাড়াটিয়া</th>
+                <th className="py-3 px-4 whitespace-nowrap">মাধ্যম</th>
+                <th className="py-3 px-4 whitespace-nowrap">আদায়কৃত টাকা</th>
+                <th className="py-3 px-4 whitespace-nowrap">টাকা সংগ্রহকারী</th>
+                <th className="py-3 px-4 whitespace-nowrap">নোট / ট্রানজ্যাকশন</th>
+                <th className="py-3 px-4 text-right whitespace-nowrap">রশিদ</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {filteredPayments.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="py-12 text-center text-slate-400 font-medium">
+                    কোনো পেমেন্ট রেকর্ড পাওয়া যায়নি।
+                  </td>
+                </tr>
+              ) : (
+                filteredPayments.map((pay) => {
+                  const flat = flats.find((f) => f.id === pay.flatId);
+                  const tenant = tenants.find((t) => t.id === pay.tenantId);
+
+                  return (
+                    <tr key={pay.id} className="hover:bg-slate-50/70 transition">
+                      <td className="py-3.5 px-4 font-mono whitespace-nowrap">
+                        <div className="font-bold text-slate-900">{pay.receiptNo}</div>
+                        <div className="text-[11px] text-slate-500 font-sans">{pay.date}</div>
+                      </td>
+
+                      <td className="py-3.5 px-4 whitespace-nowrap">
+                        <div className="font-bold text-slate-900">{flat?.name}</div>
+                        <div className="text-[11px] text-slate-500">{tenant?.name}</div>
+                      </td>
+
+                      <td className="py-3.5 px-4 whitespace-nowrap">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-wide bg-slate-100 text-slate-800">
+                          {pay.method}
+                        </span>
+                      </td>
+
+                      <td className="py-3.5 px-4 font-black text-sm text-emerald-700 whitespace-nowrap">
+                        + ৳ {pay.amount.toLocaleString()}
+                      </td>
+
+                      <td className="py-3.5 px-4 whitespace-nowrap">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 text-slate-700">
+                          {pay.collectedBy}
+                        </span>
+                      </td>
+
+                      <td className="py-3.5 px-4 text-slate-500 italic max-w-xs truncate whitespace-nowrap">
+                        {pay.remarks || '—'}
+                      </td>
+
+                      <td className="py-3.5 px-4 text-right whitespace-nowrap">
+                        <button
+                          onClick={() => handleOpenReceipt(pay)}
+                          className="inline-flex items-center gap-1 px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg font-semibold text-xs transition shrink-0"
+                        >
+                          <FileText className="w-3.5 h-3.5" />
+                          <span>রশিদ</span>
+                        </button>
                       </td>
                     </tr>
-                  ) : (
-                    propertyHandovers.map((h) => (
-                      <tr key={h.id} className="hover:bg-slate-50/70 transition">
-                        <td className="py-3.5 px-4 font-mono whitespace-nowrap">
-                          <div className="font-bold text-emerald-900">{h.voucherNo}</div>
-                          <div className="text-[11px] text-slate-500 font-sans">{h.date}</div>
-                        </td>
-
-                        <td className="py-3.5 px-4 whitespace-nowrap">
-                          <div className="font-bold text-slate-900">{h.managerName}</div>
-                          <div className="text-[11px] text-slate-500">টাকা প্রদানকারী</div>
-                        </td>
-
-                        <td className="py-3.5 px-4 whitespace-nowrap">
-                          <div className="font-bold text-slate-900">{h.receivedBy}</div>
-                          <div className="text-[11px] text-slate-500">টাকা গ্রহণকারী</div>
-                        </td>
-
-                        <td className="py-3.5 px-4 whitespace-nowrap">
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 text-slate-800">
-                            {h.method === 'cash' ? 'নগদ ক্যাশ' : 'ব্যাংক ডিপোজিট'}
-                          </span>
-                        </td>
-
-                        <td className="py-3.5 px-4 font-black text-sm text-emerald-800 whitespace-nowrap">
-                          ৳ {h.amount.toLocaleString()}
-                        </td>
-
-                        <td className="py-3.5 px-4 text-slate-600 max-w-xs truncate whitespace-nowrap">
-                          {h.note || '—'}
-                        </td>
-
-                        <td className="py-3.5 px-4 text-right whitespace-nowrap">
-                          <button
-                            onClick={() => setSelectedHandoverForVoucher(h)}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-lg font-bold text-xs transition"
-                          >
-                            <FileText className="w-3.5 h-3.5" />
-                            <span>ভাউচার প্রিন্ট</span>
-                          </button>
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
         </div>
-      )}
+      </div>
 
       {/* ================= MODAL: RECEIVE CASH FROM MANAGER ================= */}
       {showHandoverModal && (
@@ -607,10 +353,10 @@ export default function PaymentsPage() {
               <div>
                 <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
                   <HandCoins className="w-5 h-5 text-emerald-700" />
-                  ম্যানেজার থেকে ক্যাশ গ্রহণ ও ক্লোজিং
+                  ম্যানেজার থেকে ক্যাশ গ্রহণ
                 </h3>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  {activeProperty?.name} — ম্যানেজার থেকে নগদ টাকা বুঝে নেওয়া এবং অফিশিয়াল ভাউচার তৈরি
+                  {activeProperty?.name} — ম্যানেজার থেকে প্রাপ্ত নগদ টাকা বুঝে নেওয়া ও ভাউচার তৈরি
                 </p>
               </div>
               <button
@@ -621,38 +367,13 @@ export default function PaymentsPage() {
               </button>
             </div>
 
-            {/* Reconciliation Snapshot */}
-            <div className="mt-4 bg-emerald-50 border border-emerald-200 rounded-xl p-3.5 flex justify-between items-center text-xs">
-              <div>
-                <span className="text-emerald-800 font-semibold block">ম্যানেজারের কাছে বর্তমান বকেয়া:</span>
-                <span className="text-lg font-black text-emerald-950">
-                  ৳ {pendingWithManager.toLocaleString()}
-                </span>
-              </div>
-              <div className="text-right">
-                <span className="text-slate-500 block">মোট আদায়কৃত ক্যাশ:</span>
-                <span className="font-bold text-slate-700">৳ {totalManagerCollected.toLocaleString()}</span>
-              </div>
-            </div>
-
             {/* Handover Form */}
             <form onSubmit={handleConfirmHandover} className="mt-4 space-y-4">
               {/* Handover Amount */}
               <div>
-                <div className="flex justify-between items-center mb-1">
-                  <label className="block text-xs font-bold text-slate-700">
-                    হস্তান্তরিত টাকার পরিমাণ (টাকা) <span className="text-red-500">*</span>
-                  </label>
-                  {pendingWithManager > 0 && (
-                    <button
-                      type="button"
-                      onClick={() => setHandoverAmount(pendingWithManager)}
-                      className="text-xs text-emerald-700 font-bold hover:underline"
-                    >
-                      সম্পূর্ণ বকেয়া (৳{pendingWithManager.toLocaleString()})
-                    </button>
-                  )}
-                </div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">
+                  হস্তান্তরিত টাকার পরিমাণ (টাকা) <span className="text-red-500">*</span>
+                </label>
                 <div className="relative">
                   <span className="absolute left-3.5 top-2.5 font-black text-slate-500">৳</span>
                   <input
@@ -738,7 +459,7 @@ export default function PaymentsPage() {
                   type="text"
                   value={handoverNote}
                   onChange={(e) => setHandoverNote(e.target.value)}
-                  placeholder="যেমন: নভেম্বর মাসের প্রথম কিস্তি ক্যাশ হস্তান্তর"
+                  placeholder="যেমন: চলতি মাসের সংগৃহীত নগদ ভাড়া হস্তান্তর"
                   className="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs text-slate-800 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 />
               </div>
@@ -757,7 +478,7 @@ export default function PaymentsPage() {
                   className="px-5 py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-xs font-black shadow transition flex items-center gap-1.5"
                 >
                   <ShieldCheck className="w-4 h-4" />
-                  <span>হস্তান্তর সম্পন্ন ও ভাউচার তৈরি করুন</span>
+                  <span>হস্তান্তর নিশ্চিত ও ভাউচার তৈরি করুন</span>
                 </button>
               </div>
             </form>
@@ -773,7 +494,7 @@ export default function PaymentsPage() {
             <div className="flex justify-between items-center pb-4 border-b border-slate-200 mb-6 print:hidden">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-5 h-5 text-emerald-700" />
-                <span className="font-black text-sm text-slate-900">ক্যাশ হস্তান্তর ও হিসাব সমন্বয় ভাউচার</span>
+                <span className="font-black text-sm text-slate-900">ক্যাশ হস্তান্তর ভাউচার স্লিপ</span>
               </div>
               <div className="flex items-center gap-2">
                 <button
@@ -900,6 +621,50 @@ export default function PaymentsPage() {
                 <span>সফটওয়্যার: ভাড়া খাতা (Vara Khata)</span>
                 <span>ইস্যুর তারিখ: {selectedHandoverForVoucher.date}</span>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ================= MODAL: HISTORY OF HANDOVER VOUCHERS ================= */}
+      {showHistoryModal && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-6 text-slate-900 border border-slate-100 animate-in fade-in zoom-in-95 my-8">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                <History className="w-5 h-5 text-emerald-700" />
+                ম্যানেজার ক্যাশ হস্তান্তর ভাউচার তালিকা
+              </h3>
+              <button
+                onClick={() => setShowHistoryModal(false)}
+                className="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="mt-4 divide-y divide-slate-100 max-h-96 overflow-y-auto">
+              {propertyHandovers.map((h) => (
+                <div key={h.id} className="py-3 flex justify-between items-center text-xs">
+                  <div>
+                    <span className="font-mono font-bold text-emerald-800">{h.voucherNo}</span>
+                    <span className="text-slate-400 ml-2">({h.date})</span>
+                    <div className="text-slate-600 font-medium mt-0.5">প্রদানকারী: {h.managerName}</div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="font-black text-sm text-slate-900">৳ {h.amount.toLocaleString()}</span>
+                    <button
+                      onClick={() => {
+                        setSelectedHandoverForVoucher(h);
+                        setShowHistoryModal(false);
+                      }}
+                      className="px-2.5 py-1 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-lg font-bold text-xs hover:bg-emerald-100 transition"
+                    >
+                      ভাউচার দেখুন
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
