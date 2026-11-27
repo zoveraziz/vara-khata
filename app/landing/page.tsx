@@ -706,13 +706,13 @@ export default function HomePage() {
       </section>
 
       {/* 9. Final High-Impact CTA Banner */}
-      <section className="py-16 sm:py-20 relative z-10 bg-white border-t border-slate-200">
+      <section className="py-12 sm:py-16 relative z-10 bg-white border-t border-slate-200">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-3xl p-8 sm:p-14 bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-950 text-center space-y-6 shadow-xl border border-emerald-700/60 relative overflow-hidden">
-            <div className="max-w-2xl mx-auto relative z-10">
+          <div className="rounded-3xl py-7 sm:py-9 px-6 sm:px-12 bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-950 text-center space-y-4 sm:space-y-5 shadow-xl border border-emerald-700/60 relative overflow-hidden">
+            <div className="max-w-4xl mx-auto relative z-10">
               {siteContent.finalCta.title ? (
                 <>
-                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-snug tracking-tight drop-shadow-2xs mb-3">
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-snug tracking-tight drop-shadow-2xs mb-2">
                     {siteContent.finalCta.title}
                   </h2>
                   <p className="text-emerald-100 text-sm sm:text-base leading-relaxed font-medium">
@@ -720,13 +720,13 @@ export default function HomePage() {
                   </p>
                 </>
               ) : (
-                <p className="text-white text-base sm:text-xl font-bold leading-relaxed">
+                <p className="text-white text-base sm:text-lg lg:text-xl font-bold leading-relaxed">
                   {siteContent.finalCta.subtitle}
                 </p>
               )}
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2 relative z-10">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-1 relative z-10">
               <Link
                 href="/register"
                 className="w-full sm:w-auto px-8 py-3.5 rounded-2xl font-black text-sm sm:text-base bg-white text-emerald-950 hover:bg-emerald-50 shadow-lg transition-all flex items-center justify-center gap-2"
