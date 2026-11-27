@@ -116,3 +116,16 @@ export interface ReminderLog {
   sentAt: string;
   status: 'sent' | 'delivered' | 'failed';
 }
+
+export interface CashHandoverRecord {
+  id: string;
+  propertyId: string;
+  managerName: string;
+  amount: number;
+  date: string;
+  method: 'cash' | 'bank_deposit';
+  receivedBy: string;
+  voucherNo: string;
+  note?: string;
+  status: 'completed';
+}

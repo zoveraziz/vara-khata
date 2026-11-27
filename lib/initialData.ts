@@ -1,4 +1,4 @@
-import { Property, Flat, Tenant, Bill, PaymentRecord, ReminderSettings, ReminderLog } from '@/types';
+import { Property, Flat, Tenant, Bill, PaymentRecord, ReminderSettings, ReminderLog, CashHandoverRecord } from '@/types';
 
 export const initialProperties: Property[] = [
   {
@@ -464,6 +464,18 @@ export const initialPayments: PaymentRecord[] = [
     remarks: 'বিকাশ TrxID: 7XA993LA2 (বাকি ২০০০ টাকা)',
     receiptNo: 'VK-2026-10-002',
   },
+  {
+    id: 'pay-nov-103',
+    billId: 'bill-nov-103',
+    flatId: 'flat-103',
+    tenantId: 'ten-3',
+    amount: 19500,
+    method: 'cash',
+    date: '2026-11-06',
+    collectedBy: 'ম্যানেজার',
+    remarks: 'নভেম্বর ভাড়ার নগদ ক্যাশ ম্যানেজারের নিকট জমা',
+    receiptNo: 'VK-2026-11-003',
+  },
 ];
 
 export const initialReminderSettings: ReminderSettings = {
@@ -516,6 +528,21 @@ export const initialReminderLogs: ReminderLog[] = [
     channel: 'sms',
     sentAt: '2026-11-02 10:00 AM',
     status: 'delivered',
+  },
+];
+
+export const initialHandovers: CashHandoverRecord[] = [
+  {
+    id: 'ho-1',
+    propertyId: 'prop-1',
+    managerName: 'আব্দুল করিম (ম্যানেজার)',
+    amount: 22680,
+    date: '2026-08-08',
+    method: 'cash',
+    receivedBy: 'বাড়িওয়ালা (মালিক)',
+    voucherNo: 'HO-2026-08-001',
+    note: 'আগস্ট মাসের ফ্ল্যাট ১০১-এর ভাড়া ক্যাশ হস্তান্তর ও হিসাব সমম্বয় সম্পন্ন',
+    status: 'completed',
   },
 ];
 
