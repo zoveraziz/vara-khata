@@ -38,7 +38,7 @@ export const siteContent = {
     primaryCta: '৩টি ফ্ল্যাট আজীবন ফ্রি ব্যবহার করুন',
     secondaryCta: 'সরাসরি লাইভ ডেমো দেখুন (১ ক্লিকে)',
     tabDashboard: 'বাড়িওয়ালার ড্যাশবোর্ড',
-    tabWhatsapp: 'ভাড়াটিয়ার হোয়াটসঅ্যাপ রশিদ',
+    tabWhatsapp: 'ভাড়া খাতা অটো এসএমএস',
     tabMeter: 'সাব-মিটার ক্যালকুলেটর',
     tableTitle: 'জুন ২০২৬ ভাড়ার তালিকা ও আদায় হিসেব',
     tableLink: 'সম্পূর্ণ ড্যাশবোর্ড দেখুন →',
