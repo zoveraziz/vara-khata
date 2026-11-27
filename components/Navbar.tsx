@@ -25,8 +25,8 @@ import {
   ChevronDown,
 } from 'lucide-react';
 
-// Modular Role Toggle: If ever requested to remove, set to false to completely hide roles without breaking any code
-export const FEATURE_ROLES_ENABLED = true;
+// Modular Role Toggle: Set to false to keep UI 100% clean and simple until landlord requests activation
+export const FEATURE_ROLES_ENABLED = false;
 
 export default function Navbar() {
   const pathname = usePathname();
