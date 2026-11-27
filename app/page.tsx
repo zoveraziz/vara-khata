@@ -486,82 +486,64 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. Master Section: কাগজের খাতা ছেড়ে ডিজিটাল সমাধান (Problem vs Digital Freedom) */}
-      <section id="features" className="py-20 sm:py-24 relative z-10 bg-white border-b border-slate-200">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 4. Section: Before vs After (দুইটি বক্স: বামে ও ডানে) */}
+      <section id="features" className="py-20 sm:py-24 bg-[#f8fafc] border-b border-slate-200 relative z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center max-w-3xl mx-auto space-y-2.5 mb-14">
+          <div className="text-center max-w-3xl mx-auto space-y-2 mb-12">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-bold border border-slate-200">
-              {siteContent.features.badge}
+              {siteContent.comparison.badge}
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
-              {siteContent.features.title}
+              {siteContent.comparison.title}
             </h2>
-            <p className="text-slate-700 text-sm sm:text-base leading-relaxed font-medium">
-              {siteContent.features.subtitle}
-            </p>
           </div>
 
-          {/* 5 Comprehensive Wide Horizontal Cards */}
-          <div className="space-y-4">
-            {(siteContent.features.items || []).map((item, idx) => (
-              <div
-                key={item.id || idx}
-                className="rounded-2xl p-5 sm:p-6 bg-slate-50/80 border border-slate-200/90 hover:border-emerald-300 hover:bg-white hover:shadow-md transition-all flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-6 group"
-              >
-                <div className="flex items-start gap-4 sm:gap-5">
-                  {/* Category Icon */}
-                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-bold shrink-0 group-hover:scale-105 transition-transform shadow-2xs ${
-                    idx === 0 ? 'bg-emerald-50 text-emerald-800 border border-emerald-200/80' :
-                    idx === 1 ? 'bg-amber-50 text-amber-700 border border-amber-200/80' :
-                    idx === 2 ? 'bg-teal-50 text-teal-800 border border-teal-200/80' :
-                    idx === 3 ? 'bg-indigo-50 text-indigo-800 border border-indigo-200/80' :
-                    'bg-blue-50 text-blue-800 border border-blue-200/80'
-                  }`}>
-                    {idx === 0 && <Building2 className="w-6 h-6 text-emerald-800" />}
-                    {idx === 1 && <Zap className="w-6 h-6 text-amber-600" />}
-                    {idx === 2 && <MessageCircle className="w-6 h-6 text-teal-700" />}
-                    {idx === 3 && <Receipt className="w-6 h-6 text-indigo-700" />}
-                    {idx === 4 && <ShieldCheck className="w-6 h-6 text-blue-700" />}
-                  </div>
-
-                  <div className="space-y-2">
-                    {/* Header with Title and Tag */}
-                    <div className="flex flex-wrap items-center gap-2">
-                      <h4 className="text-lg sm:text-xl font-black text-slate-900">
-                        {item.title}
-                      </h4>
-                      <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-white text-slate-700 border border-slate-200 shadow-2xs">
-                        {item.tag}
-                      </span>
-                    </div>
-
-                    {/* Problem vs Solution */}
-                    <div className="space-y-1.5 text-xs sm:text-sm font-medium">
-                      <div className="flex items-start gap-2">
-                        <span className="inline-block px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 font-bold text-[10px] shrink-0 mt-0.5">
-                          খাতার যন্ত্রণা
-                        </span>
-                        <span className="text-slate-600">{item.painPoint}</span>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <span className="inline-block px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-900 font-bold text-[10px] shrink-0 mt-0.5">
-                          ভাড়া খাতায় মুক্তি
-                        </span>
-                        <span className="text-slate-800 font-semibold">{item.solution}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right Badge Pill on Desktop */}
-                <div className="hidden lg:flex items-center text-xs font-bold text-emerald-800 bg-emerald-50 px-3.5 py-2 rounded-xl border border-emerald-200/80 shrink-0 self-center">
-                  {item.badge}
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+            
+            {/* The Old Painful Way (বামে হালকা লাল কার্ড) */}
+            <div className="rounded-3xl p-6 sm:p-8 bg-rose-50/50 border border-rose-200/80 relative overflow-hidden space-y-5 shadow-2xs">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-rose-100 text-rose-800 text-xs font-bold border border-rose-200">
+                <XCircle className="w-4 h-4 text-rose-600" />
+                <span>{siteContent.comparison.oldWay.badge}</span>
               </div>
-            ))}
-          </div>
 
+              <h4 className="text-xl font-black text-slate-900">
+                {siteContent.comparison.oldWay.title}
+              </h4>
+
+              <ul className="space-y-4 text-sm text-slate-800 font-medium">
+                {siteContent.comparison.oldWay.points.map((pt, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <XCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+                    <span><strong>{pt.bold}</strong>{pt.text}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* The New Vara Khata Way (ডানে সবুজ ও সাদা পরিপাটি কার্ড) */}
+            <div className="rounded-3xl p-6 sm:p-8 bg-emerald-50/40 border border-emerald-300/80 relative overflow-hidden space-y-5 shadow-sm">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-200">
+                <CheckCircle2 className="w-4 h-4 text-emerald-700" />
+                <span>{siteContent.comparison.newWay.badge}</span>
+              </div>
+
+              <h4 className="text-xl font-black text-slate-900">
+                {siteContent.comparison.newWay.title}
+              </h4>
+
+              <ul className="space-y-4 text-sm text-slate-800 font-medium">
+                {siteContent.comparison.newWay.points.map((pt, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-700 shrink-0 mt-0.5" />
+                    <span><strong>{pt.bold}</strong>{pt.text}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </div>
         </div>
       </section>
 
