@@ -15,8 +15,8 @@ interface SiteContentContextType {
 
 const SiteContentContext = createContext<SiteContentContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'vara_khata_custom_site_content_v6';
-const TIME_KEY = 'vara_khata_site_content_updated_at_v6';
+const STORAGE_KEY = 'vara_khata_custom_site_content_v7';
+const TIME_KEY = 'vara_khata_site_content_updated_at_v7';
 
 export function SiteContentProvider({ children }: { children: React.ReactNode }) {
   const [content, setContent] = useState<SiteContentType>(defaultContent);
@@ -51,6 +51,7 @@ export function SiteContentProvider({ children }: { children: React.ReactNode })
           features: {
             ...prev.features,
             ...parsed.features,
+            items: parsed.features?.items || prev.features.items,
             meter: { ...prev.features.meter, ...parsed.features?.meter },
             reminder: { ...prev.features.reminder, ...parsed.features?.reminder },
             receipt: { ...prev.features.receipt, ...parsed.features?.receipt },
