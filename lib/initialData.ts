@@ -465,9 +465,9 @@ export const initialPayments: PaymentRecord[] = [
     receiptNo: 'VK-2026-10-002',
   },
   {
-    id: 'pay-nov-103',
-    billId: 'bill-nov-103',
-    flatId: 'flat-103',
+    id: 'pay-nov-201',
+    billId: 'bill-nov-201',
+    flatId: 'flat-201',
     tenantId: 'ten-3',
     amount: 19500,
     method: 'cash',
@@ -531,18 +531,5 @@ export const initialReminderLogs: ReminderLog[] = [
   },
 ];
 
-export const initialHandovers: CashHandoverRecord[] = [
-  {
-    id: 'ho-1',
-    propertyId: 'prop-1',
-    managerName: 'আব্দুল করিম (ম্যানেজার)',
-    amount: 22680,
-    date: '2026-08-08',
-    method: 'cash',
-    receivedBy: 'বাড়িওয়ালা (মালিক)',
-    voucherNo: 'HO-2026-08-001',
-    note: 'আগস্ট মাসের ফ্ল্যাট ১০১-এর ভাড়া ক্যাশ হস্তান্তর ও হিসাব সমম্বয় সম্পন্ন',
-    status: 'completed',
-  },
-];
+export const initialHandovers: CashHandoverRecord[] = [];
 

@@ -105,13 +105,17 @@ export default function PaymentsPage() {
     try {
       const saved = localStorage.getItem('vk_cash_handovers');
       if (saved) {
-        setHandovers(JSON.parse(saved));
+        const parsed: CashHandoverRecord[] = JSON.parse(saved);
+        // Clean out any past dummy mock record so user starts at ৳ 0 received
+        const cleaned = parsed.filter((h) => h.id !== 'ho-1');
+        setHandovers(cleaned);
+        localStorage.setItem('vk_cash_handovers', JSON.stringify(cleaned));
       } else {
-        setHandovers(initialHandovers);
-        localStorage.setItem('vk_cash_handovers', JSON.stringify(initialHandovers));
+        setHandovers([]);
+        localStorage.setItem('vk_cash_handovers', JSON.stringify([]));
       }
     } catch {
-      setHandovers(initialHandovers);
+      setHandovers([]);
     }
   }, []);
 
@@ -282,7 +286,9 @@ export default function PaymentsPage() {
               ৳ {totalHandedOver.toLocaleString()}
             </div>
             <div className="text-[10px] text-slate-400 mt-1">
-              {propertyHandovers.length} টি ভাউচারে মালিককে পরিশোধিত
+              {propertyHandovers.length > 0
+                ? `${propertyHandovers.length} টি ভাউচারে মালিককে পরিশোধিত`
+                : 'এখনও কোনো ক্যাশ রিসিভ করা হয়নি (০টি ভাউচার)'}
             </div>
           </div>
 
