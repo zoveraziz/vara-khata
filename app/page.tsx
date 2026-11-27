@@ -1015,7 +1015,7 @@ export default function HomePage() {
             </div>
 
             {/* Popular Tier (Pro) */}
-            <div className="rounded-3xl p-8 bg-slate-50 border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-md flex flex-col justify-between space-y-6 relative transition-all">
+            <div className="rounded-3xl p-8 bg-white border-2 border-emerald-600 shadow-md ring-4 ring-emerald-50 flex flex-col justify-between space-y-6 relative transition-all">
               <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-emerald-800 text-white font-black text-[11px] uppercase tracking-wider shadow-sm">
                 সবচেয়ে জনপ্রিয়
               </div>
@@ -1161,15 +1161,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 9. Final High-Impact CTA Banner */}
+      {/* 9. Final High-Impact CTA Banner (Royal Deep Forest Green, Zero Black Hole) */}
       <section className="py-20 relative z-10 bg-white border-t border-slate-200">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-3xl p-8 sm:p-14 bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 text-center space-y-6 shadow-md border border-emerald-900/30 relative overflow-hidden">
+          <div className="rounded-3xl p-8 sm:p-14 bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-800 text-center space-y-6 shadow-xl border border-emerald-600/50 relative overflow-hidden">
             <div className="max-w-2xl mx-auto space-y-3">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-snug tracking-tight">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-snug tracking-tight drop-shadow-2xs">
                 বাড়িভাড়া ব্যবস্থাপনাকে ডিজিটাল ও সহজ করুন
               </h2>
-              <p className="text-slate-200 text-sm sm:text-base leading-relaxed font-medium">
+              <p className="text-emerald-100 text-sm sm:text-base leading-relaxed font-medium">
                 আর কোনো জটিল খাতার হিসাব বা বিল নিয়ে ভুল বোঝাবুঝি নয়। মাত্র ২ মিনিটে আপনার ভবনের ফ্ল্যাটগুলো যোগ করে নিশ্চিন্ত থাকুন।
               </p>
             </div>
@@ -1177,16 +1177,16 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2">
               <Link
                 href="/register"
-                className="w-full sm:w-auto px-8 py-3.5 rounded-2xl font-bold text-sm sm:text-base bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm transition-all flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-8 py-3.5 rounded-2xl font-black text-sm sm:text-base bg-white text-emerald-950 hover:bg-emerald-50 shadow-lg transition-all flex items-center justify-center gap-2"
               >
                 <span>ফ্রি অ্যাকাউন্ট তৈরি করুন</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 text-emerald-800" />
               </Link>
               <Link
                 href="/dashboard"
-                className="w-full sm:w-auto px-7 py-3.5 rounded-2xl font-bold text-sm sm:text-base bg-slate-800/80 hover:bg-slate-800 text-white border border-slate-700 transition-all flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-7 py-3.5 rounded-2xl font-bold text-sm sm:text-base bg-emerald-900/60 hover:bg-emerald-900 text-white border border-emerald-400/40 transition-all flex items-center justify-center gap-2"
               >
-                <Sparkles className="w-4 h-4 text-emerald-400" />
+                <Sparkles className="w-4 h-4 text-emerald-300" />
                 <span>সরাসরি লাইভ ডেমো দেখুন</span>
               </Link>
             </div>
