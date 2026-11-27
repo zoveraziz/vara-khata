@@ -38,10 +38,11 @@ export default function PaymentModal({
   const [loading, setLoading] = useState(false);
 
   const paymentMethods: { id: PaymentMethod; label: string; icon: any; color: string }[] = [
-    { id: 'cash', label: 'ক্যাশ (নগদ)', icon: Banknote, color: 'text-emerald-600 bg-emerald-50 border-emerald-200' },
-    { id: 'bkash', label: 'বিকাশ (bKash)', icon: Smartphone, color: 'text-pink-600 bg-pink-50 border-pink-200' },
-    { id: 'nagad', label: 'নগদ (Nagad)', icon: Smartphone, color: 'text-orange-600 bg-orange-50 border-orange-200' },
-    { id: 'bank', label: 'ব্যাংক ট্রান্সফার', icon: Landmark, color: 'text-blue-600 bg-blue-50 border-blue-200' },
+    { id: 'cash', label: 'ক্যাশ (নগদ)', icon: Banknote, color: 'text-emerald-700 bg-emerald-50 border-emerald-300' },
+    { id: 'bkash', label: 'বিকাশ (bKash)', icon: Smartphone, color: 'text-pink-700 bg-pink-50 border-pink-300' },
+    { id: 'nagad', label: 'নগদ (Nagad)', icon: Smartphone, color: 'text-orange-700 bg-orange-50 border-orange-300' },
+    { id: 'rocket', label: 'রকেট (Rocket)', icon: Smartphone, color: 'text-purple-700 bg-purple-50 border-purple-300' },
+    { id: 'bank', label: 'ব্যাংক ট্রান্সফার', icon: Landmark, color: 'text-blue-700 bg-blue-50 border-blue-300' },
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -111,7 +112,7 @@ export default function PaymentModal({
             <label className="block text-xs font-bold text-gray-700 mb-2">
               টাকা পাওয়ার মাধ্যম সিলেক্ট করুন <span className="text-red-500">*</span>
             </label>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {paymentMethods.map((m) => {
                 const Icon = m.icon;
                 const isSelected = method === m.id;

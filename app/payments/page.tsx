@@ -239,6 +239,7 @@ export default function PaymentsPage() {
             { id: 'cash', label: 'ক্যাশ (নগদ)' },
             { id: 'bkash', label: 'বিকাশ (bKash)' },
             { id: 'nagad', label: 'নগদ (Nagad)' },
+            { id: 'rocket', label: 'রকেট (Rocket)' },
             { id: 'bank', label: 'ব্যাংক ট্রান্সফার' },
           ].map((m) => (
             <button
@@ -307,8 +308,28 @@ export default function PaymentsPage() {
                       </td>
 
                       <td className="py-3.5 px-4 whitespace-nowrap">
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-wide bg-slate-100 text-slate-800">
-                          {pay.method}
+                        <span
+                          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-wide border ${
+                            pay.method === 'bkash'
+                              ? 'bg-pink-50 text-pink-700 border-pink-200'
+                              : pay.method === 'nagad'
+                              ? 'bg-orange-50 text-orange-700 border-orange-200'
+                              : pay.method === 'rocket'
+                              ? 'bg-purple-50 text-purple-700 border-purple-200'
+                              : pay.method === 'bank'
+                              ? 'bg-blue-50 text-blue-700 border-blue-200'
+                              : 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                          }`}
+                        >
+                          {pay.method === 'cash'
+                            ? '💵 ক্যাশ'
+                            : pay.method === 'bkash'
+                            ? '📱 বিকাশ'
+                            : pay.method === 'nagad'
+                            ? '📱 নগদ'
+                            : pay.method === 'rocket'
+                            ? '🚀 রকেট'
+                            : '🏦 ব্যাংক'}
                         </span>
                       </td>
 

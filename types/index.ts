@@ -1,4 +1,4 @@
-export type PaymentMethod = 'cash' | 'bkash' | 'nagad' | 'bank';
+export type PaymentMethod = 'cash' | 'bkash' | 'nagad' | 'rocket' | 'bank';
 export type PaymentStatus = 'paid' | 'partial' | 'unpaid';
 export type FlatStatus = 'occupied' | 'vacant';
 export type ReminderChannel = 'sms' | 'whatsapp' | 'both';
