@@ -452,31 +452,29 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
             {siteContent.howItWorks.steps.map((step, idx) => (
               <div
                 key={idx}
-                className="relative rounded-3xl p-7 sm:p-8 bg-slate-50/70 border border-slate-200 hover:border-emerald-300 hover:bg-white hover:shadow-md transition-all group flex flex-col justify-between space-y-6"
+                className="relative rounded-2xl p-5 sm:p-6 bg-slate-50/80 border border-slate-200/90 hover:border-emerald-300 hover:bg-white hover:shadow-md transition-all group flex flex-col justify-between space-y-4"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-5">
-                    <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 shadow-2xs text-emerald-800 flex items-center justify-center font-black text-xl group-hover:bg-emerald-800 group-hover:text-white transition-all">
+                  {/* Step Number on the Left of Title in the same line */}
+                  <div className="flex items-center gap-3 mb-2.5">
+                    <span className="w-8 h-8 rounded-xl bg-white text-emerald-800 border border-slate-200/90 shadow-2xs flex items-center justify-center font-black text-sm shrink-0 group-hover:bg-emerald-800 group-hover:text-white group-hover:border-emerald-800 transition-all">
                       {step.stepNumber}
-                    </div>
-                    <span className="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-slate-200/70 text-slate-700 group-hover:bg-emerald-100 group-hover:text-emerald-900 transition-colors">
-                      {step.stepLabel}
                     </span>
+                    <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
+                      {step.title}
+                    </h3>
                   </div>
 
-                  <h3 className="text-xl font-black text-slate-900 mb-2">
-                    {step.title}
-                  </h3>
-                  <p className="text-sm text-slate-700 leading-relaxed font-medium">
+                  <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
                     {step.description}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-200 flex items-center gap-2 text-xs font-bold text-emerald-800">
+                <div className="pt-3 border-t border-slate-200/80 flex items-center gap-2 text-xs font-bold text-emerald-800">
                   <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
                   <span>{step.featureBadge}</span>
                 </div>
