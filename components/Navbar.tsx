@@ -66,7 +66,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-white shadow-xs">
+      <header className="sticky top-0 z-40 bg-white shadow-xs print:hidden">
         {/* Row 1: Brand Logo, Property Switcher & User Profile */}
         <div className="border-b border-slate-200/80 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

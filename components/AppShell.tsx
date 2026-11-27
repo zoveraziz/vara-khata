@@ -10,7 +10,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     pathname === '/' ||
     pathname === '/landing' ||
     pathname === '/login' ||
-    pathname === '/register';
+    pathname === '/register' ||
+    pathname === '/receipt';
 
   if (isPublicPage) {
     return <main className="flex-1 w-full">{children}</main>;

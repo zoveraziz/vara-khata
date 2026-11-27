@@ -12,3 +12,62 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* ==============================================================================
+   A4 Single-Page Guarantee & Clean PDF Printing Rules
+   ============================================================================== */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 8mm 10mm;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    font-size: 11pt;
+  }
+
+  /* Hide navigation, sidebars, footers, backdrop overlays and print:hidden elements */
+  header, nav, footer, .print-hidden, [class*="print:hidden"] {
+    display: none !important;
+  }
+
+  /* Prevent background page from spilling into print when modal is active */
+  body:has(.printable-receipt-modal) > *:not(:has(.printable-receipt-modal)) {
+    display: none !important;
+  }
+
+  /* Ensure modal container fills single A4 page cleanly without pagination breaks */
+  .printable-receipt-modal {
+    position: static !important;
+    inset: auto !important;
+    background: #ffffff !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    overflow: visible !important;
+  }
+
+  .printable-receipt-card {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+    border: 1.5px solid #065f46 !important;
+    border-radius: 8px !important;
+    padding: 16px !important;
+    margin: 0 auto !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+  }
+}
