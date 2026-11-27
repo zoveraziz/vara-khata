@@ -576,13 +576,13 @@ export default function HomePage() {
                   অ্যাকাউন্ট খুলুন
                 </h3>
                 <p className="text-sm text-slate-700 leading-relaxed font-medium">
-                  মোবাইল নম্বর বা ইমেইল দিয়ে OTP-এর মাধ্যমে মাত্র ৩০ সেকেন্ডে কোনো ক্রেডিট কার্ড ছাড়াই ফ্রি অ্যাকাউন্ট তৈরি করুন।
+                  মোবাইল নম্বর দিয়ে মাত্র ৩০ সেকেন্ডে কোনো পাসওয়ার্ড বা ওটিপির ঝামেলা ছাড়াই ফ্রি অ্যাকাউন্ট তৈরি করুন।
                 </p>
               </div>
 
               <div className="pt-4 border-t border-slate-200 flex items-center gap-2 text-xs font-bold text-emerald-800">
                 <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
-                <span>তাত্ক্ষণিক ওটিপি ভেরিফিকেশন</span>
+                <span>ঝামেলাহীন সরাসরি লগইন</span>
               </div>
             </div>
 
