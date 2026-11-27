@@ -49,6 +49,12 @@ export default function HomePage() {
   const hoursSaved = Math.max(4, Math.round(flatCount * 0.8));
   const phoneHassleSaved = Math.max(6, Math.round(flatCount * 1.5));
 
+  // Helper to convert English digits to Bengali digits
+  const toBengaliNum = (num: number | string): string => {
+    const bengaliDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+    return String(num).replace(/[0-9]/g, (digit) => bengaliDigits[parseInt(digit, 10)]);
+  };
+
   return (
     <div className="min-h-screen w-full bg-[#f8fafc] text-slate-900 font-sans selection:bg-emerald-100 selection:text-emerald-900 antialiased overflow-x-hidden">
       
@@ -487,12 +493,12 @@ export default function HomePage() {
 
                   <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
                     <div>
-                      <span className="text-xs text-slate-700 font-bold block">ব্যবহৃত ইউনিট: {usedUnits} টি</span>
+                      <span className="text-xs text-slate-700 font-bold block">ব্যবহৃত ইউনিট: {toBengaliNum(usedUnits)} টি</span>
                       <span className="text-sm font-black text-slate-900 mt-0.5 block">সর্বমোট বিদ্যুৎ বিল</span>
                     </div>
                     <div className="text-right">
                       <span className="text-2xl sm:text-3xl font-black text-emerald-800">
-                        ৳ {calculatedElectricBill.toLocaleString()}
+                        ৳ {toBengaliNum(calculatedElectricBill.toLocaleString())}
                       </span>
                     </div>
                   </div>
@@ -837,7 +843,7 @@ export default function HomePage() {
                 </label>
                 <div className="shrink-0 flex items-center justify-center min-w-[72px] sm:min-w-[85px] px-3 sm:px-4 py-1.5 rounded-xl bg-slate-50 border border-slate-200 shadow-2xs">
                   <span className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 whitespace-nowrap select-none">
-                    {flatCount}টি
+                    {toBengaliNum(flatCount)}টি
                   </span>
                 </div>
               </div>
@@ -862,7 +868,7 @@ export default function HomePage() {
               <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-center shadow-2xs">
                 <span className="text-xs text-slate-700 font-bold block">{siteContent.calculator.timeSavedLabel}</span>
                 <span className="text-2xl sm:text-3xl font-black text-slate-900 block mt-2 whitespace-nowrap">
-                  {hoursSaved} ঘণ্টা
+                  {toBengaliNum(hoursSaved)} ঘণ্টা
                 </span>
                 <span className="text-[11px] text-slate-600 font-medium mt-1 block">{siteContent.calculator.timeSavedSub}</span>
               </div>
@@ -870,7 +876,7 @@ export default function HomePage() {
               <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-center shadow-2xs">
                 <span className="text-xs text-slate-700 font-bold block">{siteContent.calculator.hassleSavedLabel}</span>
                 <span className="text-2xl sm:text-3xl font-black text-slate-900 block mt-2 whitespace-nowrap">
-                  {phoneHassleSaved}টি কল
+                  {toBengaliNum(phoneHassleSaved)}টি কল
                 </span>
                 <span className="text-[11px] text-slate-600 font-medium mt-1 block">{siteContent.calculator.hassleSavedSub}</span>
               </div>
@@ -889,7 +895,7 @@ export default function HomePage() {
                 href="/register"
                 className="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-sm shadow-sm transition-all"
               >
-                <span>{siteContent.calculator.ctaTemplate.replace('{count}', String(flatCount))}</span>
+                <span>{siteContent.calculator.ctaTemplate.replace('{count}', toBengaliNum(flatCount))}</span>
               </Link>
             </div>
 
