@@ -1024,10 +1024,10 @@ export default function HomePage() {
       </section>
 
       {/* 9. Final High-Impact CTA Banner */}
-      <section className="py-20 relative z-10 bg-white border-t border-slate-200">
+      <section className="py-16 sm:py-20 relative z-10 bg-white border-t border-slate-200">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-3xl p-8 sm:p-14 bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-800 text-center space-y-6 shadow-xl border border-emerald-600/50 relative overflow-hidden">
-            <div className="max-w-2xl mx-auto space-y-3">
+          <div className="rounded-3xl p-8 sm:p-14 bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-950 text-center space-y-6 shadow-xl border border-emerald-700/60 relative overflow-hidden">
+            <div className="max-w-2xl mx-auto space-y-3 relative z-10">
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-snug tracking-tight drop-shadow-2xs">
                 {siteContent.finalCta.title}
               </h2>
@@ -1036,7 +1036,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2 relative z-10">
               <Link
                 href="/register"
                 className="w-full sm:w-auto px-8 py-3.5 rounded-2xl font-black text-sm sm:text-base bg-white text-emerald-950 hover:bg-emerald-50 shadow-lg transition-all flex items-center justify-center gap-2"
