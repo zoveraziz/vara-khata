@@ -145,29 +145,21 @@ export default function Navbar() {
                   {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                 </button>
 
-                <Link href="/dashboard" className="flex items-center gap-3 group">
-                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-700 to-teal-500 text-white flex items-center justify-center font-extrabold text-xl shadow-md shadow-emerald-700/20 group-hover:scale-105 transition-transform">
+                <Link href="/dashboard" className="flex items-center gap-2.5 group">
+                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-700 to-teal-500 text-white flex items-center justify-center font-extrabold text-xl shadow-md shadow-emerald-700/20 group-hover:scale-105 transition-transform shrink-0">
                     ভ
                   </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-black text-xl text-slate-900 tracking-tight">
-                        ভাড়া খাতা
-                      </span>
-                      <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200/70 inline-flex items-center gap-1">
-                        <Sparkles className="w-3 h-3 text-emerald-600" />
-                        ড্যাশবোর্ড
-                      </span>
-                    </div>
-                  </div>
+                  <span className="font-black text-xl text-slate-900 tracking-tight whitespace-nowrap">
+                    ভাড়া খাতা
+                  </span>
                 </Link>
               </div>
 
               {/* Right Side: Property Switcher & Role & User Info */}
-              <div className="flex items-center gap-2.5 sm:gap-3">
+              <div className="flex items-center gap-2 sm:gap-3">
                 
-                {/* Property Dropdown */}
-                <div className="flex items-center bg-slate-50 border border-slate-200/90 rounded-xl px-2.5 sm:px-3 py-1.5 shadow-2xs">
+                {/* Property Dropdown (Visible on Tablet and Desktop, clean on mobile) */}
+                <div className="hidden sm:flex items-center bg-slate-50 border border-slate-200/90 rounded-xl px-2.5 sm:px-3 py-1.5 shadow-2xs">
                   <span className="mr-1.5 text-sm">🏢</span>
                   <select
                     value={activePropertyId}
@@ -265,7 +257,26 @@ export default function Navbar() {
 
         {/* Mobile Navigation Dropdown Drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-b border-slate-200 bg-white px-4 py-3 space-y-1">
+          <div className="md:hidden border-b border-slate-200 bg-white px-4 py-3 space-y-2">
+            {/* Property Selector for Mobile Drawer */}
+            <div className="bg-slate-50 border border-slate-200/90 rounded-xl p-2.5 flex items-center justify-between">
+              <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                <span>🏢</span>
+                <span>সক্রিয় বাড়ি:</span>
+              </span>
+              <select
+                value={activePropertyId}
+                onChange={(e) => setActivePropertyId(e.target.value)}
+                className="bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-900 focus:outline-none max-w-[170px] truncate"
+              >
+                {properties.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
