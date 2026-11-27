@@ -3,6 +3,14 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
+export type UserRole = 'owner' | 'manager';
+
+export interface ManagerStaff {
+  name: string;
+  phone: string;
+  addedAt: string;
+}
+
 export interface UserAccount {
   id: string;
   name: string;
@@ -11,12 +19,19 @@ export interface UserAccount {
   password?: string;
   propertyName: string;
   propertyAddress: string;
+  role?: UserRole;
   createdAt: string;
 }
 
 interface AuthContextType {
   currentUser: UserAccount | null;
   isLoggedIn: boolean;
+  activeRole: UserRole;
+  isOwner: boolean;
+  isManager: boolean;
+  switchRole: (role: UserRole) => void;
+  managerStaff: ManagerStaff | null;
+  saveManagerStaff: (staff: ManagerStaff | null) => void;
   login: (phoneOrEmail: string, password?: string) => Promise<{ success: boolean; message: string }>;
   register: (params: {
     name: string;
@@ -36,7 +51,14 @@ const defaultDemoUser: UserAccount = {
   email: 'landlord@varakhata.com',
   propertyName: 'আল-আকসা মঞ্জিল',
   propertyAddress: 'বাড়ি #১২, রোড #০৫, ব্লক-ডি, মিরপুর-২, ঢাকা',
+  role: 'owner',
   createdAt: '2026-01-01',
+};
+
+const defaultDemoManager: ManagerStaff = {
+  name: 'মোঃ কালাম হোসেন (ম্যানেজার)',
+  phone: '01811223344',
+  addedAt: '2026-02-01',
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -45,8 +67,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState<UserAccount | null>(null);
   const [users, setUsers] = useState<UserAccount[]>([defaultDemoUser]);
+  const [activeRole, setActiveRole] = useState<UserRole>('owner');
+  const [managerStaff, setManagerStaff] = useState<ManagerStaff | null>(defaultDemoManager);
 
-  // Load auth state from LocalStorage on mount
+  // Load auth state and role from LocalStorage on mount
   useEffect(() => {
     try {
       const savedUsers = localStorage.getItem('vk_all_users');
@@ -60,10 +84,42 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (activeUser) {
         setCurrentUser(JSON.parse(activeUser));
       }
+
+      const savedRole = localStorage.getItem('vk_active_role') as UserRole;
+      if (savedRole === 'owner' || savedRole === 'manager') {
+        setActiveRole(savedRole);
+      }
+
+      const savedManager = localStorage.getItem('vk_manager_staff');
+      if (savedManager) {
+        setManagerStaff(JSON.parse(savedManager));
+      }
     } catch (e) {
       console.warn('Auth storage error', e);
     }
   }, []);
+
+  const switchRole = (role: UserRole) => {
+    setActiveRole(role);
+    try {
+      localStorage.setItem('vk_active_role', role);
+    } catch (e) {
+      console.warn(e);
+    }
+  };
+
+  const saveManagerStaff = (staff: ManagerStaff | null) => {
+    setManagerStaff(staff);
+    try {
+      if (staff) {
+        localStorage.setItem('vk_manager_staff', JSON.stringify(staff));
+      } else {
+        localStorage.removeItem('vk_manager_staff');
+      }
+    } catch (e) {
+      console.warn(e);
+    }
+  };
 
   const login = async (phoneOrEmail: string, password?: string) => {
     const cleanContact = phoneOrEmail.trim().toLowerCase();
@@ -78,7 +134,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem('vk_auth_user', JSON.stringify(foundUser));
       return { success: true, message: 'লগইন সফল হয়েছে!' };
     } else {
-      // Auto-create or notify
       return { success: false, message: 'এই নম্বর বা ইমেইলে কোনো অ্যাকাউন্ট পাওয়া যায়নি। অনুগ্রহ করে সাইনআপ করুন।' };
     }
   };
@@ -106,6 +161,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       password: params.password,
       propertyName: params.propertyName.trim(),
       propertyAddress: params.propertyAddress.trim() || 'ঢাকা, বাংলাদেশ',
+      role: 'owner',
       createdAt: new Date().toISOString().split('T')[0],
     };
 
@@ -130,6 +186,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       value={{
         currentUser,
         isLoggedIn: !!currentUser,
+        activeRole,
+        isOwner: activeRole === 'owner',
+        isManager: activeRole === 'manager',
+        switchRole,
+        managerStaff,
+        saveManagerStaff,
         login,
         register,
         logout,

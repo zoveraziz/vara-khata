@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useApp } from '@/context/AppContext';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth, UserRole } from '@/context/AuthContext';
 import {
   Building2,
   LayoutDashboard,
@@ -20,20 +20,51 @@ import {
   LogOut,
   User,
   Bell,
+  ShieldCheck,
+  Check,
+  ChevronDown,
 } from 'lucide-react';
+
+// Modular Role Toggle: If ever requested to remove, set to false to completely hide roles without breaking any code
+export const FEATURE_ROLES_ENABLED = true;
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { currentUser, logout, isLoggedIn } = useAuth();
+  const {
+    currentUser,
+    logout,
+    isLoggedIn,
+    activeRole,
+    isOwner,
+    isManager,
+    switchRole,
+    managerStaff,
+    saveManagerStaff,
+  } = useAuth();
+
   const { properties, activePropertyId, setActivePropertyId, flats, addProperty } = useApp();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showAddPropertyModal, setShowAddPropertyModal] = useState(false);
+  const [showRoleModal, setShowRoleModal] = useState(false);
+
   const [newPropName, setNewPropName] = useState('');
   const [newPropAddress, setNewPropAddress] = useState('');
   const [newPropFloors, setNewPropFloors] = useState('4');
 
+  // Manager staff inputs
+  const [staffName, setStaffName] = useState(managerStaff?.name || 'মোঃ কালাম হোসেন (কেয়ারটেকার)');
+  const [staffPhone, setStaffPhone] = useState(managerStaff?.phone || '01811223344');
+  const [staffSavedMsg, setStaffSavedMsg] = useState(false);
+
   // Don't render App Navbar on public Landing Page or Login / Register
-  if (pathname === '/' || pathname === '/landing' || pathname === '/login' || pathname === '/register') {
+  if (
+    pathname === '/' ||
+    pathname === '/landing' ||
+    pathname === '/login' ||
+    pathname === '/register' ||
+    pathname === '/receipt' ||
+    pathname === '/admin'
+  ) {
     return null;
   }
 
@@ -64,9 +95,41 @@ export default function Navbar() {
     setShowAddPropertyModal(false);
   };
 
+  const handleSaveStaff = (e: React.FormEvent) => {
+    e.preventDefault();
+    saveManagerStaff({
+      name: staffName,
+      phone: staffPhone,
+      addedAt: new Date().toISOString().split('T')[0],
+    });
+    setStaffSavedMsg(true);
+    setTimeout(() => setStaffSavedMsg(false), 2500);
+  };
+
   return (
     <>
       <header className="sticky top-0 z-40 bg-white shadow-xs print:hidden">
+        
+        {/* Manager Mode Active Notification Strip */}
+        {FEATURE_ROLES_ENABLED && isManager && (
+          <div className="bg-blue-900 text-blue-100 px-4 py-2 text-xs border-b border-blue-800 shadow-inner">
+            <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-blue-400 animate-pulse"></span>
+                <span>
+                  👔 <strong>ম্যানেজার / সহকারী মোড সক্রিয়:</strong> আপনি দৈনিক মিটার রিডিং ও ভাড়ার টাকা গ্রহণ রেকর্ড করতে পারবেন। গুরুত্বপূর্ণ ডিলিট ও মালিকের ফিনান্সিয়াল সেটিংসে হাত দেওয়া যাবে না।
+                </span>
+              </div>
+              <button
+                onClick={() => switchRole('owner')}
+                className="bg-white text-blue-950 px-3 py-1 rounded-lg font-bold text-[11px] hover:bg-blue-50 transition shrink-0 shadow-2xs"
+              >
+                👑 মালিক ভিউতে ফিরে যান →
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Row 1: Brand Logo, Property Switcher & User Profile */}
         <div className="border-b border-slate-200/80 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -100,15 +163,16 @@ export default function Navbar() {
                 </Link>
               </div>
 
-              {/* Right Side: Property Switcher & User Info */}
-              <div className="flex items-center gap-3">
+              {/* Right Side: Property Switcher & Role & User Info */}
+              <div className="flex items-center gap-2.5 sm:gap-3">
+                
                 {/* Property Dropdown */}
-                <div className="flex items-center bg-slate-50 border border-slate-200/90 rounded-xl px-3 py-1.5 shadow-2xs">
+                <div className="flex items-center bg-slate-50 border border-slate-200/90 rounded-xl px-2.5 sm:px-3 py-1.5 shadow-2xs">
                   <span className="mr-1.5 text-sm">🏢</span>
                   <select
                     value={activePropertyId}
                     onChange={(e) => setActivePropertyId(e.target.value)}
-                    className="bg-transparent text-slate-800 font-bold focus:outline-none cursor-pointer text-xs sm:text-sm max-w-[140px] sm:max-w-[200px] truncate"
+                    className="bg-transparent text-slate-800 font-bold focus:outline-none cursor-pointer text-xs sm:text-sm max-w-[120px] sm:max-w-[180px] truncate"
                   >
                     {properties.map((p) => (
                       <option key={p.id} value={p.id}>
@@ -116,27 +180,47 @@ export default function Navbar() {
                       </option>
                     ))}
                   </select>
-                  <span className="text-[11px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md font-bold ml-2 hidden sm:inline-block">
+                  <span className="text-[11px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md font-bold ml-2 hidden lg:inline-block">
                     {occupiedCount}/{propertyFlats.length} ভাড়া
                   </span>
                 </div>
 
-                {/* Add Property Button */}
-                <button
-                  onClick={() => setShowAddPropertyModal(true)}
-                  className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold px-3 py-1.5 rounded-xl shadow-sm transition active:scale-95 whitespace-nowrap"
-                >
-                  <Plus className="w-4 h-4" />
-                  <span className="hidden sm:inline">নতুন বাড়ি</span>
-                </button>
+                {/* Add Property Button (Hidden or disabled in Manager Mode) */}
+                {isOwner && (
+                  <button
+                    onClick={() => setShowAddPropertyModal(true)}
+                    className="flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs sm:text-sm font-bold px-3 py-1.5 rounded-xl shadow-sm transition active:scale-95 whitespace-nowrap"
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span className="hidden sm:inline">নতুন বাড়ি</span>
+                  </button>
+                )}
+
+                {/* Role Switcher Pill */}
+                {FEATURE_ROLES_ENABLED && (
+                  <button
+                    onClick={() => setShowRoleModal(true)}
+                    className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold border transition shadow-2xs ${
+                      isOwner
+                        ? 'bg-amber-50 text-amber-900 border-amber-300/80 hover:bg-amber-100'
+                        : 'bg-blue-50 text-blue-900 border-blue-300/80 hover:bg-blue-100'
+                    }`}
+                    title="রোল পরিবর্তন বা ম্যানেজার সেটিংস"
+                  >
+                    <span>{isOwner ? '👑 মালিক' : '👔 ম্যানেজার'}</span>
+                    <ChevronDown className="w-3.5 h-3.5 opacity-60" />
+                  </button>
+                )}
 
                 {/* User Profile & Logout */}
                 <div className="flex items-center gap-2 pl-2 border-l border-slate-200">
                   <div className="hidden sm:block text-right">
                     <p className="text-xs font-bold text-slate-900 leading-tight">
-                      {currentUser?.name || 'হাজী মোঃ আব্দুল খালেক'}
+                      {isManager && managerStaff ? managerStaff.name : (currentUser?.name || 'হাজী মোঃ আব্দুল খালেক')}
                     </p>
-                    <p className="text-[10px] text-emerald-700 font-semibold">বাড়িওয়ালা</p>
+                    <p className={`text-[10px] font-bold ${isOwner ? 'text-amber-800' : 'text-blue-800'}`}>
+                      {isOwner ? 'বাড়িওয়ালা (Owner)' : 'ম্যানেজার (Staff)'}
+                    </p>
                   </div>
                   <button
                     onClick={logout}
@@ -146,6 +230,7 @@ export default function Navbar() {
                     <LogOut className="w-4 h-4" />
                   </button>
                 </div>
+
               </div>
 
             </div>
@@ -178,9 +263,9 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Navigation Drawer */}
+        {/* Mobile Navigation Dropdown Drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-b border-slate-200 p-3 space-y-1 shadow-lg">
+          <div className="md:hidden border-b border-slate-200 bg-white px-4 py-3 space-y-1">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
@@ -189,19 +274,21 @@ export default function Navbar() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition ${
+                  className={`flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-bold ${
                     isActive
-                      ? 'bg-emerald-50 text-emerald-900 border border-emerald-300 font-extrabold'
-                      : 'text-slate-800 font-bold hover:bg-slate-50'
+                      ? 'bg-emerald-50 text-emerald-800 font-black'
+                      : 'text-slate-700 hover:bg-slate-50'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-emerald-700' : 'text-slate-700'}`} />
-                  <span className="whitespace-nowrap">{item.name}</span>
+                  <Icon className="w-4 h-4" />
+                  <span>{item.name}</span>
                 </Link>
               );
             })}
             <div className="pt-2 border-t border-slate-100 flex justify-between items-center px-3">
-              <span className="text-xs font-bold text-slate-900">{currentUser?.name}</span>
+              <span className="text-xs font-bold text-slate-900">
+                {isOwner ? '👑 মালিক মোড' : '👔 ম্যানেজার মোড'}
+              </span>
               <button
                 onClick={logout}
                 className="text-xs font-bold text-red-600 flex items-center gap-1"
@@ -213,6 +300,115 @@ export default function Navbar() {
           </div>
         )}
       </header>
+
+      {/* Role Management Modal */}
+      {showRoleModal && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 text-slate-900 border border-slate-200 space-y-5 animate-in fade-in zoom-in-95">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 text-emerald-700" />
+                <h3 className="text-base font-black text-slate-900">রোল ও পারমিশন কন্ট্রোল</h3>
+              </div>
+              <button
+                onClick={() => setShowRoleModal(false)}
+                className="text-slate-400 hover:text-slate-600 p-1 rounded-lg"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Quick Switch View Selector */}
+            <div className="space-y-2.5">
+              <label className="text-xs font-bold text-slate-700 block">সক্রিয় রোল নির্বাচন করুন:</label>
+              
+              <div
+                onClick={() => switchRole('owner')}
+                className={`p-3.5 rounded-2xl border cursor-pointer transition flex items-start gap-3 ${
+                  isOwner
+                    ? 'bg-amber-50/70 border-amber-300 ring-2 ring-amber-100'
+                    : 'bg-slate-50 border-slate-200 hover:bg-slate-100'
+                }`}
+              >
+                <span className="text-xl">👑</span>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-sm font-black text-slate-900">বাড়িওয়ালা / মালিক (Owner)</h4>
+                    {isOwner && <span className="text-[11px] font-bold text-amber-800">✓ সক্রিয়</span>}
+                  </div>
+                  <p className="text-xs text-slate-600 mt-0.5">
+                    পূর্ণ নিয়ন্ত্রণ: সব ফ্ল্যাট, আয়-ব্যয়, ব্যাংক হিসাব, ম্যানেজার নিয়োগ ও ডিলিট ক্ষমতা।
+                  </p>
+                </div>
+              </div>
+
+              <div
+                onClick={() => switchRole('manager')}
+                className={`p-3.5 rounded-2xl border cursor-pointer transition flex items-start gap-3 ${
+                  isManager
+                    ? 'bg-blue-50/70 border-blue-300 ring-2 ring-blue-100'
+                    : 'bg-slate-50 border-slate-200 hover:bg-slate-100'
+                }`}
+              >
+                <span className="text-xl">👔</span>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-sm font-black text-slate-900">ম্যানেজার / কেয়ারটেকার (Staff)</h4>
+                    {isManager && <span className="text-[11px] font-bold text-blue-800">✓ সক্রিয়</span>}
+                  </div>
+                  <p className="text-xs text-slate-600 mt-0.5">
+                    দৈনন্দিন অপারেশন: সাব-মিটার রিডিং এন্ট্রি, ভাড়া গ্রহণ ও রসিদ প্রেরণ (ডিলিট বা মূল ফিনান্সিয়াল সেটিংসে বাধা)।
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Manager Details Form (Owner can edit) */}
+            <form onSubmit={handleSaveStaff} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+              <span className="text-xs font-bold text-slate-800 block">ম্যানেজার / কেয়ারটেকারের তথ্য:</span>
+              <div>
+                <label className="text-[11px] font-bold text-slate-600 block mb-1">ম্যানেজারের নাম</label>
+                <input
+                  type="text"
+                  value={staffName}
+                  onChange={(e) => setStaffName(e.target.value)}
+                  className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold text-slate-900"
+                />
+              </div>
+              <div>
+                <label className="text-[11px] font-bold text-slate-600 block mb-1">ম্যানেজারের মোবাইল নম্বর</label>
+                <input
+                  type="text"
+                  value={staffPhone}
+                  onChange={(e) => setStaffPhone(e.target.value)}
+                  className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs font-mono font-bold text-slate-900"
+                />
+              </div>
+
+              {staffSavedMsg && (
+                <p className="text-xs font-bold text-emerald-700 animate-in fade-in">✓ ম্যানেজারের তথ্য সংরক্ষিত হয়েছে!</p>
+              )}
+
+              <button
+                type="submit"
+                className="w-full py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold transition shadow-xs"
+              >
+                ম্যানেজার তথ্য সংরক্ষণ করুন
+              </button>
+            </form>
+
+            <div className="text-center pt-1">
+              <button
+                type="button"
+                onClick={() => setShowRoleModal(false)}
+                className="text-xs font-bold text-slate-600 hover:text-slate-900"
+              >
+                বন্ধ করুন
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Add Property Modal */}
       {showAddPropertyModal && (

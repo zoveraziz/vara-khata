@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useApp } from '@/context/AppContext';
+import { useAuth } from '@/context/AuthContext';
 import { Tenant, Bill } from '@/types';
 import {
   Users,
@@ -22,6 +23,7 @@ import ReceiptModal from '@/components/ReceiptModal';
 
 export default function TenantsPage() {
   const { properties, activePropertyId, flats, tenants, bills, payments, deleteTenant } = useApp();
+  const { isManager } = useAuth();
   const [selectedTenantForPoliceForm, setSelectedTenantForPoliceForm] = useState<Tenant | null>(null);
   const [selectedTenantForStatement, setSelectedTenantForStatement] = useState<Tenant | null>(null);
   const [selectedBillForReceipt, setSelectedBillForReceipt] = useState<Bill | null>(null);
@@ -196,9 +198,19 @@ export default function TenantsPage() {
                     </div>
 
                     <button
-                      onClick={() => deleteTenant(tenant.id)}
-                      title="ভাড়াটিয়া রিমুভ করুন"
-                      className="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition"
+                      onClick={() => {
+                        if (isManager) {
+                          alert('ভাড়াটিয়া ডিলিট করার অনুমতি শুধুমাত্র বাড়ির মালিকের (Owner) রয়েছে। ম্যানেজারের এই অনুমতি নেই।');
+                          return;
+                        }
+                        if (confirm('আপনি কি নিশ্চিত যে এই ভাড়াটিয়াকে রিমুভ করতে চান?')) {
+                          deleteTenant(tenant.id);
+                        }
+                      }}
+                      title={isManager ? 'ম্যানেজার হিসেবে ভাড়াটিয়া মোছার অনুমতি নেই' : 'ভাড়াটিয়া রিমুভ করুন'}
+                      className={`p-1.5 rounded-lg transition ${
+                        isManager ? 'text-slate-300 cursor-not-allowed' : 'text-slate-400 hover:text-rose-600'
+                      }`}
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>

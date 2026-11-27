@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useApp } from '@/context/AppContext';
+import { useAuth } from '@/context/AuthContext';
 import { Flat } from '@/types';
 import {
   Building2,
@@ -19,6 +20,7 @@ import Link from 'next/link';
 
 export default function FlatsPage() {
   const { properties, activePropertyId, flats, tenants, addFlat, updateFlat, deleteFlat } = useApp();
+  const { isManager } = useAuth();
   const [showAddModal, setShowAddModal] = useState(false);
   const [filterStatus, setFilterStatus] = useState<'all' | 'occupied' | 'vacant'>('all');
 
@@ -217,9 +219,19 @@ export default function FlatsPage() {
               {/* Card Footer Actions */}
               <div className="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center">
                 <button
-                  onClick={() => deleteFlat(flat.id)}
-                  title="ফ্ল্যাট মুছুন"
-                  className="text-slate-400 hover:text-red-600 p-1 rounded-lg transition"
+                  onClick={() => {
+                    if (isManager) {
+                      alert('ফ্ল্যাট ডিলিট করার অনুমতি শুধুমাত্র বাড়ির মালিকের (Owner) রয়েছে। ম্যানেজারের এই অনুমতি নেই।');
+                      return;
+                    }
+                    if (confirm('আপনি কি নিশ্চিত যে এই ফ্ল্যাটটি মুছতে চান?')) {
+                      deleteFlat(flat.id);
+                    }
+                  }}
+                  title={isManager ? 'ম্যানেজার হিসেবে ফ্ল্যাট মোছার অনুমতি নেই' : 'ফ্ল্যাট মুছুন'}
+                  className={`p-1 rounded-lg transition ${
+                    isManager ? 'text-slate-300 cursor-not-allowed' : 'text-slate-400 hover:text-red-600'
+                  }`}
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
