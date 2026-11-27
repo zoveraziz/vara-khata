@@ -19,6 +19,7 @@ import {
   Menu,
   X,
 } from 'lucide-react';
+import { siteContent } from '@/config/siteContent';
 
 export default function HomePage() {
   // 1. Mobile Menu Dropdown State
@@ -45,25 +46,6 @@ export default function HomePage() {
   const hoursSaved = Math.max(4, Math.round(flatCount * 0.8));
   const phoneHassleSaved = Math.max(6, Math.round(flatCount * 1.5));
 
-  const faqs = [
-    {
-      q: 'সফটওয়্যারটি কি মোবাইল দিয়ে সহজে চালানো যায়?',
-      a: 'হ্যাঁ, সম্পূর্ণ মোবাইল-বান্ধব (১০০% রেসপনসিভ)। আপনার ফোনে কোনো অ্যাপ ডাউনলোড করারও বাধ্যবাধকতা নেই; ক্রোম বা যেকোনো ব্রাউজারে লগইন করেই মুহূর্তের মধ্যে সব কাজ শেষ করতে পারবেন।',
-    },
-    {
-      q: 'ভাড়াটিয়াকে কি কোনো মোবাইল অ্যাপ ইনস্টল করতে হবে?',
-      a: 'একদমই না! ভাড়াটিয়ার কোনো বাড়তি অ্যাপ বা সফটওয়্যার ইনস্টল করতে হবে না। আপনি শুধু সফটওয়্যার থেকে "WhatsApp-এ পাঠান" বা "এসএমএস পাঠান" বাটনে ক্লিক করবেন, সাথে সাথে তাঁর ফোনে মূল ভাড়া ও বকেয়ার স্বচ্ছ হিসাবসহ ডিজিটাল মানি রিসিট চলে যাবে।',
-    },
-    {
-      q: 'বাংলাদেশ পুলিশ ভাড়াটিয়া তথ্য ফরম কীভাবে পাওয়া যাবে?',
-      a: 'ভাড়াটিয়ার নাম, ফোন, এনআইডি ও তথ্য সিস্টেমে এন্ট্রি করা থাকলে "পুলিশ ফরম" বাটনে চাপ দিলেই ১ ক্লিকে ১ কপি পাসপোর্ট সাইজ ছবি ও স্বাক্ষর সহ ডিএমপি (DMP) নির্ধারিত প্রিন্টযোগ্য সরকারি ফরম স্বয়ংক্রিয়ভাবে তৈরি হয়ে যায়।',
-    },
-    {
-      q: 'সাব-মিটারের বিদ্যুৎ বিল কীভাবে হিসাব করব?',
-      a: 'আপনাকে ক্যালকুলেটর নিয়ে হিসাব করতে হবে না। মিটারের বর্তমান রিডিং লিখে দিলেই সিস্টেম স্বয়ংক্রিয়ভাবে আগের রিডিং থেকে বিয়োগ করে ব্যবহৃত ইউনিট এবং প্রতি ইউনিটের রেট দিয়ে গুণ করে বিলে স্বয়ংক্রিয়ভাবে বসিয়ে দেয়।',
-    },
-  ];
-
   return (
     <div className="min-h-screen w-full bg-[#f8fafc] text-slate-900 font-sans selection:bg-emerald-100 selection:text-emerald-900 antialiased overflow-x-hidden">
       
@@ -74,14 +56,14 @@ export default function HomePage() {
           {/* Brand Logo */}
           <Link href="/" className="flex items-center gap-3 group shrink-0">
             <div className="w-10 h-10 rounded-2xl bg-emerald-800 text-white flex items-center justify-center font-black text-2xl shadow-sm group-hover:scale-105 transition-transform shrink-0">
-              ভ
+              {siteContent.brand.letter}
             </div>
             <div className="flex flex-col">
               <span className="font-black text-xl sm:text-2xl text-slate-900 tracking-tight leading-none">
-                ভাড়া খাতা
+                {siteContent.brand.name}
               </span>
               <span className="text-[11px] font-bold text-emerald-800 tracking-wider block mt-0.5">
-                বাড়িওয়ালাদের ডিজিটাল সহকারী
+                {siteContent.brand.tagline}
               </span>
             </div>
           </Link>
@@ -93,14 +75,14 @@ export default function HomePage() {
               className="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 transition-all flex items-center gap-1.5 shadow-2xs hover:border-slate-400"
             >
               <Sparkles className="w-4 h-4 text-emerald-700" />
-              <span>লাইভ ডেমো</span>
+              <span>{siteContent.header.demoButton}</span>
             </Link>
 
             <Link
               href="/login"
               className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-emerald-800 hover:bg-emerald-900 transition-all shadow-sm flex items-center gap-1.5 group"
             >
-              <span>লগইন / শুরু করুন</span>
+              <span>{siteContent.header.loginButton}</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </div>
@@ -110,7 +92,7 @@ export default function HomePage() {
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-xl text-slate-800 hover:bg-slate-100 border border-slate-200 transition-colors"
-              aria-label="মেনু খুলুন"
+              aria-label={siteContent.header.mobileMenuAria}
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -126,14 +108,14 @@ export default function HomePage() {
               className="w-full px-4 py-3 rounded-xl text-sm font-bold text-slate-800 bg-slate-50 hover:bg-slate-100 border border-slate-200 flex items-center justify-center gap-2"
             >
               <Sparkles className="w-4 h-4 text-emerald-700" />
-              <span>লাইভ ডেমো দেখুন</span>
+              <span>{siteContent.header.demoButton}</span>
             </Link>
             <Link
               href="/login"
               onClick={() => setMobileMenuOpen(false)}
               className="w-full px-4 py-3 rounded-xl text-sm font-bold text-white bg-emerald-800 hover:bg-emerald-900 flex items-center justify-center gap-2 shadow-sm"
             >
-              <span>লগইন / শুরু করুন</span>
+              <span>{siteContent.header.loginButton}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -148,23 +130,22 @@ export default function HomePage() {
           <div className="flex justify-center mb-6">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 text-slate-800 text-xs sm:text-sm font-bold shadow-2xs">
               <Sparkles className="w-4 h-4 text-emerald-700" />
-              <span>বাংলাদেশের #১ প্রপটেক প্ল্যাটফর্ম • ৩,৫০০+ বাড়িওয়ালার ভরসা</span>
+              <span>{siteContent.hero.trustPill}</span>
             </div>
           </div>
 
           {/* Headline */}
           <div className="text-center max-w-4xl mx-auto space-y-4 sm:space-y-6">
             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.28] sm:leading-[1.2] text-slate-900">
-              হাতে লেখা খাতার দিন শেষ,{' '}
+              {siteContent.hero.titleLine1}{' '}
               <br className="hidden sm:inline" />
               <span className="text-emerald-800">
-                স্মার্ট বাড়িওয়ালার শুরু।
+                {siteContent.hero.titleHighlight}
               </span>
             </h1>
 
             <p className="text-sm sm:text-base lg:text-lg text-slate-700 leading-relaxed max-w-2xl mx-auto font-medium">
-              মাসের ১-১০ তারিখের ভাড়া চাওয়ার অস্বস্তি আর হিসাবের দিন শেষ। 
-              মোবাইল থেকেই তৈরি করুন অটো-বিল, পাঠান সম্মানজনক হোয়াটসঅ্যাপ রিমাইন্ডার ও ডিজিটাল মানি রিসিট।
+              {siteContent.hero.subtitle}
             </p>
 
             {/* CTAs */}
@@ -173,7 +154,7 @@ export default function HomePage() {
                 href="/register"
                 className="w-full sm:w-auto px-7 py-3.5 rounded-2xl font-bold text-base text-white bg-emerald-800 hover:bg-emerald-900 shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 group"
               >
-                <span>৩টি ফ্ল্যাট আজীবন ফ্রি ব্যবহার করুন</span>
+                <span>{siteContent.hero.primaryCta}</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
 
@@ -182,7 +163,7 @@ export default function HomePage() {
                 className="w-full sm:w-auto px-6 py-3.5 rounded-2xl font-bold text-base text-slate-900 bg-white hover:bg-slate-50 border border-slate-300 shadow-2xs transition-all flex items-center justify-center gap-2 hover:border-slate-400"
               >
                 <Sparkles className="w-5 h-5 text-emerald-700" />
-                <span>সরাসরি লাইভ ডেমো দেখুন (১ ক্লিকে)</span>
+                <span>{siteContent.hero.secondaryCta}</span>
               </Link>
             </div>
           </div>
@@ -202,7 +183,7 @@ export default function HomePage() {
                   }`}
                 >
                   <Building2 className={`w-4 h-4 ${heroView === 'dashboard' ? 'text-emerald-700' : 'text-slate-600'}`} />
-                  <span>বাড়িওয়ালার ড্যাশবোর্ড</span>
+                  <span>{siteContent.hero.tabDashboard}</span>
                 </button>
 
                 <button
@@ -214,7 +195,7 @@ export default function HomePage() {
                   }`}
                 >
                   <MessageCircle className={`w-4 h-4 ${heroView === 'whatsapp' ? 'text-emerald-700' : 'text-slate-600'}`} />
-                  <span>ভাড়াটিয়ার হোয়াটসঅ্যাপ রশিদ</span>
+                  <span>{siteContent.hero.tabWhatsapp}</span>
                 </button>
 
                 <button
@@ -226,7 +207,7 @@ export default function HomePage() {
                   }`}
                 >
                   <Zap className={`w-4 h-4 ${heroView === 'meter' ? 'text-amber-600' : 'text-slate-600'}`} />
-                  <span>সাব-মিটার ক্যালকুলেটর</span>
+                  <span>{siteContent.hero.tabMeter}</span>
                 </button>
               </div>
             </div>
@@ -266,10 +247,10 @@ export default function HomePage() {
                     <div className="px-4 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <span className="w-2.5 h-2.5 rounded-full bg-emerald-600" />
-                        <span className="text-xs font-black text-slate-900">জুন ২০২৬ ভাড়ার তালিকা ও আদায় হিসেব</span>
+                        <span className="text-xs font-black text-slate-900">{siteContent.hero.tableTitle}</span>
                       </div>
                       <Link href="/dashboard" className="text-xs font-bold text-emerald-800 hover:underline">
-                        সম্পূর্ণ ড্যাশবোর্ড দেখুন →
+                        {siteContent.hero.tableLink}
                       </Link>
                     </div>
 
@@ -520,124 +501,74 @@ export default function HomePage() {
 
           {/* Social Proof Stats Bar */}
           <div className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto pt-8 border-t border-slate-200">
-            <div className="text-center p-3">
-              <span className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 block whitespace-nowrap">৩,৫০০+</span>
-              <span className="text-xs sm:text-sm text-slate-700 font-bold mt-1 block">নিবন্ধিত বাড়িওয়ালা</span>
-            </div>
-            <div className="text-center p-3">
-              <span className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 block whitespace-nowrap">৳ ৪.৫ কোটি+</span>
-              <span className="text-xs sm:text-sm text-slate-700 font-bold mt-1 block">ভাড়া আদায় সম্পন্ন</span>
-            </div>
-            <div className="text-center p-3">
-              <span className="text-xl sm:text-2xl lg:text-3xl font-black text-emerald-800 block whitespace-nowrap">৯৮.৫%</span>
-              <span className="text-xs sm:text-sm text-slate-700 font-bold mt-1 block">সময়মতো বিল আদায়</span>
-            </div>
-            <div className="text-center p-3">
-              <span className="text-xl sm:text-2xl lg:text-3xl font-black text-amber-700 block whitespace-nowrap">৪.৯ ★★★★★</span>
-              <span className="text-xs sm:text-sm text-slate-700 font-bold mt-1 block">ইউজার রিভিউ রেটিং</span>
-            </div>
+            {siteContent.stats.map((stat, idx) => (
+              <div key={idx} className="text-center p-3">
+                <span
+                  className={`text-xl sm:text-2xl lg:text-3xl font-black block whitespace-nowrap ${
+                    stat.highlight === 'emerald'
+                      ? 'text-emerald-800'
+                      : stat.highlight === 'amber'
+                      ? 'text-amber-700'
+                      : 'text-slate-900'
+                  }`}
+                >
+                  {stat.value}
+                </span>
+                <span className="text-xs sm:text-sm text-slate-700 font-bold mt-1 block">{stat.label}</span>
+              </div>
+            ))}
           </div>
 
         </div>
       </section>
 
-      {/* 3.5 Section: How it Works (মাত্র ৩টি ধাপে শুরু করুন) - Modern Differentiated Style */}
+      {/* 3.5 Section: How it Works (মাত্র ৩টি ধাপে শুরু করুন) */}
       <section className="py-24 bg-white border-y border-slate-200 relative z-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center max-w-2xl mx-auto space-y-3 mb-14">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200/80">
               <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
-              <span>সহজ ও দ্রুত অনবোর্ডিং</span>
+              <span>{siteContent.howItWorks.badge}</span>
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
-              মাত্র ৩টি ধাপে শুরু করুন
+              {siteContent.howItWorks.title}
             </h2>
             <p className="text-slate-600 text-sm sm:text-base font-medium">
-              কোনো জটিলতা নেই, ১ মিনিটেই রেডি হয়ে যাবে আপনার বাড়ি বা মার্কেটের ডিজিটাল খাতা
+              {siteContent.howItWorks.subtitle}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            
-            {/* Step 1 Card */}
-            <div className="relative rounded-3xl p-7 sm:p-8 bg-slate-50/70 border border-slate-200 hover:border-emerald-300 hover:bg-white hover:shadow-md transition-all group flex flex-col justify-between space-y-6">
-              <div>
-                <div className="flex items-center justify-between mb-5">
-                  <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 shadow-2xs text-emerald-800 flex items-center justify-center font-black text-xl group-hover:bg-emerald-800 group-hover:text-white transition-all">
-                    ১
+            {siteContent.howItWorks.steps.map((step, idx) => (
+              <div
+                key={idx}
+                className="relative rounded-3xl p-7 sm:p-8 bg-slate-50/70 border border-slate-200 hover:border-emerald-300 hover:bg-white hover:shadow-md transition-all group flex flex-col justify-between space-y-6"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 shadow-2xs text-emerald-800 flex items-center justify-center font-black text-xl group-hover:bg-emerald-800 group-hover:text-white transition-all">
+                      {step.stepNumber}
+                    </div>
+                    <span className="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-slate-200/70 text-slate-700 group-hover:bg-emerald-100 group-hover:text-emerald-900 transition-colors">
+                      {step.stepLabel}
+                    </span>
                   </div>
-                  <span className="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-slate-200/70 text-slate-700 group-hover:bg-emerald-100 group-hover:text-emerald-900 transition-colors">
-                    ধাপ ০১
-                  </span>
+
+                  <h3 className="text-xl font-black text-slate-900 mb-2">
+                    {step.title}
+                  </h3>
+                  <p className="text-sm text-slate-700 leading-relaxed font-medium">
+                    {step.description}
+                  </p>
                 </div>
 
-                <h3 className="text-xl font-black text-slate-900 mb-2">
-                  অ্যাকাউন্ট খুলুন
-                </h3>
-                <p className="text-sm text-slate-700 leading-relaxed font-medium">
-                  মোবাইল নম্বর দিয়ে মাত্র ৩০ সেকেন্ডে কোনো পাসওয়ার্ড বা ওটিপির ঝামেলা ছাড়াই ফ্রি অ্যাকাউন্ট তৈরি করুন।
-                </p>
-              </div>
-
-              <div className="pt-4 border-t border-slate-200 flex items-center gap-2 text-xs font-bold text-emerald-800">
-                <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
-                <span>ঝামেলাহীন সরাসরি লগইন</span>
-              </div>
-            </div>
-
-            {/* Step 2 Card */}
-            <div className="relative rounded-3xl p-7 sm:p-8 bg-slate-50/70 border border-slate-200 hover:border-emerald-300 hover:bg-white hover:shadow-md transition-all group flex flex-col justify-between space-y-6">
-              <div>
-                <div className="flex items-center justify-between mb-5">
-                  <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 shadow-2xs text-emerald-800 flex items-center justify-center font-black text-xl group-hover:bg-emerald-800 group-hover:text-white transition-all">
-                    ২
-                  </div>
-                  <span className="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-slate-200/70 text-slate-700 group-hover:bg-emerald-100 group-hover:text-emerald-900 transition-colors">
-                    ধাপ ০২
-                  </span>
+                <div className="pt-4 border-t border-slate-200 flex items-center gap-2 text-xs font-bold text-emerald-800">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
+                  <span>{step.featureBadge}</span>
                 </div>
-
-                <h3 className="text-xl font-black text-slate-900 mb-2">
-                  প্রপার্টি যোগ করুন
-                </h3>
-                <p className="text-sm text-slate-700 leading-relaxed font-medium">
-                  আপনার বাড়ি, মার্কেট বা ভবনের নাম দিন এবং ফ্ল্যাট নম্বর ও ভাড়াটিয়াদের তথ্য ও মোবাইল নম্বর যুক্ত করুন।
-                </p>
               </div>
-
-              <div className="pt-4 border-t border-slate-200 flex items-center gap-2 text-xs font-bold text-emerald-800">
-                <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
-                <span>আনলিমিটেড ফ্ল্যাট ও ইউনিট যোগ</span>
-              </div>
-            </div>
-
-            {/* Step 3 Card */}
-            <div className="relative rounded-3xl p-7 sm:p-8 bg-slate-50/70 border border-slate-200 hover:border-emerald-300 hover:bg-white hover:shadow-md transition-all group flex flex-col justify-between space-y-6">
-              <div>
-                <div className="flex items-center justify-between mb-5">
-                  <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 shadow-2xs text-emerald-800 flex items-center justify-center font-black text-xl group-hover:bg-emerald-800 group-hover:text-white transition-all">
-                    ৩
-                  </div>
-                  <span className="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-slate-200/70 text-slate-700 group-hover:bg-emerald-100 group-hover:text-emerald-900 transition-colors">
-                    ধাপ ০৩
-                  </span>
-                </div>
-
-                <h3 className="text-xl font-black text-slate-900 mb-2">
-                  বিল তৈরি ও আদায়
-                </h3>
-                <p className="text-sm text-slate-700 leading-relaxed font-medium">
-                  প্রতি মাসের ১ তারিখে এক ক্লিকে স্বয়ংক্রিয় বিল তৈরি, হোয়াটসঅ্যাপে রসিদ প্রেরণ ও ভাড়ার হিসাব রাখুন।
-                </p>
-              </div>
-
-              <div className="pt-4 border-t border-slate-200 flex items-center gap-2 text-xs font-bold text-emerald-800">
-                <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
-                <span>১ ক্লিকে হোয়াটসঅ্যাপ মানি রিসিট</span>
-              </div>
-            </div>
-
+            ))}
           </div>
         </div>
       </section>
@@ -648,13 +579,13 @@ export default function HomePage() {
           
           <div className="text-center max-w-3xl mx-auto space-y-2.5 mb-12">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-bold border border-slate-200">
-              তুলনামূলক বাস্তব চিত্র
+              {siteContent.comparison.badge}
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
-              হাতে লেখা খাতার ঝামেলা বনাম আধুনিক ‘ভাড়া খাতা’
+              {siteContent.comparison.title}
             </h2>
             <p className="text-slate-700 text-sm sm:text-base leading-relaxed font-medium">
-              প্রতি মাসের হিসাব মেলানো নিয়ে অযথা মানসিক চাপ নেওয়ার দিন কি সত্যি এখনও মেনে নেওয়া যায়?
+              {siteContent.comparison.subtitle}
             </p>
           </div>
 
@@ -664,30 +595,20 @@ export default function HomePage() {
             <div className="rounded-3xl p-6 sm:p-8 bg-rose-50/50 border border-rose-200/80 relative overflow-hidden space-y-5">
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-rose-100 text-rose-800 text-xs font-bold border border-rose-200">
                 <XCircle className="w-4 h-4 text-rose-600" />
-                <span>আগের এনালগ খাতা পদ্ধতি</span>
+                <span>{siteContent.comparison.oldWay.badge}</span>
               </div>
 
               <h4 className="text-xl font-black text-slate-900">
-                মাসের শুরুতেই বাড়িওয়ালার মাথায় রাজ্যের দুশ্চিন্তা
+                {siteContent.comparison.oldWay.title}
               </h4>
 
               <ul className="space-y-3.5 text-sm text-slate-800 font-medium">
-                <li className="flex items-start gap-3">
-                  <XCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
-                  <span><strong>খাতার পাতা ছেঁড়া ও হারিয়ে যাওয়া:</strong> কোন ভাড়াটিয়ার কত বকেয়া ছিল বা অ্যাডভান্স জমা ছিল, তা খুঁজে পেতে ঘণ্টার পর ঘণ্টা খাতা ঘাঁটতে হয়।</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <XCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
-                  <span><strong>সাব-মিটারের জটিল হিসাব:</strong> ক্যালকুলেটর দিয়ে ইউনিট বিয়োগ করতে গিয়ে ভুল হওয়া এবং ভাড়াটিয়ার সাথে হিসাব নিয়ে ভুল বোঝাবুঝি।</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <XCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
-                  <span><strong>ভাড়া চাইতে লজ্জা লাগা:</strong> মুখে মুখে বা বারবার ফোন করে ভাড়া চাওয়া বাড়িওয়ালাদের জন্য অত্যন্ত অস্বস্তিকর।</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <XCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
-                  <span><strong>রশিদের কাগুজে ক্যাচাল:</strong> কাঁচা কাগজের রসিদ ভাড়াটিয়া হারিয়ে ফেললে কোনো লেনদেনের প্রমাণ থাকে না।</span>
-                </li>
+                {siteContent.comparison.oldWay.points.map((pt, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <XCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+                    <span><strong>{pt.bold}</strong>{pt.text}</span>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -695,30 +616,20 @@ export default function HomePage() {
             <div className="rounded-3xl p-6 sm:p-8 bg-emerald-50/40 border border-emerald-300/80 relative overflow-hidden space-y-5 shadow-sm">
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-200">
                 <CheckCircle2 className="w-4 h-4 text-emerald-700" />
-                <span>স্মার্ট ‘ভাড়া খাতা’ গ্রিন হাউস সমাধান</span>
+                <span>{siteContent.comparison.newWay.badge}</span>
               </div>
 
               <h4 className="text-xl font-black text-slate-900">
-                সম্পূর্ণ চাপমুক্ত জীবন ও ১ ক্লিকে সব ফ্ল্যাটের নিয়ন্ত্রণ
+                {siteContent.comparison.newWay.title}
               </h4>
 
               <ul className="space-y-3.5 text-sm text-slate-800 font-medium">
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-700 shrink-0 mt-0.5" />
-                  <span><strong>আজীবন ক্লাউড ব্যাকআপ:</strong> মোবাইল নষ্ট বা পরিবর্তন হলেও কোনো ডেটা হারাবে না; যেকোনো সময় যেকোনো ডিভাইস থেকে এক ক্লিকে লগইন।</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-700 shrink-0 mt-0.5" />
-                  <span><strong>অটো সাব-মিটার ক্যালকুলেশন:</strong> শুধু বর্তমান রিডিং লিখলেই ইউনিট ও প্রতি ইউনিটের রেট মিলিয়ে স্বয়ংক্রিয়ভাবে বিল তৈরি।</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-700 shrink-0 mt-0.5" />
-                  <span><strong>স্বয়ংক্রিয় ১-৫ তারিখ রিমাইন্ডার:</strong> সফটওয়্যার স্বয়ংক্রিয়ভাবে ভদ্র ও প্রফেশনাল ভাষায় এসএমএস ও হোয়াটসঅ্যাপে তাগাদা পাঠায়।</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-700 shrink-0 mt-0.5" />
-                  <span><strong>ডিজিটাল মানি রিসিট ও পুলিশ ফরম:</strong> পেমেন্ট পাওয়ামাত্র ডিজিটাল রিসিট এবং ভাড়াটিয়া ভেরিফিকেশনের জন্য ডিএমপি সরকারি ফরম প্রিন্ট।</span>
-                </li>
+                {siteContent.comparison.newWay.points.map((pt, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-700 shrink-0 mt-0.5" />
+                    <span><strong>{pt.bold}</strong>{pt.text}</span>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -732,36 +643,36 @@ export default function HomePage() {
           
           <div className="text-center max-w-3xl mx-auto space-y-2.5 mb-14">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-bold border border-slate-200">
-              প্রিমিয়াম বেন্টো ফিচার গ্রিড
+              {siteContent.features.badge}
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
-              একটি মাত্র অ্যাপে আপনার বাড়ির প্রতিটি সমাধান
+              {siteContent.features.title}
             </h2>
             <p className="text-slate-700 text-sm sm:text-base leading-relaxed font-medium">
-              প্রতিটি টুল তৈরি করা হয়েছে বাংলাদেশের বাড়িওয়ালাদের বাস্তব অভিজ্ঞতার ওপর ভিত্তি করে।
+              {siteContent.features.subtitle}
             </p>
           </div>
 
           {/* Bento Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            {/* Bento 1: Large Featured Card (2 Columns Span) */}
+            {/* Bento 1: Large Featured Card */}
             <div className="md:col-span-2 rounded-3xl p-7 sm:p-9 bg-slate-50 border border-slate-200 hover:border-slate-300 transition-all shadow-2xs hover:shadow-sm space-y-6 relative overflow-hidden">
               <div className="flex items-center justify-between">
                 <div className="w-12 h-12 rounded-2xl bg-white text-slate-800 border border-slate-200 flex items-center justify-center font-bold">
                   <Zap className="w-6 h-6 text-amber-600" />
                 </div>
                 <span className="text-xs font-bold px-3 py-1 rounded-full bg-white border border-slate-200 text-slate-800">
-                  বিদ্যুৎ বিল সমস্যা সমাধান
+                  {siteContent.features.meter.tag}
                 </span>
               </div>
 
               <div className="space-y-2">
                 <h4 className="text-xl sm:text-2xl font-black text-slate-900">
-                  সাব-মিটার রিডিং ও অটো বিদ্যুৎ বিল ইঞ্জিন
+                  {siteContent.features.meter.title}
                 </h4>
                 <p className="text-sm text-slate-700 max-w-xl leading-relaxed font-medium">
-                  মিটার রিডিং তোলার ঝামেলা শেষ। শুধু চলতি মাসের রিডিং লিখে দিলে সফটওয়্যার স্বয়ংক্রিয়ভাবে আগের রিডিং থেকে বিয়োগ করে সঠিক ইউনিট হিসাব করে এবং প্রতি ইউনিটের রেট অনুযায়ী মোট টাকা মাসিক বিলে যোগ করে দেয়।
+                  {siteContent.features.meter.description}
                 </p>
               </div>
 
@@ -794,15 +705,15 @@ export default function HomePage() {
                 <MessageCircle className="w-6 h-6 text-emerald-700" />
               </div>
               <h4 className="text-xl font-black text-slate-900">
-                স্বয়ংক্রিয় এসএমএস ও হোয়াটসঅ্যাপ
+                {siteContent.features.reminder.title}
               </h4>
               <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-                মুখে ভাড়া চাওয়ার কোনো অস্বস্তি নেই। ১ থেকে ৫ তারিখের মধ্যে শুধুমাত্র বকেয়া থাকা ভাড়াটিয়াদের স্বয়ংক্রিয় সম্মানজনক তাগাদা চলে যায়।
+                {siteContent.features.reminder.description}
               </p>
               <div className="pt-2">
                 <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800">
                   <CheckCircle2 className="w-4 h-4 text-emerald-700" />
-                  পরিশোধিত কাউকে ডিস্টার্ব করবে না
+                  {siteContent.features.reminder.tag}
                 </span>
               </div>
             </div>
@@ -813,47 +724,47 @@ export default function HomePage() {
                 <Receipt className="w-6 h-6 text-emerald-700" />
               </div>
               <h4 className="text-xl font-black text-slate-900">
-                ডিজিটাল মানি রিসিট (PDF)
+                {siteContent.features.receipt.title}
               </h4>
               <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-                টাকা গ্রহণ করার সাথে সাথেই কিউআর কোড ও রশিদ নম্বরসহ প্রফেশনাল মানি রিসিট তৈরি হয়। সরাসরি হোয়াটসঅ্যাপে পাঠানো বা প্রিন্ট নেওয়া যায়।
+                {siteContent.features.receipt.description}
               </p>
               <div className="pt-2">
                 <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800">
                   <Printer className="w-4 h-4 text-emerald-700" />
-                  প্রিন্ট ও আজীবন ক্লাউড সংরক্ষণ
+                  {siteContent.features.receipt.tag}
                 </span>
               </div>
             </div>
 
-            {/* Bento 4: Police Verification Form (2 Columns Span) */}
+            {/* Bento 4: Police Verification Form */}
             <div className="md:col-span-2 rounded-3xl p-7 sm:p-9 bg-slate-50 border border-slate-200 hover:border-slate-300 transition-all shadow-2xs hover:shadow-sm space-y-6">
               <div className="flex items-center justify-between">
                 <div className="w-12 h-12 rounded-2xl bg-white text-slate-800 border border-slate-200 flex items-center justify-center font-bold">
                   <ShieldCheck className="w-6 h-6 text-emerald-700" />
                 </div>
                 <span className="text-xs font-bold px-3 py-1 rounded-full bg-white border border-slate-200 text-slate-800">
-                  আইনি নিরাপত্তা ও ডিএমপি
+                  {siteContent.features.police.tag}
                 </span>
               </div>
 
               <div className="space-y-2">
                 <h4 className="text-xl sm:text-2xl font-black text-slate-900">
-                  বাংলাদেশ পুলিশ ভাড়াটিয়া তথ্য ফরম (স্বয়ংক্রিয় প্রিন্ট)
+                  {siteContent.features.police.title}
                 </h4>
                 <p className="text-sm text-slate-700 max-w-xl leading-relaxed font-medium">
-                  নতুন ভাড়াটিয়া তোলার পর আলাদা করে পুলিশের ফর্ম কিনে হাতে লেখার দিন শেষ। সফটওয়্যার থেকে ১ ক্লিকে ১ কপি পাসপোর্ট সাইজ ছবি ও জাতীয় পরিচয়পত্রের ঘর সহ সরকারি ফরম্যাটে প্রস্তুত হয়ে যায়।
+                  {siteContent.features.police.description}
                 </p>
               </div>
 
               <div className="flex items-center gap-4 text-xs font-bold text-slate-800">
                 <div className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-700" />
-                  <span>ঢাকা মেট্রোপলিটন পুলিশ ফরম্যাট</span>
+                  <span>{siteContent.features.police.point1}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-700" />
-                  <span>জরুরি যোগাযোগ ও এনআইডি রেকর্ড</span>
+                  <span>{siteContent.features.police.point2}</span>
                 </div>
               </div>
             </div>
@@ -868,13 +779,13 @@ export default function HomePage() {
           
           <div className="text-center max-w-2xl mx-auto space-y-2.5 mb-12">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-bold border border-slate-200">
-              সঞ্চয় ও লাভ ক্যালকুলেটর
+              {siteContent.calculator.badge}
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
-              আপনার কত সময় ও টাকা বাঁচবে?
+              {siteContent.calculator.title}
             </h2>
             <p className="text-slate-700 text-sm sm:text-base leading-relaxed font-medium">
-              নিচের স্লাইডারটি টেনে আপনার বাড়ির ফ্ল্যাট সংখ্যা সিলেক্ট করে ফলাফল দেখুন।
+              {siteContent.calculator.subtitle}
             </p>
           </div>
 
@@ -885,7 +796,7 @@ export default function HomePage() {
               <div className="flex justify-between items-center gap-3">
                 <label className="text-xs sm:text-base font-bold text-slate-900 flex items-center gap-1.5 sm:gap-2 leading-tight">
                   <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-800 shrink-0" />
-                  <span>আপনার ভবনে মোট ফ্ল্যাট / ইউনিট সংখ্যা:</span>
+                  <span>{siteContent.calculator.label}</span>
                 </label>
                 <div className="shrink-0 flex items-center justify-center min-w-[72px] sm:min-w-[85px] px-3 sm:px-4 py-1.5 rounded-xl bg-slate-50 border border-slate-200 shadow-2xs">
                   <span className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 whitespace-nowrap select-none">
@@ -903,36 +814,36 @@ export default function HomePage() {
                 className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700"
               />
               <div className="flex justify-between text-xs text-slate-600 font-bold font-mono">
-                <span>১টি ফ্ল্যাট</span>
-                <span>২৫টি</span>
-                <span>৫০টি ফ্ল্যাট</span>
+                <span>{siteContent.calculator.minFlatLabel}</span>
+                <span>{siteContent.calculator.midFlatLabel}</span>
+                <span>{siteContent.calculator.maxFlatLabel}</span>
               </div>
             </div>
 
             {/* Calculated Results Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-200">
               <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-center shadow-2xs">
-                <span className="text-xs text-slate-700 font-bold block">মাসে বেঁচে যাওয়া সময়</span>
+                <span className="text-xs text-slate-700 font-bold block">{siteContent.calculator.timeSavedLabel}</span>
                 <span className="text-2xl sm:text-3xl font-black text-slate-900 block mt-2 whitespace-nowrap">
                   {hoursSaved} ঘণ্টা
                 </span>
-                <span className="text-[11px] text-slate-600 font-medium mt-1 block">হিসাব ও বারবার তাগাদা দেওয়ার সময়</span>
+                <span className="text-[11px] text-slate-600 font-medium mt-1 block">{siteContent.calculator.timeSavedSub}</span>
               </div>
 
               <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-center shadow-2xs">
-                <span className="text-xs text-slate-700 font-bold block">ফোনকলের মানসিক চাপ মুক্তি</span>
+                <span className="text-xs text-slate-700 font-bold block">{siteContent.calculator.hassleSavedLabel}</span>
                 <span className="text-2xl sm:text-3xl font-black text-slate-900 block mt-2 whitespace-nowrap">
                   {phoneHassleSaved}টি কল
                 </span>
-                <span className="text-[11px] text-slate-600 font-medium mt-1 block">অটো-মেসেজে ভাড়া পরিশোধ নিশ্চিত</span>
+                <span className="text-[11px] text-slate-600 font-medium mt-1 block">{siteContent.calculator.hassleSavedSub}</span>
               </div>
 
               <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-center shadow-2xs">
-                <span className="text-xs text-slate-700 font-bold block">বকেয়া ঝুঁকি হ্রাস</span>
+                <span className="text-xs text-slate-700 font-bold block">{siteContent.calculator.dueRiskLabel}</span>
                 <span className="text-2xl sm:text-3xl font-black text-emerald-800 block mt-2 whitespace-nowrap">
-                  ০% বকেয়া
+                  {siteContent.calculator.dueRiskValue}
                 </span>
-                <span className="text-[11px] text-slate-600 font-medium mt-1 block">১-১০ তারিখের ভেতরেই ভাড়া আদায়</span>
+                <span className="text-[11px] text-slate-600 font-medium mt-1 block">{siteContent.calculator.dueRiskSub}</span>
               </div>
             </div>
 
@@ -941,7 +852,7 @@ export default function HomePage() {
                 href="/register"
                 className="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-sm shadow-sm transition-all"
               >
-                <span>আপনার {flatCount}টি ফ্ল্যাটের জন্য ফ্রি শুরু করুন →</span>
+                <span>{siteContent.calculator.ctaTemplate.replace('{count}', String(flatCount))}</span>
               </Link>
             </div>
 
@@ -955,163 +866,77 @@ export default function HomePage() {
           
           <div className="text-center max-w-2xl mx-auto space-y-2.5 mb-14">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-bold border border-slate-200">
-              স্বচ্ছ ও সাশ্রয়ী প্যাকেজ
+              {siteContent.pricing.badge}
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
-              ছোট বা বড়—যেকোনো বাড়ির জন্য সেরা প্ল্যান
+              {siteContent.pricing.title}
             </h2>
             <p className="text-slate-700 text-sm sm:text-base leading-relaxed font-medium">
-              কোনো লুকানো চার্জ নেই। ৩টি ফ্ল্যাট পর্যন্ত আজীবন বিনামূল্যে ব্যবহার করুন।
+              {siteContent.pricing.subtitle}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
-            
-            {/* Free Tier */}
-            <div className="rounded-3xl p-8 bg-slate-50 border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-md flex flex-col justify-between space-y-6 relative transition-all">
-              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-slate-800 text-white font-black text-[11px] uppercase tracking-wider shadow-sm">
-                শুরু করার জন্য
-              </div>
-
-              <div className="space-y-4">
-                <div className="inline-block px-3 py-1 rounded-full bg-white text-slate-800 border border-slate-200 text-xs font-bold">
-                  ছোট বাড়ির জন্য
-                </div>
-                <h4 className="text-2xl font-black text-slate-900">ফ্রি ট্রায়াল</h4>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-black text-slate-900">৳ ০</span>
-                  <span className="text-xs text-slate-600 font-bold">/আজীবন ফ্রি</span>
-                </div>
-                <p className="text-xs text-slate-700 leading-relaxed min-h-[36px] font-medium">
-                  যাদের ৩টি পর্যন্ত ফ্ল্যাট রয়েছে এবং সম্পূর্ণ নিশ্চিন্তে ডিজিটাল খাতা শুরু করতে চান।
-                </p>
-
-                <ul className="space-y-2.5 text-xs text-slate-800 font-medium pt-3 border-t border-slate-200">
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-700 shrink-0" />
-                    <span><strong>সর্বোচ্চ ৩টি ফ্ল্যাট</strong> পরিচালনা</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-700 shrink-0" />
-                    <span>ডিজিটাল মানি রিসিট তৈরি</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-700 shrink-0" />
-                    <span>সাব-মিটার ক্যালকুলেটর</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-700 shrink-0" />
-                    <span>ডিএমপি পুলিশ ফরম ডাউনলোড</span>
-                  </li>
-                </ul>
-              </div>
-
-              <Link
-                href="/register"
-                className="w-full py-3.5 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-center text-sm block transition-all shadow-xs"
+            {siteContent.pricing.plans.map((plan, idx) => (
+              <div
+                key={idx}
+                className={`rounded-3xl p-8 flex flex-col justify-between space-y-6 relative transition-all ${
+                  plan.isPopular
+                    ? 'bg-white border-2 border-emerald-600 shadow-md ring-4 ring-emerald-50'
+                    : 'bg-slate-50 border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-md'
+                }`}
               >
-                ফ্রিতে শুরু করুন →
-              </Link>
-            </div>
-
-            {/* Popular Tier (Pro) */}
-            <div className="rounded-3xl p-8 bg-white border-2 border-emerald-600 shadow-md ring-4 ring-emerald-50 flex flex-col justify-between space-y-6 relative transition-all">
-              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-emerald-800 text-white font-black text-[11px] uppercase tracking-wider shadow-sm">
-                সবচেয়ে জনপ্রিয়
-              </div>
-
-              <div className="space-y-4">
-                <div className="inline-block px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200/60">
-                  মাঝারি বাড়ির জন্য
+                <div
+                  className={`absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-white font-black text-[11px] uppercase tracking-wider shadow-sm ${
+                    plan.isPopular ? 'bg-emerald-800' : 'bg-slate-800'
+                  }`}
+                >
+                  {plan.badgeTop}
                 </div>
-                <h4 className="text-2xl font-black text-slate-900">প্রো বাড়িওয়ালা</h4>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-black text-emerald-800">৳ ৩৯৯</span>
-                  <span className="text-xs text-slate-600 font-bold">/প্রতি মাস</span>
+
+                <div className="space-y-4">
+                  <div
+                    className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${
+                      plan.isPopular
+                        ? 'bg-emerald-50 text-emerald-800 border border-emerald-200/60'
+                        : 'bg-white text-slate-800 border border-slate-200'
+                    }`}
+                  >
+                    {plan.audience}
+                  </div>
+                  <h4 className="text-2xl font-black text-slate-900">{plan.name}</h4>
+                  <div className="flex items-baseline gap-1">
+                    <span
+                      className={`text-4xl font-black ${
+                        plan.isPopular ? 'text-emerald-800' : 'text-slate-900'
+                      }`}
+                    >
+                      {plan.price}
+                    </span>
+                    <span className="text-xs text-slate-600 font-bold">{plan.period}</span>
+                  </div>
+                  <p className="text-xs text-slate-700 leading-relaxed min-h-[36px] font-medium">
+                    {plan.description}
+                  </p>
+
+                  <ul className="space-y-2.5 text-xs text-slate-800 font-medium pt-3 border-t border-slate-200">
+                    {plan.features.map((feat, fIdx) => (
+                      <li key={fIdx} className="flex items-center gap-2">
+                        <Check className="w-4 h-4 text-emerald-700 shrink-0" />
+                        <span>{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <p className="text-xs text-slate-700 leading-relaxed min-h-[36px] font-medium">
-                  ৪ থেকে ১০টি ফ্ল্যাট থাকা বাড়িওয়ালাদের জন্য নিখুঁত স্বয়ংক্রিয় সমাধান।
-                </p>
 
-                <ul className="space-y-2.5 text-xs text-slate-800 font-medium pt-3 border-t border-slate-200">
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-700 shrink-0" />
-                    <span><strong>১০টি ফ্ল্যাট</strong> পর্যন্ত সম্পূর্ণ নিয়ন্ত্রণ</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-700 shrink-0" />
-                    <span><strong>স্বয়ংক্রিয় ১-৫ তারিখ এসএমএস রিমাইন্ডার</strong></span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-700 shrink-0" />
-                    <span>হোয়াটসঅ্যাপে ১-ক্লিক ভাড়ার রশিদ প্রেরণ</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-700 shrink-0" />
-                    <span>বকেয়া ট্র্যাকিং ও অডিট স্টেটমেন্ট</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-700 shrink-0" />
-                    <span>প্রাধান্যভিত্তিক ফোন সাপোর্ট</span>
-                  </li>
-                </ul>
+                <Link
+                  href="/register"
+                  className="w-full py-3.5 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-center text-sm block transition-all shadow-xs"
+                >
+                  {plan.ctaText}
+                </Link>
               </div>
-
-              <Link
-                href="/register"
-                className="w-full py-3.5 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-center text-sm block transition-all shadow-xs"
-              >
-                প্রো প্ল্যান শুরু করুন →
-              </Link>
-            </div>
-
-            {/* Enterprise Tier */}
-            <div className="rounded-3xl p-8 bg-slate-50 border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-md flex flex-col justify-between space-y-6 relative transition-all">
-              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-slate-800 text-white font-black text-[11px] uppercase tracking-wider shadow-sm">
-                বড় ভবন ও সমিতি
-              </div>
-
-              <div className="space-y-4">
-                <div className="inline-block px-3 py-1 rounded-full bg-white text-slate-800 border border-slate-200 text-xs font-bold">
-                  কমপ্লেক্স ও সমিতির জন্য
-                </div>
-                <h4 className="text-2xl font-black text-slate-900">এপার্টমেন্ট সমিতি</h4>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-black text-slate-900">৳ ৯৯৯</span>
-                  <span className="text-xs text-slate-600 font-bold">/প্রতি মাস</span>
-                </div>
-                <p className="text-xs text-slate-700 leading-relaxed min-h-[36px] font-medium">
-                  ১১ থেকে ৩০+ ফ্ল্যাট এবং অ্যাপার্টমেন্ট কমিটির সম্পূর্ণ ফিনান্সিয়াল ম্যানেজমেন্ট।
-                </p>
-
-                <ul className="space-y-2.5 text-xs text-slate-800 font-medium pt-3 border-t border-slate-200">
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-700 shrink-0" />
-                    <span><strong>আনলিমিটেড ফ্ল্যাট</strong> ও একাধিক বিল্ডিং</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-700 shrink-0" />
-                    <span>কমিটি ও ম্যানেজারের আলাদা রোল ও পারমিশন</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-700 shrink-0" />
-                    <span>মাসিক অডিট ও ব্যাংক স্টেটমেন্ট রিপোর্ট</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-700 shrink-0" />
-                    <span>ডেডিকেটেড অ্যাকাউন্ট ম্যানেজার</span>
-                  </li>
-                </ul>
-              </div>
-
-              <Link
-                href="/register"
-                className="w-full py-3.5 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-center text-sm block transition-all shadow-xs"
-              >
-                সমিতি প্ল্যান নিন →
-              </Link>
-            </div>
-
+            ))}
           </div>
         </div>
       </section>
@@ -1130,7 +955,7 @@ export default function HomePage() {
           </div>
 
           <div className="space-y-3">
-            {faqs.map((faq, index) => {
+            {siteContent.faqs.map((faq, index) => {
               const isOpen = openFaq === index;
               return (
                 <div
@@ -1161,16 +986,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 9. Final High-Impact CTA Banner (Royal Deep Forest Green, Zero Black Hole) */}
+      {/* 9. Final High-Impact CTA Banner */}
       <section className="py-20 relative z-10 bg-white border-t border-slate-200">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-3xl p-8 sm:p-14 bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-800 text-center space-y-6 shadow-xl border border-emerald-600/50 relative overflow-hidden">
             <div className="max-w-2xl mx-auto space-y-3">
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-snug tracking-tight drop-shadow-2xs">
-                বাড়িভাড়া ব্যবস্থাপনাকে ডিজিটাল ও সহজ করুন
+                {siteContent.finalCta.title}
               </h2>
               <p className="text-emerald-100 text-sm sm:text-base leading-relaxed font-medium">
-                আর কোনো জটিল খাতার হিসাব বা বিল নিয়ে ভুল বোঝাবুঝি নয়। মাত্র ২ মিনিটে আপনার ভবনের ফ্ল্যাটগুলো যোগ করে নিশ্চিন্ত থাকুন।
+                {siteContent.finalCta.subtitle}
               </p>
             </div>
 
@@ -1179,7 +1004,7 @@ export default function HomePage() {
                 href="/register"
                 className="w-full sm:w-auto px-8 py-3.5 rounded-2xl font-black text-sm sm:text-base bg-white text-emerald-950 hover:bg-emerald-50 shadow-lg transition-all flex items-center justify-center gap-2"
               >
-                <span>ফ্রি অ্যাকাউন্ট তৈরি করুন</span>
+                <span>{siteContent.finalCta.primaryButton}</span>
                 <ArrowRight className="w-4 h-4 text-emerald-800" />
               </Link>
               <Link
@@ -1187,7 +1012,7 @@ export default function HomePage() {
                 className="w-full sm:w-auto px-7 py-3.5 rounded-2xl font-bold text-sm sm:text-base bg-emerald-900/60 hover:bg-emerald-900 text-white border border-emerald-400/40 transition-all flex items-center justify-center gap-2"
               >
                 <Sparkles className="w-4 h-4 text-emerald-300" />
-                <span>সরাসরি লাইভ ডেমো দেখুন</span>
+                <span>{siteContent.finalCta.secondaryButton}</span>
               </Link>
             </div>
           </div>
@@ -1199,29 +1024,26 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <div className="w-7 h-7 rounded-lg bg-emerald-800 text-white flex items-center justify-center font-bold text-sm">
-              ভ
+              {siteContent.brand.letter}
             </div>
-            <span className="font-bold text-slate-900 text-sm">ভাড়া খাতা</span>
-            <span className="text-slate-600">• বাড়িওয়ালাদের স্মার্ট রেন্ট ম্যানেজমেন্ট (গ্রিন হাউস থিম)</span>
+            <span className="font-bold text-slate-900 text-sm">{siteContent.brand.name}</span>
+            <span className="text-slate-600">• {siteContent.brand.subTagline}</span>
           </div>
 
           <div className="flex items-center gap-6">
-            <Link href="/login" className="hover:text-emerald-800 transition-colors font-bold text-slate-700">
-              লগইন
-            </Link>
-            <Link href="/dashboard" className="hover:text-emerald-800 transition-colors font-bold text-slate-700">
-              ড্যাশবোর্ড
-            </Link>
-            <Link href="/to-let" className="hover:text-emerald-800 transition-colors font-bold text-slate-700">
-              টু-লেট লিস্টিং
-            </Link>
-            <a href="#faq" className="hover:text-emerald-800 transition-colors font-bold text-slate-700">
-              হেল্প সেন্টার
-            </a>
+            {siteContent.footer.links.map((link, idx) => (
+              <Link
+                key={idx}
+                href={link.href}
+                className="hover:text-emerald-800 transition-colors font-bold text-slate-700"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
 
           <div className="text-slate-600">
-            © 2026 ভাড়া খাতা। সর্বস্বত্ব সংরক্ষিত।
+            {siteContent.brand.copyright}
           </div>
         </div>
       </footer>
