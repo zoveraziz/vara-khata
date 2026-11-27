@@ -25,6 +25,10 @@ import {
   Eye,
   EyeOff,
   LogOut,
+  Phone,
+  Mail,
+  Globe,
+  MessageCircle,
 } from 'lucide-react';
 
 export default function AdminPage() {
@@ -74,7 +78,7 @@ export default function AdminPage() {
   // Local working copy of content for form edits
   const [formData, setFormData] = useState<SiteContentType>(content);
   const [activeTab, setActiveTab] = useState<
-    'brand' | 'hero' | 'stats' | 'howItWorks' | 'comparison' | 'features' | 'calculator' | 'pricing' | 'faqs' | 'finalCta'
+    'brand' | 'hero' | 'stats' | 'howItWorks' | 'comparison' | 'features' | 'calculator' | 'pricing' | 'faqs' | 'finalCta' | 'contact' | 'nrb' | 'payments'
   >('hero');
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [resetConfirmOpen, setResetConfirmOpen] = useState(false);
@@ -174,6 +178,9 @@ export default function AdminPage() {
 
   const tabs = [
     { id: 'hero', label: '🚀 হিরো সেকশন', icon: Sparkles },
+    { id: 'contact', label: '📞 হেল্পলাইন ও সাপোর্ট', icon: Phone },
+    { id: 'nrb', label: '✈️ প্রবাসী সুবিধা', icon: Globe },
+    { id: 'payments', label: '💳 পেমেন্ট পার্টনার্স', icon: DollarSign },
     { id: 'brand', label: '🏷️ ব্র্যান্ড ও হেডার', icon: Building2 },
     { id: 'stats', label: '📊 পরিসংখ্যান', icon: Sliders },
     { id: 'howItWorks', label: '📝 ৩টি ধাপ (অনবোর্ডিং)', icon: Layers },
@@ -1344,6 +1351,284 @@ export default function AdminPage() {
                     setFormData({ ...formData, brand: { ...formData.brand, copyright: e.target.value } })
                   }
                   className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-medium"
+                />
+              </div>
+            </div>
+          )}
+
+          {/* TAB: CONTACT & HELPLINE (৪ নং) */}
+          {activeTab === 'contact' && formData.contact && (
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-base font-black text-slate-900 flex items-center gap-2">
+                  <Phone className="w-5 h-5 text-emerald-700" />
+                  সরাসরি হেল্পলাইন ও কন্টাক্ট সাপোর্ট সেটিংস
+                </h3>
+                <p className="text-xs text-slate-500 mt-1">
+                  এখানে দেওয়া মোবাইল নম্বর, হোয়াটসঅ্যাপ ও ইমেইল ওয়েবসাইটের হেডার ও কন্টাক্ট সেকশনে সরাসরি প্রদর্শিত হবে।
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-bold text-slate-800 block mb-1">
+                    হেল্পলাইন মোবাইল নম্বর <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.contact.phone}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        contact: { ...formData.contact, phone: e.target.value },
+                      })
+                    }
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-black text-slate-900 focus:bg-white focus:border-emerald-700 focus:outline-none"
+                  />
+                  <span className="text-[10px] text-slate-500 mt-0.5 block">ক্লিক করলে সরাসরি ডায়াল হবে</span>
+                </div>
+
+                <div>
+                  <label className="text-xs font-bold text-slate-800 block mb-1">
+                    সাপোর্ট ইমেইল অ্যাড্রেস <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    value={formData.contact.email}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        contact: { ...formData.contact, email: e.target.value },
+                      })
+                    }
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-900 focus:bg-white focus:border-emerald-700 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-bold text-slate-800 block mb-1">
+                    সাপোর্ট পাওয়ার সময়
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.contact.hours}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        contact: { ...formData.contact, hours: e.target.value },
+                      })
+                    }
+                    placeholder="যেমন: সকাল ৯টা – রাত ১০টা"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:bg-white focus:border-emerald-700 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-xs font-bold text-slate-800 block mb-1">
+                    হোয়াটসঅ্যাপ নম্বর (কান্ট্রি কোড সহ)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.contact.whatsappNumber}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        contact: { ...formData.contact, whatsappNumber: e.target.value },
+                      })
+                    }
+                    placeholder="যেমন: 8801721838990"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:bg-white focus:border-emerald-700 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-slate-800 block mb-1">
+                  কন্টাক্ট সেকশনের শিরোনাম
+                </label>
+                <input
+                  type="text"
+                  value={formData.contact.title}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      contact: { ...formData.contact, title: e.target.value },
+                    })
+                  }
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-900 focus:bg-white focus:border-emerald-700 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-slate-800 block mb-1">
+                  কন্টাক্ট সেকশনের বিবরণ
+                </label>
+                <textarea
+                  rows={2}
+                  value={formData.contact.subtitle}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      contact: { ...formData.contact, subtitle: e.target.value },
+                    })
+                  }
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:bg-white focus:border-emerald-700 focus:outline-none leading-relaxed"
+                />
+              </div>
+            </div>
+          )}
+
+          {/* TAB: NRB LANDLORDS (২ নং) */}
+          {activeTab === 'nrb' && formData.nrb && (
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-base font-black text-slate-900 flex items-center gap-2">
+                  <Globe className="w-5 h-5 text-emerald-700" />
+                  প্রবাসী বাড়িওয়ালাদের সুবিধা (NRB Section) সেটিংস
+                </h3>
+                <p className="text-xs text-slate-500 mt-1">
+                  বিদেশে থাকা বাড়িওয়ালাদের আকৃষ্ট করার বিশেষ সেকশনের লেখাগুলো এখান থেকে পরিবর্তন করুন।
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-bold text-slate-800 block mb-1">ছোট ব্যাজ টেক্সট</label>
+                  <input
+                    type="text"
+                    value={formData.nrb.badge}
+                    onChange={(e) =>
+                      setFormData({ ...formData, nrb: { ...formData.nrb, badge: e.target.value } })
+                    }
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-slate-800 block mb-1">কল টু অ্যাকশন বাটন টেক্সট</label>
+                  <input
+                    type="text"
+                    value={formData.nrb.ctaText}
+                    onChange={(e) =>
+                      setFormData({ ...formData, nrb: { ...formData.nrb, ctaText: e.target.value } })
+                    }
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-900"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-slate-800 block mb-1">মূল শিরোনাম</label>
+                <input
+                  type="text"
+                  value={formData.nrb.title}
+                  onChange={(e) =>
+                    setFormData({ ...formData, nrb: { ...formData.nrb, title: e.target.value } })
+                  }
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-black text-slate-900"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-slate-800 block mb-1">উপশিরোনাম ও বিবরণ</label>
+                <textarea
+                  rows={2}
+                  value={formData.nrb.subtitle}
+                  onChange={(e) =>
+                    setFormData({ ...formData, nrb: { ...formData.nrb, subtitle: e.target.value } })
+                  }
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 leading-relaxed"
+                />
+              </div>
+
+              {/* 3 Pillars */}
+              <div className="space-y-3 pt-2 border-t border-slate-200">
+                <label className="text-xs font-bold text-slate-800 block">৩টি প্রধান বৈশিষ্ট্য কার্ড:</label>
+                {formData.nrb.features.map((feat, idx) => (
+                  <div key={idx} className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                    <span className="text-[11px] font-bold text-emerald-800">পিলার #{idx + 1}</span>
+                    <input
+                      type="text"
+                      value={feat.title}
+                      onChange={(e) => {
+                        const updated = [...formData.nrb.features];
+                        updated[idx] = { ...updated[idx], title: e.target.value };
+                        setFormData({ ...formData, nrb: { ...formData.nrb, features: updated } });
+                      }}
+                      className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs font-bold text-slate-900"
+                    />
+                    <textarea
+                      rows={2}
+                      value={feat.description}
+                      onChange={(e) => {
+                        const updated = [...formData.nrb.features];
+                        updated[idx] = { ...updated[idx], description: e.target.value };
+                        setFormData({ ...formData, nrb: { ...formData.nrb, features: updated } });
+                      }}
+                      className="w-full bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-700 leading-relaxed"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* TAB: PAYMENT PARTNERS (৫ নং) */}
+          {activeTab === 'payments' && formData.paymentPartners && (
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-base font-black text-slate-900 flex items-center gap-2">
+                  <DollarSign className="w-5 h-5 text-emerald-700" />
+                  পেমেন্ট মাধ্যম ও পার্টনার্স স্ট্রিপ সেটিংস
+                </h3>
+                <p className="text-xs text-slate-500 mt-1">
+                  হোমপেজের পরিসংখ্যানের নিচে প্রদর্শিত পেমেন্ট মাধ্যমগুলোর শিরোনাম ও বিবরণ এখান থেকে এডিট করুন।
+                </p>
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-slate-800 block mb-1">ছোট ব্যাজ টেক্সট</label>
+                <input
+                  type="text"
+                  value={formData.paymentPartners.badge}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      paymentPartners: { ...formData.paymentPartners, badge: e.target.value },
+                    })
+                  }
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-slate-800 block mb-1">মূল শিরোনাম</label>
+                <input
+                  type="text"
+                  value={formData.paymentPartners.title}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      paymentPartners: { ...formData.paymentPartners, title: e.target.value },
+                    })
+                  }
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-900"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-slate-800 block mb-1">উপশিরোনাম</label>
+                <input
+                  type="text"
+                  value={formData.paymentPartners.subtitle}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      paymentPartners: { ...formData.paymentPartners, subtitle: e.target.value },
+                    })
+                  }
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900"
                 />
               </div>
             </div>

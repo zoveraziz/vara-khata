@@ -69,6 +69,17 @@ export function SiteContentProvider({ children }: { children: React.ReactNode })
             ...parsed.footer,
             links: parsed.footer?.links || prev.footer.links,
           },
+          nrb: {
+            ...prev.nrb,
+            ...parsed.nrb,
+            features: parsed.nrb?.features || prev.nrb?.features,
+          },
+          contact: { ...prev.contact, ...parsed.contact },
+          paymentPartners: {
+            ...prev.paymentPartners,
+            ...parsed.paymentPartners,
+            methods: parsed.paymentPartners?.methods || prev.paymentPartners?.methods,
+          },
         }));
         setIsCustomized(true);
         if (storedTime) setLastUpdated(storedTime);
