@@ -950,13 +950,21 @@ export default function HomePage() {
       <section className="py-16 sm:py-20 relative z-10 bg-white border-t border-slate-200">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-3xl p-8 sm:p-14 bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-950 text-center space-y-6 shadow-xl border border-emerald-700/60 relative overflow-hidden">
-            <div className="max-w-2xl mx-auto space-y-3 relative z-10">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-snug tracking-tight drop-shadow-2xs">
-                {siteContent.finalCta.title}
-              </h2>
-              <p className="text-emerald-100 text-sm sm:text-base leading-relaxed font-medium">
-                {siteContent.finalCta.subtitle}
-              </p>
+            <div className="max-w-2xl mx-auto relative z-10">
+              {siteContent.finalCta.title ? (
+                <>
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-snug tracking-tight drop-shadow-2xs mb-3">
+                    {siteContent.finalCta.title}
+                  </h2>
+                  <p className="text-emerald-100 text-sm sm:text-base leading-relaxed font-medium">
+                    {siteContent.finalCta.subtitle}
+                  </p>
+                </>
+              ) : (
+                <p className="text-white text-base sm:text-xl font-bold leading-relaxed">
+                  {siteContent.finalCta.subtitle}
+                </p>
+              )}
             </div>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2 relative z-10">
@@ -1019,7 +1027,9 @@ export default function HomePage() {
               {siteContent.brand.letter}
             </div>
             <span className="font-bold text-slate-900 text-sm">{siteContent.brand.name}</span>
-            <span className="text-slate-600">• {siteContent.brand.subTagline}</span>
+            {siteContent.brand.subTagline ? (
+              <span className="text-slate-600">• {siteContent.brand.subTagline}</span>
+            ) : null}
           </div>
 
           <div className="flex items-center gap-6">
