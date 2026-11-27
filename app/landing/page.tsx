@@ -31,21 +31,8 @@ export default function HomePage() {
   // 2. Interactive States for Live In-Hero Previews (Dashboard & WhatsApp Receipt)
   const [heroView, setHeroView] = useState<'dashboard' | 'whatsapp'>('dashboard');
 
-  // 3. Interactive ROI Calculator States
-  const [flatCount, setFlatCount] = useState<number>(12);
-
-  // 4. FAQ Accordion State
+  // 3. FAQ Accordion State
   const [openFaq, setOpenFaq] = useState<number | null>(0);
-
-  // Derived Calculations
-  const hoursSaved = Math.max(4, Math.round(flatCount * 0.8));
-  const phoneHassleSaved = Math.max(6, Math.round(flatCount * 1.5));
-
-  // Helper to convert English digits to Bengali digits
-  const toBengaliNum = (num: number | string): string => {
-    const bengaliDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-    return String(num).replace(/[0-9]/g, (digit) => bengaliDigits[parseInt(digit, 10)]);
-  };
 
   return (
     <div className="min-h-screen w-full bg-[#f8fafc] text-slate-900 font-sans selection:bg-emerald-100 selection:text-emerald-900 antialiased overflow-x-hidden">
@@ -733,94 +720,7 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* 6. Section: Interactive ROI Calculator */}
-      <section id="calculator" className="py-20 bg-[#f8fafc] border-y border-slate-200 relative z-10">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center max-w-2xl mx-auto space-y-2.5 mb-12">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-bold border border-slate-200">
-              {siteContent.calculator.badge}
-            </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
-              {siteContent.calculator.title}
-            </h2>
-            <p className="text-slate-700 text-sm sm:text-base leading-relaxed font-medium">
-              {siteContent.calculator.subtitle}
-            </p>
-          </div>
-
-          <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-8">
-            
-            {/* Slider Control */}
-            <div className="space-y-4">
-              <div className="flex justify-between items-center gap-3">
-                <label className="text-xs sm:text-base font-bold text-slate-900 flex items-center gap-1.5 sm:gap-2 leading-tight">
-                  <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-800 shrink-0" />
-                  <span>{siteContent.calculator.label}</span>
-                </label>
-                <div className="shrink-0 flex items-center justify-center min-w-[72px] sm:min-w-[85px] px-3 sm:px-4 py-1.5 rounded-xl bg-slate-50 border border-slate-200 shadow-2xs">
-                  <span className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 whitespace-nowrap select-none">
-                    {toBengaliNum(flatCount)}টি
-                  </span>
-                </div>
-              </div>
-
-              <input
-                type="range"
-                min="1"
-                max="50"
-                value={flatCount}
-                onChange={(e) => setFlatCount(Number(e.target.value))}
-                className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700"
-              />
-              <div className="flex justify-between text-xs text-slate-600 font-bold font-mono">
-                <span>{siteContent.calculator.minFlatLabel}</span>
-                <span>{siteContent.calculator.midFlatLabel}</span>
-                <span>{siteContent.calculator.maxFlatLabel}</span>
-              </div>
-            </div>
-
-            {/* Calculated Results Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-200">
-              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-center shadow-2xs">
-                <span className="text-xs text-slate-700 font-bold block">{siteContent.calculator.timeSavedLabel}</span>
-                <span className="text-2xl sm:text-3xl font-black text-slate-900 block mt-2 whitespace-nowrap">
-                  {toBengaliNum(hoursSaved)} ঘণ্টা
-                </span>
-                <span className="text-[11px] text-slate-600 font-medium mt-1 block">{siteContent.calculator.timeSavedSub}</span>
-              </div>
-
-              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-center shadow-2xs">
-                <span className="text-xs text-slate-700 font-bold block">{siteContent.calculator.hassleSavedLabel}</span>
-                <span className="text-2xl sm:text-3xl font-black text-slate-900 block mt-2 whitespace-nowrap">
-                  {toBengaliNum(phoneHassleSaved)}টি কল
-                </span>
-                <span className="text-[11px] text-slate-600 font-medium mt-1 block">{siteContent.calculator.hassleSavedSub}</span>
-              </div>
-
-              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-center shadow-2xs">
-                <span className="text-xs text-slate-700 font-bold block">{siteContent.calculator.dueRiskLabel}</span>
-                <span className="text-2xl sm:text-3xl font-black text-emerald-800 block mt-2 whitespace-nowrap">
-                  {siteContent.calculator.dueRiskValue}
-                </span>
-                <span className="text-[11px] text-slate-600 font-medium mt-1 block">{siteContent.calculator.dueRiskSub}</span>
-              </div>
-            </div>
-
-            <div className="text-center pt-2">
-              <Link
-                href="/register"
-                className="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-sm shadow-sm transition-all"
-              >
-                <span>{siteContent.calculator.ctaTemplate.replace('{count}', toBengaliNum(flatCount))}</span>
-              </Link>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* 7. Section: Pricing Matrix */}
+      {/* 6. Section: Pricing Matrix */}
       <section id="pricing" className="py-24 relative z-10 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           
