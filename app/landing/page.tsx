@@ -550,11 +550,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. Section: Luxury Bento Grid Layout ("অল-ইন-ওয়ান সমাধান") */}
-      <section id="bento" className="py-24 relative z-10 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 5. Section: All-in-One Features (৪টি পরিপাটি ওয়াইড বক্স) */}
+      <section id="bento" className="py-20 sm:py-24 relative z-10 bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center max-w-3xl mx-auto space-y-2.5 mb-14">
+          <div className="text-center max-w-3xl mx-auto space-y-2.5 mb-12">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-bold border border-slate-200">
               {siteContent.features.badge}
             </div>
@@ -566,119 +566,106 @@ export default function HomePage() {
             </p>
           </div>
 
-          {/* Bento Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* 4 Wide Horizontal Feature Cards */}
+          <div className="space-y-4">
             
-            {/* Bento 1: Large Featured Card */}
-            <div className="md:col-span-2 rounded-3xl p-7 sm:p-9 bg-slate-50 border border-slate-200 hover:border-slate-300 transition-all shadow-2xs hover:shadow-sm space-y-6 relative overflow-hidden">
-              <div className="flex items-center justify-between">
-                <div className="w-12 h-12 rounded-2xl bg-white text-slate-800 border border-slate-200 flex items-center justify-center font-bold">
+            {/* Feature 1: Sub-meter Reading */}
+            <div className="rounded-2xl p-5 sm:p-6 bg-slate-50 border border-slate-200/90 hover:border-emerald-300 hover:bg-white hover:shadow-md transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 group">
+              <div className="flex items-start gap-4 sm:gap-5">
+                <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 border border-amber-200/80 flex items-center justify-center font-bold shrink-0 group-hover:scale-105 transition-transform shadow-2xs">
                   <Zap className="w-6 h-6 text-amber-600" />
                 </div>
-                <span className="text-xs font-bold px-3 py-1 rounded-full bg-white border border-slate-200 text-slate-800">
-                  {siteContent.features.meter.tag}
-                </span>
+                <div className="space-y-1.5">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h4 className="text-lg sm:text-xl font-black text-slate-900">
+                      {siteContent.features.meter.title}
+                    </h4>
+                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-white text-slate-700 border border-slate-200 shadow-2xs">
+                      {siteContent.features.meter.tag}
+                    </span>
+                  </div>
+                  <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium max-w-2xl">
+                    {siteContent.features.meter.description}
+                  </p>
+                </div>
               </div>
-
-              <div className="space-y-2">
-                <h4 className="text-xl sm:text-2xl font-black text-slate-900">
-                  {siteContent.features.meter.title}
-                </h4>
-                <p className="text-sm text-slate-700 max-w-xl leading-relaxed font-medium">
-                  {siteContent.features.meter.description}
-                </p>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-white border border-slate-200 flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
-                <div className="flex items-center gap-2">
-                  <span className="text-slate-600">পূর্বের রিডিং:</span>
-                  <span className="text-slate-900 font-bold">১২০</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-slate-600">বর্তমান রিডিং:</span>
-                  <span className="text-slate-900 font-bold">২৫০</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-slate-600">ব্যবহৃত:</span>
-                  <span className="text-amber-700 font-bold">১৩০ ইউনিট</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-slate-600">রেট:</span>
-                  <span className="text-slate-900 font-bold">৳ ১০/ইউনিট</span>
-                </div>
-                <div className="text-emerald-800 font-bold text-sm">
-                  = ৳ ১,৩০০
-                </div>
+              <div className="hidden md:flex items-center text-xs font-bold text-emerald-800 bg-emerald-50 px-3.5 py-2 rounded-xl border border-emerald-200/80 shrink-0">
+                অটো হিসাব
               </div>
             </div>
 
-            {/* Bento 2: Automated Reminders */}
-            <div className="rounded-3xl p-7 bg-slate-50 border border-slate-200 hover:border-slate-300 transition-all shadow-2xs hover:shadow-sm space-y-5">
-              <div className="w-12 h-12 rounded-2xl bg-white text-slate-800 border border-slate-200 flex items-center justify-center font-bold">
-                <MessageCircle className="w-6 h-6 text-emerald-700" />
+            {/* Feature 2: Automated Reminders */}
+            <div className="rounded-2xl p-5 sm:p-6 bg-slate-50 border border-slate-200/90 hover:border-emerald-300 hover:bg-white hover:shadow-md transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 group">
+              <div className="flex items-start gap-4 sm:gap-5">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-800 border border-emerald-200/80 flex items-center justify-center font-bold shrink-0 group-hover:scale-105 transition-transform shadow-2xs">
+                  <MessageCircle className="w-6 h-6 text-emerald-700" />
+                </div>
+                <div className="space-y-1.5">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h4 className="text-lg sm:text-xl font-black text-slate-900">
+                      {siteContent.features.reminder.title}
+                    </h4>
+                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-white text-slate-700 border border-slate-200 shadow-2xs">
+                      {siteContent.features.reminder.tag}
+                    </span>
+                  </div>
+                  <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium max-w-2xl">
+                    {siteContent.features.reminder.description}
+                  </p>
+                </div>
               </div>
-              <h4 className="text-xl font-black text-slate-900">
-                {siteContent.features.reminder.title}
-              </h4>
-              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-                {siteContent.features.reminder.description}
-              </p>
-              <div className="pt-2">
-                <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-700" />
-                  {siteContent.features.reminder.tag}
-                </span>
+              <div className="hidden md:flex items-center text-xs font-bold text-emerald-800 bg-emerald-50 px-3.5 py-2 rounded-xl border border-emerald-200/80 shrink-0">
+                স্বয়ংক্রিয় সেন্ড
               </div>
             </div>
 
-            {/* Bento 3: Digital Money Receipt */}
-            <div className="rounded-3xl p-7 bg-slate-50 border border-slate-200 hover:border-slate-300 transition-all shadow-2xs hover:shadow-sm space-y-5">
-              <div className="w-12 h-12 rounded-2xl bg-white text-slate-800 border border-slate-200 flex items-center justify-center font-bold">
-                <Receipt className="w-6 h-6 text-emerald-700" />
+            {/* Feature 3: Digital Money Receipt */}
+            <div className="rounded-2xl p-5 sm:p-6 bg-slate-50 border border-slate-200/90 hover:border-emerald-300 hover:bg-white hover:shadow-md transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 group">
+              <div className="flex items-start gap-4 sm:gap-5">
+                <div className="w-12 h-12 rounded-2xl bg-teal-50 text-teal-800 border border-teal-200/80 flex items-center justify-center font-bold shrink-0 group-hover:scale-105 transition-transform shadow-2xs">
+                  <Receipt className="w-6 h-6 text-teal-700" />
+                </div>
+                <div className="space-y-1.5">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h4 className="text-lg sm:text-xl font-black text-slate-900">
+                      {siteContent.features.receipt.title}
+                    </h4>
+                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-white text-slate-700 border border-slate-200 shadow-2xs">
+                      {siteContent.features.receipt.tag}
+                    </span>
+                  </div>
+                  <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium max-w-2xl">
+                    {siteContent.features.receipt.description}
+                  </p>
+                </div>
               </div>
-              <h4 className="text-xl font-black text-slate-900">
-                {siteContent.features.receipt.title}
-              </h4>
-              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-                {siteContent.features.receipt.description}
-              </p>
-              <div className="pt-2">
-                <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800">
-                  <Printer className="w-4 h-4 text-emerald-700" />
-                  {siteContent.features.receipt.tag}
-                </span>
+              <div className="hidden md:flex items-center text-xs font-bold text-emerald-800 bg-emerald-50 px-3.5 py-2 rounded-xl border border-emerald-200/80 shrink-0">
+                PDF ভাউচার
               </div>
             </div>
 
-            {/* Bento 4: Police Verification Form */}
-            <div className="md:col-span-2 rounded-3xl p-7 sm:p-9 bg-slate-50 border border-slate-200 hover:border-slate-300 transition-all shadow-2xs hover:shadow-sm space-y-6">
-              <div className="flex items-center justify-between">
-                <div className="w-12 h-12 rounded-2xl bg-white text-slate-800 border border-slate-200 flex items-center justify-center font-bold">
-                  <ShieldCheck className="w-6 h-6 text-emerald-700" />
+            {/* Feature 4: Police Form */}
+            <div className="rounded-2xl p-5 sm:p-6 bg-slate-50 border border-slate-200/90 hover:border-emerald-300 hover:bg-white hover:shadow-md transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 group">
+              <div className="flex items-start gap-4 sm:gap-5">
+                <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-800 border border-blue-200/80 flex items-center justify-center font-bold shrink-0 group-hover:scale-105 transition-transform shadow-2xs">
+                  <ShieldCheck className="w-6 h-6 text-blue-700" />
                 </div>
-                <span className="text-xs font-bold px-3 py-1 rounded-full bg-white border border-slate-200 text-slate-800">
-                  {siteContent.features.police.tag}
-                </span>
+                <div className="space-y-1.5">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h4 className="text-lg sm:text-xl font-black text-slate-900">
+                      {siteContent.features.police.title}
+                    </h4>
+                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-white text-slate-700 border border-slate-200 shadow-2xs">
+                      {siteContent.features.police.tag}
+                    </span>
+                  </div>
+                  <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium max-w-2xl">
+                    {siteContent.features.police.description}
+                  </p>
+                </div>
               </div>
-
-              <div className="space-y-2">
-                <h4 className="text-xl sm:text-2xl font-black text-slate-900">
-                  {siteContent.features.police.title}
-                </h4>
-                <p className="text-sm text-slate-700 max-w-xl leading-relaxed font-medium">
-                  {siteContent.features.police.description}
-                </p>
-              </div>
-
-              <div className="flex items-center gap-4 text-xs font-bold text-slate-800">
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-700" />
-                  <span>{siteContent.features.police.point1}</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-700" />
-                  <span>{siteContent.features.police.point2}</span>
-                </div>
+              <div className="hidden md:flex items-center text-xs font-bold text-emerald-800 bg-emerald-50 px-3.5 py-2 rounded-xl border border-emerald-200/80 shrink-0">
+                পুলিশ ফরম্যাট
               </div>
             </div>
 
