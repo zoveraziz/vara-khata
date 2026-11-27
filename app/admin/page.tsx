@@ -21,10 +21,55 @@ import {
   Sliders,
   FileText,
   LayoutTemplate,
+  Lock,
+  Eye,
+  EyeOff,
+  LogOut,
 } from 'lucide-react';
 
 export default function AdminPage() {
   const { content, updateContent, resetContent, isCustomized, lastUpdated } = useSiteContent();
+
+  // Authentication State with Password '1992'
+  const ADMIN_PASSWORD = '1992';
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [passwordInput, setPasswordInput] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [authError, setAuthError] = useState('');
+  const [hasCheckedSession, setHasCheckedSession] = useState(false);
+
+  // Check session storage on mount
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isAuth = sessionStorage.getItem('vara_khata_admin_auth') === 'true';
+      if (isAuth) {
+        setIsAuthenticated(true);
+      }
+      setHasCheckedSession(true);
+    }
+  }, []);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (passwordInput.trim() === ADMIN_PASSWORD) {
+      setIsAuthenticated(true);
+      setAuthError('');
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('vara_khata_admin_auth', 'true');
+      }
+    } else {
+      setAuthError('ভুল পাসওয়ার্ড! সঠিক অ্যাডমিন পাসওয়ার্ড দিন।');
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setPasswordInput('');
+    setAuthError('');
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem('vara_khata_admin_auth');
+    }
+  };
 
   // Local working copy of content for form edits
   const [formData, setFormData] = useState<SiteContentType>(content);
@@ -52,6 +97,80 @@ export default function AdminPage() {
     setSavedSuccess(true);
     setTimeout(() => setSavedSuccess(false), 3000);
   };
+
+  // If not authenticated, render secure Lock Screen
+  if (hasCheckedSession && !isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-[#f8fafc] flex flex-col items-center justify-center p-4 selection:bg-emerald-100 selection:text-emerald-900">
+        <div className="w-full max-w-md bg-white border border-slate-200 rounded-3xl p-8 sm:p-10 shadow-xl space-y-6">
+          
+          <div className="text-center space-y-3">
+            <div className="w-16 h-16 rounded-3xl bg-emerald-800 text-white flex items-center justify-center mx-auto shadow-md">
+              <Lock className="w-8 h-8 text-emerald-100" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-black text-slate-900 tracking-tight">
+                ভাড়া খাতা অ্যাডমিন
+              </h1>
+              <p className="text-xs text-slate-500 font-medium mt-1">
+                কন্ট্রোল প্যানেলে প্রবেশের জন্য পাসওয়ার্ড দিন
+              </p>
+            </div>
+          </div>
+
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <label className="text-xs font-bold text-slate-700 block mb-1.5">
+                অ্যাডমিন পাসওয়ার্ড
+              </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={passwordInput}
+                  onChange={(e) => {
+                    setPasswordInput(e.target.value);
+                    if (authError) setAuthError('');
+                  }}
+                  autoFocus
+                  placeholder="পাসওয়ার্ড লিখুন..."
+                  className="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3.5 pr-11 text-base text-slate-900 font-mono tracking-wider focus:border-emerald-700 focus:bg-white focus:outline-none transition"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1"
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+            </div>
+
+            {authError && (
+              <div className="flex items-center gap-2 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-bold animate-in fade-in duration-150">
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                <span>{authError}</span>
+              </div>
+            )}
+
+            <button
+              type="submit"
+              className="w-full py-3.5 rounded-2xl bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-base shadow-sm hover:shadow transition flex items-center justify-center gap-2 group cursor-pointer"
+            >
+              <span>লগইন করুন</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            </button>
+          </form>
+
+          <div className="text-center pt-2 border-t border-slate-100">
+            <Link href="/" className="text-xs text-slate-500 hover:text-emerald-800 font-bold transition">
+              ← মূল ওয়েবসাইটে ফিরে যান
+            </Link>
+          </div>
+
+        </div>
+      </div>
+    );
+  }
 
   const tabs = [
     { id: 'hero', label: '🚀 হিরো সেকশন', icon: Sparkles },
@@ -121,6 +240,16 @@ export default function AdminPage() {
             >
               <Save className="w-4 h-4" />
               <span>পরিবর্তন সেভ করুন</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-rose-700 hover:bg-rose-50 border border-slate-200 transition flex items-center gap-1.5"
+              title="অ্যাডমিন প্যানেল থেকে লগআউট করুন"
+            >
+              <LogOut className="w-3.5 h-3.5 text-slate-500" />
+              <span className="hidden sm:inline">লগআউট</span>
             </button>
           </div>
 
