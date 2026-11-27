@@ -776,22 +776,22 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5.5 Section: NRB Landlords (প্রবাসী বাড়িওয়ালাদের বিশেষ সুবিধা - পরিচ্ছন্ন ও সংক্ষেপিত বক্স) */}
+      {/* 5.5 Section: NRB Landlords (প্রবাসী বাড়িওয়ালাদের বিশেষ সুবিধা - সবুজ থিম ও প্রশস্ত বক্স) */}
       {siteContent.nrb && (
-        <section className="py-8 bg-[#f8fafc] relative z-10 border-t border-slate-200/80">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="rounded-3xl p-6 sm:p-8 bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 text-white shadow-lg border border-slate-700/60 flex flex-col sm:flex-row items-center justify-between gap-6 relative overflow-hidden">
+        <section className="py-6 sm:py-8 bg-[#f8fafc] relative z-10 border-t border-slate-200/80">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="rounded-3xl py-5 sm:py-6 px-6 sm:px-8 bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-950 text-white shadow-md border border-emerald-700/60 flex flex-col sm:flex-row items-center justify-between gap-5 relative overflow-hidden">
               <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-white/5 transform skew-x-12 pointer-events-none"></div>
 
-              <div className="space-y-2 text-center sm:text-left relative z-10">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-400/30">
+              <div className="space-y-1.5 text-center sm:text-left relative z-10 max-w-2xl lg:max-w-3xl">
+                <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-emerald-700/50 text-emerald-200 text-[11px] font-bold border border-emerald-500/40">
                   <Globe className="w-3.5 h-3.5" />
                   <span>{siteContent.nrb.badge}</span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-black text-white tracking-tight">
                   {siteContent.nrb.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-300 max-w-xl font-medium leading-relaxed">
+                <p className="text-xs sm:text-sm text-emerald-100 font-medium leading-relaxed">
                   {siteContent.nrb.subtitle}
                 </p>
               </div>
@@ -799,10 +799,10 @@ export default function HomePage() {
               <div className="shrink-0 w-full sm:w-auto relative z-10 text-center">
                 <Link
                   href="/register"
-                  className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs sm:text-sm rounded-xl shadow-lg transition active:scale-95"
+                  className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 bg-white hover:bg-emerald-50 text-emerald-950 font-black text-xs sm:text-sm rounded-xl shadow-md transition active:scale-95"
                 >
                   <span>{siteContent.nrb.ctaText}</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 text-emerald-800" />
                 </Link>
               </div>
             </div>
