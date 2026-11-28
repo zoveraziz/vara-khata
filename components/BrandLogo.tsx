@@ -7,6 +7,7 @@ interface BrandLogoProps {
   showSubtitle?: boolean;
   className?: string;
   theme?: 'dark' | 'light';
+  lang?: 'bn' | 'en';
 }
 
 export function BrandLogoIcon({ size = 'md', className = '' }: { size?: 'sm' | 'md' | 'lg'; className?: string }) {
@@ -105,8 +106,10 @@ export default function BrandLogo({
   showSubtitle = true,
   className = '',
   theme = 'light',
+  lang = 'bn',
 }: BrandLogoProps) {
   const isDark = theme === 'dark';
+  const isEnglish = lang === 'en';
 
   const titleSizes = {
     sm: 'text-base font-black',
@@ -121,7 +124,10 @@ export default function BrandLogo({
   };
 
   return (
-    <div className={`flex items-center gap-2.5 sm:gap-3 group select-none ${className}`}>
+    <div
+      className={`flex items-center gap-2.5 sm:gap-3 group select-none notranslate ${className}`}
+      translate="no"
+    >
       {/* Visual Logo Icon */}
       <BrandLogoIcon size={size} className="group-hover:scale-105 transition-transform" />
 
@@ -129,11 +135,12 @@ export default function BrandLogo({
       <div className="flex flex-col justify-center leading-tight">
         <div className="flex items-center gap-1.5">
           <span
-            className={`tracking-tight whitespace-nowrap ${titleSizes[size]} ${
+            className={`tracking-tight whitespace-nowrap notranslate ${titleSizes[size]} ${
               isDark ? 'text-white' : 'text-[#0F4A34]'
             }`}
+            translate="no"
           >
-            ভাড়া খাতা
+            {isEnglish ? 'Vara Khata' : 'ভাড়া খাতা'}
           </span>
         </div>
 
@@ -143,7 +150,7 @@ export default function BrandLogo({
               isDark ? 'text-emerald-300' : 'text-emerald-800'
             }`}
           >
-            স্মার্ট প্রপার্টি ম্যানেজমেন্ট
+            {isEnglish ? 'Smart Property Management' : 'স্মার্ট প্রপার্টি ম্যানেজমেন্ট'}
           </p>
         )}
       </div>

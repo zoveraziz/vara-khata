@@ -62,7 +62,7 @@ export default function HomePage() {
           
           {/* Brand Logo on the Left */}
           <Link href="/" className="flex items-center group shrink-0">
-            <BrandLogo size="md" showSubtitle={true} />
+            <BrandLogo size="md" showSubtitle={true} lang={lang} />
           </Link>
 
           {/* Desktop Right-Aligned Tabs Group */}
@@ -879,7 +879,7 @@ export default function HomePage() {
       <footer className="bg-white border-t border-slate-200 py-12 relative z-10 text-xs text-slate-600 font-medium">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           <Link href="/" className="flex items-center group">
-            <BrandLogo size="sm" showSubtitle={true} />
+            <BrandLogo size="sm" showSubtitle={true} lang={lang} />
           </Link>
 
           <div className="flex items-center gap-6">
