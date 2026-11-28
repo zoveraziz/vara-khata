@@ -43,7 +43,7 @@ export default function Navbar() {
     saveManagerStaff,
   } = useAuth();
 
-  const { properties, activePropertyId, setActivePropertyId, flats, addProperty, subscription, triggerSubscriptionPrompt } = useApp();
+  const { properties, activePropertyId, setActivePropertyId, flats, addProperty, subscription, triggerSubscriptionPrompt, canPerformAction } = useApp();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showAddPropertyModal, setShowAddPropertyModal] = useState(false);
   const [showRoleModal, setShowRoleModal] = useState(false);
@@ -86,6 +86,11 @@ export default function Navbar() {
   const handleCreateProperty = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newPropName.trim() || !newPropAddress.trim()) return;
+    const check = canPerformAction('add_property');
+    if (!check.allowed) {
+      triggerSubscriptionPrompt(check.reason || 'নতুন বাড়ি যোগ করতে প্যাকেজ সক্রিয় করুন।');
+      return;
+    }
     addProperty({
       name: newPropName,
       address: newPropAddress,
@@ -181,7 +186,14 @@ export default function Navbar() {
                 {/* Add Property Button (Hidden or disabled in Manager Mode) */}
                 {isOwner && (
                   <button
-                    onClick={() => setShowAddPropertyModal(true)}
+                    onClick={() => {
+                      const check = canPerformAction('add_property');
+                      if (!check.allowed) {
+                        triggerSubscriptionPrompt(check.reason || 'নতুন বাড়ি যোগ করতে প্যাকেজ সক্রিয় করুন।');
+                        return;
+                      }
+                      setShowAddPropertyModal(true);
+                    }}
                     className="flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs sm:text-sm font-bold px-3 py-1.5 rounded-xl shadow-sm transition active:scale-95 whitespace-nowrap"
                   >
                     <Plus className="w-4 h-4" />

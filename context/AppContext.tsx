@@ -79,7 +79,7 @@ interface AppContextType {
   subscriptionModalReason: string;
   setSubscriptionModalReason: (reason: string) => void;
   triggerSubscriptionPrompt: (reason: string) => void;
-  canPerformAction: (action: 'add_flat' | 'add_tenant' | 'generate_bill' | 'print_receipt' | 'send_sms') => { allowed: boolean; reason?: string };
+  canPerformAction: (action: 'add_property' | 'add_flat' | 'add_tenant' | 'generate_bill' | 'print_receipt' | 'send_sms') => { allowed: boolean; reason?: string };
   subscriptionRequests: SubscriptionRequest[];
   submitSubscriptionRequest: (params: {
     planId: SubscriptionPlanId;
@@ -158,16 +158,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [reminderLogs, setReminderLogs] = useState<ReminderLog[]>(initialReminderLogs);
 
   const defaultSubscription: Subscription = {
-    planId: 'pro',
-    planName: 'প্রো বাড়িওয়ালা',
+    planId: 'free',
+    planName: 'ফ্রি ট্রায়াল (৩টি ফ্ল্যাট পর্যন্ত)',
     status: 'active',
-    startDate: '2026-11-01T00:00:00.000Z',
-    validUntil: '2026-12-31T23:59:59.000Z',
-    maxFlats: 15,
-    price: 399,
-    paymentMethod: 'bkash',
-    trxId: '9M8A2B7K1X',
-    lastPaymentDate: '2026-11-01T00:00:00.000Z',
+    startDate: '2026-01-01T00:00:00.000Z',
+    validUntil: '2099-12-31T23:59:59.000Z',
+    maxFlats: 3,
+    price: 0,
   };
 
   const [subscription, setSubscription] = useState<Subscription>(defaultSubscription);
@@ -697,22 +694,34 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setShowSubscriptionModal(true);
   };
 
-  const canPerformAction = (action: 'add_flat' | 'add_tenant' | 'generate_bill' | 'print_receipt' | 'send_sms'): { allowed: boolean; reason?: string } => {
+  const canPerformAction = (action: 'add_property' | 'add_flat' | 'add_tenant' | 'generate_bill' | 'print_receipt' | 'send_sms'): { allowed: boolean; reason?: string } => {
     const isExpired = subscription.status === 'expired' || new Date(subscription.validUntil).getTime() < Date.now();
     const isPending = subscription.status === 'pending';
 
     if (isPending) {
       return {
         allowed: false,
-        reason: 'আপনার পেমেন্ট রিকোয়েস্টটি বর্তমানে এডমিন কর্তৃক যাচাইকরণ প্রক্রিয়াধীন (Processing) রয়েছে। দ্রুতই সক্রিয় হবে।',
+        reason: 'আপনার পেমেন্ট রিকোয়েস্টটি বর্তমানে এডমিন কর্তৃক যাচাইকরণ প্রক্রিয়াধীন (Processing) রয়েছে। দ্রুতই প্যাকেজ চালু হবে।',
       };
     }
     
     if (isExpired && subscription.planId !== 'free') {
       return {
         allowed: false,
-        reason: 'আপনার সাবস্ক্রিপশনের মেয়াদ শেষ হয়েছে। নিরবচ্ছিন্ন সেবা ও ফিচার সচল করতে রিনিউ করুন।',
+        reason: 'আপনার সাবস্ক্রিপশনের মেয়াদ শেষ হয়েছে। নিরবচ্ছিন্ন সেবা ও ফিচার সচল করতে প্যাকেজ রিনিউ করুন।',
       };
+    }
+
+    if (action === 'add_property') {
+      if (isExpired) {
+        return { allowed: false, reason: 'সাবস্ক্রিপশনের মেয়াদ শেষ হয়েছে। নতুন বাড়ি যোগ করতে প্যাকেজ রিনিউ করুন।' };
+      }
+      if (subscription.planId === 'free' && (properties.length >= 3 || flats.length >= 3)) {
+        return {
+          allowed: false,
+          reason: 'ফ্রি প্ল্যানে সর্বোচ্চ ৩টি বাড়ি বা ইউনিট পরিচালনা করা যায়। ৪ নম্বর বাড়ি বা ফ্ল্যাট যোগ করতে অনুগ্রহ করে ‘প্রো বাড়িওয়ালা’ প্যাকেজটি কিনুন (Buy Package)।',
+        };
+      }
     }
 
     if (action === 'add_flat') {
@@ -722,7 +731,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       if (subscription.planId === 'free' && flats.length >= 3) {
         return {
           allowed: false,
-          reason: 'ফ্রি প্ল্যানে সর্বোচ্চ ৩টি ফ্ল্যাট ব্যবহার করা যায়। আপনার কোটা পূর্ণ হয়েছে, অতিরিক্ত ফ্ল্যাট যোগ করতে ‘প্রো বাড়িওয়ালা’ প্ল্যান অ্যাক্টিভ করুন।',
+          reason: 'ফ্রি প্ল্যানে সর্বোচ্চ ৩টি বাড়ি বা ফ্ল্যাট বিনামূল্যে পরিচালনা করা যায়। ৪ নম্বর ফ্ল্যাট যোগ করতে অনুগ্রহ করে ‘প্রো বাড়িওয়ালা’ প্যাকেজটি কিনুন (Buy Package)।',
         };
       }
       if (subscription.planId === 'pro' && flats.length >= 15) {
@@ -735,10 +744,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
     if (action === 'add_tenant') {
       if (isExpired) {
-        return { allowed: false, reason: 'সাবস্ক্রিপশনের মেয়াদ শেষ হওয়ায় নতুন ভাড়াটিয়া যুক্ত করা সাময়িকভাবে স্থগিত। রিনিউ করুন।' };
+        return { allowed: false, reason: 'সাবস্ক্রিপশনের মেয়াদ শেষ হওয়ায় নতুন ভাড়াটিয়া যুক্ত করা সাময়িকভাবে স্থগিত। প্যাকেজ রিনিউ করুন।' };
       }
-      if (subscription.planId === 'free' && flats.length > 3) {
-        return { allowed: false, reason: 'ফ্রি কোটা অতিক্রান্ত হয়েছে। নতুন ভাড়াটিয়া যোগ করতে প্রো প্ল্যান সক্রিয় করুন।' };
+      if (subscription.planId === 'free' && (tenants.length >= 3 || flats.length >= 3)) {
+        return {
+          allowed: false,
+          reason: 'ফ্রি প্ল্যানে সর্বোচ্চ ৩টি ভাড়াটিয়ার খাতা পরিচালনা করা যায়। ৪ নম্বর বা নতুন ভাড়াটিয়া যোগ করতে অনুগ্রহ করে ‘প্রো বাড়িওয়ালা’ প্যাকেজটি কিনুন (Buy Package)।',
+        };
       }
     }
 

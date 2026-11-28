@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+import { useApp } from '@/context/AppContext';
 import {
   Building2,
   Lock,
@@ -18,6 +19,7 @@ import {
 export default function RegisterPage() {
   const router = useRouter();
   const { register } = useAuth();
+  const { resetToFreePlan, addProperty } = useApp();
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -43,6 +45,12 @@ export default function RegisterPage() {
       });
 
       if (res.success) {
+        resetToFreePlan();
+        addProperty({
+          name: propertyName.trim(),
+          address: propertyAddress.trim() || 'ঢাকা, বাংলাদেশ',
+          totalFloors: 1,
+        });
         router.push('/dashboard');
       } else {
         setError(res.message);
