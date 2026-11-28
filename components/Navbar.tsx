@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useApp } from '@/context/AppContext';
 import { useAuth, UserRole } from '@/context/AuthContext';
+import BrandLogo from '@/components/BrandLogo';
 import {
   Building2,
   LayoutDashboard,
@@ -150,13 +151,8 @@ export default function Navbar() {
                   {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                 </button>
 
-                <Link href="/dashboard" className="flex items-center gap-2.5 group">
-                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-700 to-teal-500 text-white flex items-center justify-center font-extrabold text-xl shadow-md shadow-emerald-700/20 group-hover:scale-105 transition-transform shrink-0">
-                    ভ
-                  </div>
-                  <span className="font-black text-xl text-slate-900 tracking-tight whitespace-nowrap">
-                    ভাড়া খাতা
-                  </span>
+                <Link href="/dashboard" className="flex items-center group">
+                  <BrandLogo size="md" showSubtitle={true} />
                 </Link>
               </div>
 

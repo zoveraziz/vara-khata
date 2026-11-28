@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { useApp } from '@/context/AppContext';
+import BrandLogo from '@/components/BrandLogo';
 import {
   Building2,
   Lock,
@@ -65,11 +66,8 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 -m-4 sm:-m-6 lg:-m-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <Link href="/" className="inline-flex items-center gap-2.5">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-700 to-teal-500 text-white flex items-center justify-center font-black text-2xl shadow-md">
-            ভ
-          </div>
-          <span className="font-black text-2xl text-slate-900 tracking-tight">ভাড়া খাতা</span>
+        <Link href="/" className="inline-flex items-center">
+          <BrandLogo size="lg" showSubtitle={true} />
         </Link>
         <h2 className="mt-4 text-2xl font-black text-slate-900 tracking-tight">
           ফ্রি বাড়িওয়ালা অ্যাকাউন্ট খুলুন
