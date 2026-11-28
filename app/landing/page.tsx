@@ -579,39 +579,27 @@ export default function HomePage() {
       <section id="pricing" className="py-24 relative z-10 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center max-w-2xl mx-auto space-y-2.5 mb-14">
+          {/* Section Header with Badge and Centered Value Banner */}
+          <div className="text-center max-w-4xl mx-auto mb-12 sm:mb-14 space-y-4">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-slate-100 text-slate-800 text-xs font-bold border border-slate-200">
               {siteContent.pricing.badge}
             </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
-              {siteContent.pricing.title}
-            </h2>
-            <p className="text-slate-700 text-sm sm:text-base leading-relaxed font-medium">
-              {siteContent.pricing.subtitle}
-            </p>
-          </div>
 
-          {/* Motivational Value Banner */}
-          {siteContent.pricing.valueBanner && (
-            <div className="mb-12 max-w-4xl mx-auto rounded-3xl bg-gradient-to-r from-emerald-50 via-teal-50/70 to-emerald-50 border border-emerald-200 p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left shadow-2xs">
-              <div className="flex items-center gap-3.5">
-                <div className="w-12 h-12 rounded-2xl bg-emerald-800 text-white flex items-center justify-center text-xl shrink-0 shadow-sm">
+            {/* Motivational Value Box (Centered, Single-line Title & Clean Subtitle) */}
+            {siteContent.pricing.valueBanner && (
+              <div className="rounded-3xl bg-gradient-to-r from-emerald-50 via-teal-50/70 to-emerald-50 border border-emerald-200 p-6 sm:p-7 shadow-2xs space-y-2 text-center">
+                <div className="inline-flex items-center justify-center w-10 h-10 rounded-2xl bg-emerald-800 text-white text-lg shadow-sm mx-auto mb-1">
                   ☕
                 </div>
-                <div>
-                  <h4 className="text-sm sm:text-base font-black text-slate-900 leading-tight">
-                    {siteContent.pricing.valueBanner.headline}
-                  </h4>
-                  <p className="text-xs text-slate-600 mt-1">
-                    {siteContent.pricing.valueBanner.subline}
-                  </p>
-                </div>
+                <h3 className="text-base sm:text-lg lg:text-xl font-black text-slate-900 tracking-tight leading-snug">
+                  {siteContent.pricing.valueBanner.headline}
+                </h3>
+                <p className="text-xs sm:text-sm font-medium text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                  {siteContent.pricing.valueBanner.subline}
+                </p>
               </div>
-              <span className="text-xs font-black text-emerald-900 bg-white border border-emerald-300 px-3.5 py-2 rounded-xl shadow-2xs whitespace-nowrap shrink-0">
-                {siteContent.pricing.valueBanner.tag}
-              </span>
-            </div>
-          )}
+            )}
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
             {siteContent.pricing.plans.map((plan, idx) => (
