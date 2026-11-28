@@ -787,15 +787,9 @@ export default function HomePage() {
       {/* 10. Footer (Clean White/Slate) */}
       <footer className="bg-white border-t border-slate-200 py-12 relative z-10 text-xs text-slate-600 font-medium">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
-            <div className="w-7 h-7 rounded-lg bg-emerald-800 text-white flex items-center justify-center font-bold text-sm">
-              {siteContent.brand.letter}
-            </div>
-            <span className="font-bold text-slate-900 text-sm">{siteContent.brand.name}</span>
-            {siteContent.brand.subTagline ? (
-              <span className="text-slate-600">• {siteContent.brand.subTagline}</span>
-            ) : null}
-          </div>
+          <Link href="/" className="flex items-center group">
+            <BrandLogo size="sm" showSubtitle={true} />
+          </Link>
 
           <div className="flex items-center gap-6">
             {siteContent.footer.links.map((link, idx) => (
