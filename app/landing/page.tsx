@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 import { useSiteContent } from '@/context/SiteContentContext';
 import BrandLogo from '@/components/BrandLogo';
-import HeroSkylineBg from '@/components/HeroSkylineBg';
+import ArchitecturalBackground from '@/components/ArchitecturalBackground';
 
 export default function HomePage() {
   const { content: siteContent } = useSiteContent();
@@ -37,7 +37,8 @@ export default function HomePage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   return (
-    <div className="min-h-screen w-full bg-[#f8fafc] text-slate-900 font-sans selection:bg-emerald-100 selection:text-emerald-900 antialiased overflow-x-hidden">
+    <div className="min-h-screen w-full bg-[#f8fafc] text-slate-900 font-sans selection:bg-emerald-100 selection:text-emerald-900 antialiased overflow-x-hidden relative">
+      <ArchitecturalBackground />
       
       {/* 1. Header (Clean White, Subtle Slate Border, Mobile Responsive Dropdown) */}
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-2xs transition-all">
@@ -104,7 +105,6 @@ export default function HomePage() {
 
       {/* 2. Hero Section (Eye-friendly, Calm & High Contrast Text) */}
       <section className="relative pt-12 pb-16 lg:pt-20 lg:pb-28 overflow-hidden z-10">
-        <HeroSkylineBg />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Eyebrow Pill */}
