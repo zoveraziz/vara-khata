@@ -169,7 +169,18 @@ export default function Navbar() {
                   <span className="mr-1.5 text-sm">🏢</span>
                   <select
                     value={activePropertyId}
-                    onChange={(e) => setActivePropertyId(e.target.value)}
+                    onChange={(e) => {
+                      if (e.target.value === '__add_new__') {
+                        const check = canPerformAction('add_property');
+                        if (!check.allowed) {
+                          triggerSubscriptionPrompt(check.reason || 'নতুন বাড়ি যোগ করতে প্যাকেজ সক্রিয় করুন।');
+                          return;
+                        }
+                        setShowAddPropertyModal(true);
+                        return;
+                      }
+                      setActivePropertyId(e.target.value);
+                    }}
                     className="bg-transparent text-slate-800 font-bold focus:outline-none cursor-pointer text-xs sm:text-sm max-w-[120px] sm:max-w-[180px] truncate"
                   >
                     {properties.map((p) => (
@@ -177,13 +188,16 @@ export default function Navbar() {
                         {p.name}
                       </option>
                     ))}
+                    {isOwner && (
+                      <option value="__add_new__">+ নতুন বাড়ি যুক্ত করুন</option>
+                    )}
                   </select>
                   <span className="text-[11px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md font-bold ml-2 hidden lg:inline-block">
                     {occupiedCount}/{propertyFlats.length} ভাড়া
                   </span>
                 </div>
 
-                {/* Add Property Button (Hidden or disabled in Manager Mode) */}
+                {/* Add Property Button (Hidden on Mobile to keep header clean next to logo) */}
                 {isOwner && (
                   <button
                     onClick={() => {
@@ -194,10 +208,10 @@ export default function Navbar() {
                       }
                       setShowAddPropertyModal(true);
                     }}
-                    className="flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs sm:text-sm font-bold px-3 py-1.5 rounded-xl shadow-sm transition active:scale-95 whitespace-nowrap"
+                    className="hidden sm:flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs sm:text-sm font-bold px-3 py-1.5 rounded-xl shadow-sm transition active:scale-95 whitespace-nowrap"
                   >
                     <Plus className="w-4 h-4" />
-                    <span className="hidden sm:inline">নতুন বাড়ি</span>
+                    <span>নতুন বাড়ি</span>
                   </button>
                 )}
 
@@ -330,7 +344,19 @@ export default function Navbar() {
               </span>
               <select
                 value={activePropertyId}
-                onChange={(e) => setActivePropertyId(e.target.value)}
+                onChange={(e) => {
+                  if (e.target.value === '__add_new__') {
+                    setMobileMenuOpen(false);
+                    const check = canPerformAction('add_property');
+                    if (!check.allowed) {
+                      triggerSubscriptionPrompt(check.reason || 'নতুন বাড়ি যোগ করতে প্যাকেজ সক্রিয় করুন।');
+                      return;
+                    }
+                    setShowAddPropertyModal(true);
+                    return;
+                  }
+                  setActivePropertyId(e.target.value);
+                }}
                 className="bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-900 focus:outline-none max-w-[170px] truncate"
               >
                 {properties.map((p) => (
@@ -338,6 +364,9 @@ export default function Navbar() {
                     {p.name}
                   </option>
                 ))}
+                {isOwner && (
+                  <option value="__add_new__">+ নতুন বাড়ি যুক্ত করুন</option>
+                )}
               </select>
             </div>
 
