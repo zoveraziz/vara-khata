@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { useSiteContent } from '@/context/SiteContentContext';
 import BrandLogo from '@/components/BrandLogo';
+import HeroSkylineBg from '@/components/HeroSkylineBg';
 
 export default function HomePage() {
   const { content: siteContent } = useSiteContent();
@@ -103,6 +104,7 @@ export default function HomePage() {
 
       {/* 2. Hero Section (Eye-friendly, Calm & High Contrast Text) */}
       <section className="relative pt-12 pb-16 lg:pt-20 lg:pb-28 overflow-hidden z-10">
+        <HeroSkylineBg />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Eyebrow Pill */}
