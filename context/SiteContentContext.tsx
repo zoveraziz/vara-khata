@@ -45,6 +45,7 @@ export function SiteContentProvider({ children }: { children: React.ReactNode })
           comparison: {
             ...prev.comparison,
             ...parsed.comparison,
+            cards: parsed.comparison?.cards || prev.comparison.cards,
             oldWay: { ...prev.comparison.oldWay, ...parsed.comparison?.oldWay },
             newWay: { ...prev.comparison.newWay, ...parsed.comparison?.newWay },
           },
@@ -61,6 +62,7 @@ export function SiteContentProvider({ children }: { children: React.ReactNode })
           pricing: {
             ...prev.pricing,
             ...parsed.pricing,
+            valueBanner: parsed.pricing?.valueBanner || prev.pricing.valueBanner,
             plans: parsed.pricing?.plans || prev.pricing.plans,
           },
           faqs: parsed.faqs || prev.faqs,

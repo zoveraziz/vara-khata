@@ -488,50 +488,55 @@ export default function HomePage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-            
-            {/* The Old Painful Way (বামে হালকা লাল কার্ড) */}
-            <div className="rounded-3xl p-6 sm:p-8 bg-rose-50/50 border border-rose-200/80 relative overflow-hidden space-y-5 shadow-2xs">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-rose-100 text-rose-800 text-xs font-bold border border-rose-200">
-                <XCircle className="w-4 h-4 text-rose-600" />
-                <span>{siteContent.comparison.oldWay.badge}</span>
-              </div>
+          {/* 4 Problem-Solution Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+            {siteContent.comparison.cards && siteContent.comparison.cards.length > 0 ? (
+              siteContent.comparison.cards.map((card, i) => (
+                <div
+                  key={i}
+                  className="bg-white rounded-3xl border border-slate-200/90 p-5 sm:p-6 shadow-xs hover:shadow-md transition-all space-y-3.5"
+                >
+                  <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                    <span className="text-xs font-black text-slate-400">
+                      বিষয় ০{i + 1} • {card.topic}
+                    </span>
+                    <span className="text-[10px] font-bold bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded-md">
+                      {card.tag}
+                    </span>
+                  </div>
 
-              <h4 className="text-xl font-black text-slate-900">
-                {siteContent.comparison.oldWay.title}
-              </h4>
+                  {/* Problem (Red) */}
+                  <div className="bg-rose-50/70 border border-rose-200/80 rounded-2xl p-3.5 flex items-start gap-3">
+                    <span className="w-5 h-5 rounded-full bg-rose-600 text-white flex items-center justify-center font-black text-xs shrink-0 mt-0.5 shadow-2xs">
+                      ✕
+                    </span>
+                    <div className="leading-tight">
+                      <h4 className="text-sm font-black text-rose-950">
+                        {card.problemTitle}
+                      </h4>
+                      <p className="text-xs font-semibold text-rose-800/90 mt-1">
+                        {card.problemDesc}
+                      </p>
+                    </div>
+                  </div>
 
-              <ul className="space-y-4 text-sm text-slate-800 font-medium">
-                {siteContent.comparison.oldWay.points.map((pt, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <XCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
-                    <span><strong>{pt.bold}</strong>{pt.text}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* The New Vara Khata Way (ডানে সবুজ ও সাদা পরিপাটি কার্ড) */}
-            <div className="rounded-3xl p-6 sm:p-8 bg-emerald-50/40 border border-emerald-300/80 relative overflow-hidden space-y-5 shadow-sm">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-200">
-                <CheckCircle2 className="w-4 h-4 text-emerald-700" />
-                <span>{siteContent.comparison.newWay.badge}</span>
-              </div>
-
-              <h4 className="text-xl font-black text-slate-900">
-                {siteContent.comparison.newWay.title}
-              </h4>
-
-              <ul className="space-y-4 text-sm text-slate-800 font-medium">
-                {siteContent.comparison.newWay.points.map((pt, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-700 shrink-0 mt-0.5" />
-                    <span><strong>{pt.bold}</strong>{pt.text}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
+                  {/* Solution (Green) */}
+                  <div className="bg-emerald-50/80 border border-emerald-200/90 rounded-2xl p-3.5 flex items-start gap-3">
+                    <span className="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center font-black text-xs shrink-0 mt-0.5 shadow-2xs">
+                      ✓
+                    </span>
+                    <div className="leading-tight">
+                      <h4 className="text-sm font-black text-emerald-950">
+                        {card.solutionTitle}
+                      </h4>
+                      <p className="text-xs font-semibold text-emerald-800 mt-1">
+                        {card.solutionDesc}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : null}
           </div>
         </div>
       </section>
@@ -585,6 +590,28 @@ export default function HomePage() {
               {siteContent.pricing.subtitle}
             </p>
           </div>
+
+          {/* Motivational Value Banner */}
+          {siteContent.pricing.valueBanner && (
+            <div className="mb-12 max-w-4xl mx-auto rounded-3xl bg-gradient-to-r from-emerald-50 via-teal-50/70 to-emerald-50 border border-emerald-200 p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left shadow-2xs">
+              <div className="flex items-center gap-3.5">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-800 text-white flex items-center justify-center text-xl shrink-0 shadow-sm">
+                  ☕
+                </div>
+                <div>
+                  <h4 className="text-sm sm:text-base font-black text-slate-900 leading-tight">
+                    {siteContent.pricing.valueBanner.headline}
+                  </h4>
+                  <p className="text-xs text-slate-600 mt-1">
+                    {siteContent.pricing.valueBanner.subline}
+                  </p>
+                </div>
+              </div>
+              <span className="text-xs font-black text-emerald-900 bg-white border border-emerald-300 px-3.5 py-2 rounded-xl shadow-2xs whitespace-nowrap shrink-0">
+                {siteContent.pricing.valueBanner.tag}
+              </span>
+            </div>
+          )}
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
             {siteContent.pricing.plans.map((plan, idx) => (
