@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useSiteContent, SiteContentType } from '@/context/SiteContentContext';
+import { useApp } from '@/context/AppContext';
 import {
   Save,
   RotateCcw,
@@ -29,10 +30,13 @@ import {
   Mail,
   Globe,
   MessageCircle,
+  Crown,
+  Clock,
 } from 'lucide-react';
 
 export default function AdminPage() {
   const { content, updateContent, resetContent, isCustomized, lastUpdated } = useSiteContent();
+  const { subscriptionRequests, approveSubscriptionRequest, rejectSubscriptionRequest } = useApp();
 
   // Authentication State with Password '1992'
   const ADMIN_PASSWORD = '1992';
@@ -78,8 +82,8 @@ export default function AdminPage() {
   // Local working copy of content for form edits
   const [formData, setFormData] = useState<SiteContentType>(content);
   const [activeTab, setActiveTab] = useState<
-    'brand' | 'hero' | 'stats' | 'howItWorks' | 'comparison' | 'features' | 'calculator' | 'pricing' | 'faqs' | 'finalCta' | 'contact' | 'nrb' | 'payments'
-  >('hero');
+    'subscriptions' | 'hero' | 'contact' | 'nrb' | 'payments' | 'brand' | 'stats' | 'howItWorks' | 'comparison' | 'features' | 'calculator' | 'pricing' | 'faqs' | 'finalCta'
+  >('subscriptions');
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [resetConfirmOpen, setResetConfirmOpen] = useState(false);
 
@@ -176,7 +180,14 @@ export default function AdminPage() {
     );
   }
 
+  const pendingCount = subscriptionRequests.filter((r) => r.status === 'pending').length;
+
   const tabs = [
+    {
+      id: 'subscriptions',
+      label: pendingCount > 0 ? `👑 প্যাকেজ রিকোয়েস্ট (${pendingCount})` : '👑 প্যাকেজ রিকোয়েস্ট',
+      icon: Crown,
+    },
     { id: 'hero', label: '🚀 হিরো সেকশন', icon: Sparkles },
     { id: 'contact', label: '📞 হেল্পলাইন ও সাপোর্ট', icon: Phone },
     { id: 'nrb', label: '✈️ প্রবাসী সুবিধা', icon: Globe },
@@ -326,6 +337,132 @@ export default function AdminPage() {
         {/* Form Container */}
         <form onSubmit={handleSave} className="mt-6 bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-sm">
           
+          {/* ============================================================== */}
+          {/* TAB 0: SUBSCRIPTION PAYMENT REQUESTS */}
+          {/* ============================================================== */}
+          {activeTab === 'subscriptions' && (
+            <div className="space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+                <div>
+                  <h2 className="text-xl font-black text-slate-900 flex items-center gap-2">
+                    <Crown className="w-5 h-5 text-amber-500" />
+                    <span>বাড়িওয়ালাদের প্যাকেজ পেমেন্ট রিকোয়েস্ট</span>
+                  </h2>
+                  <p className="text-xs text-slate-500 mt-1">
+                    বিকাশ বা নগদ ট্রানজেকশন যাচাই করে ১-ক্লিকে বাড়িওয়ালার প্যাকেজ অনুমোদন (Approve) করুন।
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <span className="px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-100 text-amber-900 border border-amber-200">
+                    অপেক্ষমাণ: {subscriptionRequests.filter((r) => r.status === 'pending').length} টি
+                  </span>
+                  <span className="px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-100 text-emerald-900 border border-emerald-200">
+                    চালু হয়েছে: {subscriptionRequests.filter((r) => r.status === 'approved').length} টি
+                  </span>
+                </div>
+              </div>
+
+              {/* Table of requests */}
+              <div className="border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-xs">
+                <div className="overflow-x-auto w-full">
+                  <table className="w-full min-w-[780px] text-left text-xs border-collapse">
+                    <thead>
+                      <tr className="bg-slate-50 text-slate-700 border-b border-slate-200 font-bold whitespace-nowrap">
+                        <th className="py-3 px-4">বাড়িওয়ালা ও ভবন</th>
+                        <th className="py-3 px-4">কাঙ্ক্ষিত প্যাকেজ</th>
+                        <th className="py-3 px-4">মাধ্যম ও প্রেরক নম্বর</th>
+                        <th className="py-3 px-4">ট্রানজেকশন আইডি (TrxID)</th>
+                        <th className="py-3 px-4">আবেদনের সময়</th>
+                        <th className="py-3 px-4">স্ট্যাটাস</th>
+                        <th className="py-3 px-4 text-right">পদক্ষেপ</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {subscriptionRequests.length === 0 ? (
+                        <tr>
+                          <td colSpan={7} className="py-12 text-center text-slate-400 font-medium">
+                            কোনো পেমেন্ট রিকোয়েস্ট নেই।
+                          </td>
+                        </tr>
+                      ) : (
+                        subscriptionRequests.map((req) => (
+                          <tr key={req.id} className="hover:bg-slate-50/70 transition">
+                            <td className="py-3.5 px-4">
+                              <strong className="text-slate-900 block font-bold text-sm">{req.userName}</strong>
+                              <span className="text-[11px] text-slate-500 font-medium">{req.propertyName} • {req.userPhone}</span>
+                            </td>
+
+                            <td className="py-3.5 px-4 whitespace-nowrap">
+                              <span className="font-bold text-slate-900 block">{req.planName}</span>
+                              <span className="text-[11px] font-black text-emerald-700">৳ {req.amount} /মাস</span>
+                            </td>
+
+                            <td className="py-3.5 px-4 whitespace-nowrap">
+                              <span className="inline-block px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider bg-slate-100 text-slate-800">
+                                {req.method}
+                              </span>
+                              <span className="block text-xs font-bold text-slate-800 mt-0.5">{req.senderPhone}</span>
+                            </td>
+
+                            <td className="py-3.5 px-4 font-mono font-bold text-slate-800 text-xs">
+                              {req.trxId || '—'}
+                            </td>
+
+                            <td className="py-3.5 px-4 text-slate-500 text-[11px] whitespace-nowrap">
+                              {req.submittedAt}
+                            </td>
+
+                            <td className="py-3.5 px-4 whitespace-nowrap">
+                              <span
+                                className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${
+                                  req.status === 'approved'
+                                    ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
+                                    : req.status === 'pending'
+                                    ? 'bg-amber-100 text-amber-800 border border-amber-200 animate-pulse'
+                                    : 'bg-rose-100 text-rose-800 border border-rose-200'
+                                }`}
+                              >
+                                {req.status === 'approved'
+                                  ? '✓ সক্রিয় (Approved)'
+                                  : req.status === 'pending'
+                                  ? '⏳ অপেক্ষমাণ (Pending)'
+                                  : '✕ বাতিল (Rejected)'}
+                              </span>
+                            </td>
+
+                            <td className="py-3.5 px-4 text-right whitespace-nowrap">
+                              {req.status === 'pending' ? (
+                                <div className="flex items-center justify-end gap-1.5">
+                                  <button
+                                    type="button"
+                                    onClick={() => approveSubscriptionRequest(req.id)}
+                                    className="px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs shadow-xs transition"
+                                  >
+                                    চালু করুন (Approve)
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => rejectSubscriptionRequest(req.id)}
+                                    className="px-2.5 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-bold text-xs transition"
+                                  >
+                                    বাতিল
+                                  </button>
+                                </div>
+                              ) : (
+                                <span className="text-emerald-700 font-bold text-xs">অনুমোদিত সম্পন্ন</span>
+                              )}
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* ============================================================== */}
           {/* TAB 1: HERO SECTION */}
           {/* ============================================================== */}

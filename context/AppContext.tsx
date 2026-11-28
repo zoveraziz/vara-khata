@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Property, Flat, Tenant, Bill, PaymentRecord, PaymentMethod, PaymentStatus, ReminderSettings, ReminderLog, Subscription, SubscriptionPlanId, SubscriptionStatus } from '@/types';
+import { Property, Flat, Tenant, Bill, PaymentRecord, PaymentMethod, PaymentStatus, ReminderSettings, ReminderLog, Subscription, SubscriptionPlanId, SubscriptionStatus, SubscriptionRequest } from '@/types';
 import {
   initialProperties,
   initialFlats,
@@ -80,6 +80,18 @@ interface AppContextType {
   setSubscriptionModalReason: (reason: string) => void;
   triggerSubscriptionPrompt: (reason: string) => void;
   canPerformAction: (action: 'add_flat' | 'add_tenant' | 'generate_bill' | 'print_receipt' | 'send_sms') => { allowed: boolean; reason?: string };
+  subscriptionRequests: SubscriptionRequest[];
+  submitSubscriptionRequest: (params: {
+    planId: SubscriptionPlanId;
+    method: string;
+    senderPhone: string;
+    trxId: string;
+    userName?: string;
+    userPhone?: string;
+    propertyName?: string;
+  }) => void;
+  approveSubscriptionRequest: (requestId: string) => void;
+  rejectSubscriptionRequest: (requestId: string) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -162,6 +174,23 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [showSubscriptionModal, setShowSubscriptionModal] = useState<boolean>(false);
   const [subscriptionModalReason, setSubscriptionModalReason] = useState<string>('');
 
+  const [subscriptionRequests, setSubscriptionRequests] = useState<SubscriptionRequest[]>([
+    {
+      id: 'req-sample-1',
+      userName: 'হাজী মোঃ আব্দুল খালেক',
+      userPhone: '01711223344',
+      propertyName: 'আল-আকসা মঞ্জিল',
+      planId: 'pro',
+      planName: 'প্রো বাড়িওয়ালা',
+      amount: 399,
+      method: 'bkash',
+      senderPhone: '01711223344',
+      trxId: '9M8A2B7K1X',
+      submittedAt: '2026-11-28 12:30 PM',
+      status: 'approved',
+    },
+  ]);
+
   // Sync with LocalStorage after mount
   useEffect(() => {
     try {
@@ -205,6 +234,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setSubscription(JSON.parse(savedSub));
       } else {
         localStorage.setItem('vk_subscription_v1', JSON.stringify(defaultSubscription));
+      }
+
+      const savedRequests = localStorage.getItem('vk_sub_requests_v1');
+      if (savedRequests) {
+        setSubscriptionRequests(JSON.parse(savedRequests));
       }
     } catch (e) {
       console.warn('LocalStorage load error', e);
@@ -665,6 +699,14 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   const canPerformAction = (action: 'add_flat' | 'add_tenant' | 'generate_bill' | 'print_receipt' | 'send_sms'): { allowed: boolean; reason?: string } => {
     const isExpired = subscription.status === 'expired' || new Date(subscription.validUntil).getTime() < Date.now();
+    const isPending = subscription.status === 'pending';
+
+    if (isPending) {
+      return {
+        allowed: false,
+        reason: 'আপনার পেমেন্ট রিকোয়েস্টটি বর্তমানে এডমিন কর্তৃক যাচাইকরণ প্রক্রিয়াধীন (Processing) রয়েছে। দ্রুতই সক্রিয় হবে।',
+      };
+    }
     
     if (isExpired && subscription.planId !== 'free') {
       return {
@@ -727,6 +769,91 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     return { allowed: true };
   };
 
+  const submitSubscriptionRequest = (params: {
+    planId: SubscriptionPlanId;
+    method: string;
+    senderPhone: string;
+    trxId: string;
+    userName?: string;
+    userPhone?: string;
+    propertyName?: string;
+  }) => {
+    const planNames: Record<SubscriptionPlanId, string> = {
+      free: 'ফ্রি ট্রায়াল (৩টি ফ্ল্যাট পর্যন্ত)',
+      pro: 'প্রো বাড়িওয়ালা (১৫টি ফ্ল্যাট পর্যন্ত)',
+      samiti: 'এপার্টমেন্ট সমিতি (আনলিমিটেড ফ্ল্যাট)',
+    };
+    const priceMap: Record<SubscriptionPlanId, number> = {
+      free: 0,
+      pro: 399,
+      samiti: 999,
+    };
+
+    const newReq: SubscriptionRequest = {
+      id: `req-${Date.now()}`,
+      userName: params.userName || 'বাড়ির মালিক',
+      userPhone: params.userPhone || params.senderPhone,
+      propertyName: params.propertyName || 'আমার ভবন',
+      planId: params.planId,
+      planName: planNames[params.planId],
+      amount: priceMap[params.planId],
+      method: params.method,
+      senderPhone: params.senderPhone,
+      trxId: params.trxId,
+      submittedAt: new Date().toLocaleString('bn-BD'),
+      status: 'pending',
+    };
+
+    const updatedRequests = [newReq, ...subscriptionRequests];
+    setSubscriptionRequests(updatedRequests);
+    saveToStorage('vk_sub_requests_v1', updatedRequests);
+
+    // Set subscription to pending
+    setSubscription((prev) => {
+      const pendingSub: Subscription = {
+        ...prev,
+        planId: params.planId,
+        planName: planNames[params.planId],
+        status: 'pending',
+        senderPhone: params.senderPhone,
+        trxId: params.trxId,
+        paymentMethod: params.method,
+      };
+      saveToStorage('vk_subscription_v1', pendingSub);
+      return pendingSub;
+    });
+  };
+
+  const approveSubscriptionRequest = (requestId: string) => {
+    const target = subscriptionRequests.find((r) => r.id === requestId);
+    if (!target) return;
+
+    const updatedRequests = subscriptionRequests.map((r) =>
+      r.id === requestId ? { ...r, status: 'approved' as const } : r
+    );
+    setSubscriptionRequests(updatedRequests);
+    saveToStorage('vk_sub_requests_v1', updatedRequests);
+
+    activateSubscription(target.planId, target.trxId, target.method);
+  };
+
+  const rejectSubscriptionRequest = (requestId: string) => {
+    const updatedRequests = subscriptionRequests.map((r) =>
+      r.id === requestId ? { ...r, status: 'rejected' as const } : r
+    );
+    setSubscriptionRequests(updatedRequests);
+    saveToStorage('vk_sub_requests_v1', updatedRequests);
+
+    setSubscription((prev) => {
+      const expiredSub: Subscription = {
+        ...prev,
+        status: 'expired',
+      };
+      saveToStorage('vk_subscription_v1', expiredSub);
+      return expiredSub;
+    });
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -765,6 +892,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setSubscriptionModalReason,
         triggerSubscriptionPrompt,
         canPerformAction,
+        subscriptionRequests,
+        submitSubscriptionRequest,
+        approveSubscriptionRequest,
+        rejectSubscriptionRequest,
       }}
     >
       {children}

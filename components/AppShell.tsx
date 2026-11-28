@@ -48,6 +48,25 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       )}
 
+      {/* Pending Approval Banner */}
+      {subscription.status === 'pending' && (
+        <div className="bg-amber-500 text-slate-950 text-xs font-bold py-2.5 px-4 text-center flex items-center justify-center gap-2 print:hidden shadow-sm">
+          <span>
+            ⏳ আপনার {subscription.planName} প্যাকেজের পেমেন্ট যাচাই প্রক্রিয়াধীন (In Processing) রয়েছে। অ্যাডমিন অনুমোদন হওয়ামাত্রই ফিচার সচল হবে—
+          </span>
+          <button
+            onClick={() =>
+              triggerSubscriptionPrompt(
+                'আপনার পেমেন্ট রিকোয়েস্টটি গৃহীত হয়েছে। অ্যাডমিন টিম বিকাশ/নগদ যাচাই করার সাথে সাথেই প্যাকেজটি সক্রিয় হয়ে যাবে।'
+              )
+            }
+            className="underline ml-1 bg-slate-950 text-white px-2.5 py-0.5 rounded-full hover:bg-slate-800 transition shadow-xs text-[11px] font-black"
+          >
+            বিবরণ দেখুন
+          </button>
+        </div>
+      )}
+
       <Navbar />
       <SubscriptionModal />
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">

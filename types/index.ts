@@ -131,7 +131,7 @@ export interface CashHandoverRecord {
 }
 
 export type SubscriptionPlanId = 'free' | 'pro' | 'samiti';
-export type SubscriptionStatus = 'active' | 'expired';
+export type SubscriptionStatus = 'active' | 'expired' | 'pending';
 
 export interface Subscription {
   planId: SubscriptionPlanId;
@@ -144,4 +144,20 @@ export interface Subscription {
   trxId?: string;
   paymentMethod?: string;
   lastPaymentDate?: string;
+  senderPhone?: string;
+}
+
+export interface SubscriptionRequest {
+  id: string;
+  userName: string;
+  userPhone: string;
+  propertyName: string;
+  planId: SubscriptionPlanId;
+  planName: string;
+  amount: number;
+  method: string;
+  senderPhone: string;
+  trxId: string;
+  submittedAt: string;
+  status: 'pending' | 'approved' | 'rejected';
 }

@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '@/context/AppContext';
+import { useAuth } from '@/context/AuthContext';
 import { SubscriptionPlanId } from '@/types';
 import {
   Crown,
@@ -17,9 +18,13 @@ import {
   Clock,
   RotateCcw,
   Zap,
+  MessageCircle,
+  Copy,
+  Phone,
 } from 'lucide-react';
 
 export default function SubscriptionModal() {
+  const { currentUser } = useAuth();
   const {
     subscription,
     activateSubscription,
@@ -30,17 +35,27 @@ export default function SubscriptionModal() {
     subscriptionModalReason,
     setSubscriptionModalReason,
     flats,
+    properties,
+    activePropertyId,
+    submitSubscriptionRequest,
   } = useApp();
+
+  const activeProperty = properties.find((p) => p.id === activePropertyId);
 
   const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlanId>(
     subscription.planId === 'free' ? 'pro' : subscription.planId
   );
   const [selectedMethod, setSelectedMethod] = useState<'bkash' | 'nagad' | 'rocket' | 'bank'>('bkash');
+  const [senderPhone, setSenderPhone] = useState(currentUser?.phone || '');
   const [trxId, setTrxId] = useState('');
+  const [copiedNumber, setCopiedNumber] = useState(false);
   const [successMsg, setSuccessMsg] = useState(false);
   const [daysRemaining, setDaysRemaining] = useState<number>(30);
 
-  React.useEffect(() => {
+  const OFFICIAL_PAYMENT_NUMBER = '01721838990';
+  const DISPLAY_PAYMENT_NUMBER = '01721-838990';
+
+  useEffect(() => {
     if (typeof window !== 'undefined') {
       const remaining = Math.max(
         0,
@@ -55,6 +70,7 @@ export default function SubscriptionModal() {
   if (!showSubscriptionModal) return null;
 
   const isExpired = subscription.status === 'expired';
+  const isPending = subscription.status === 'pending';
 
   const handleClose = () => {
     setShowSubscriptionModal(false);
@@ -62,22 +78,69 @@ export default function SubscriptionModal() {
     setSuccessMsg(false);
   };
 
-  const handlePaymentSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const finalTrx = trxId.trim() || `TXN${Math.floor(100000 + Math.random() * 900000)}`;
-    activateSubscription(selectedPlan, finalTrx, selectedMethod);
-    setSuccessMsg(true);
-    setTimeout(() => {
-      handleClose();
-    }, 1500);
+  const handleCopyNumber = () => {
+    if (typeof window !== 'undefined') {
+      navigator.clipboard.writeText(OFFICIAL_PAYMENT_NUMBER);
+      setCopiedNumber(true);
+      setTimeout(() => setCopiedNumber(false), 2000);
+    }
   };
 
-  const handleInstantActivate = (plan: SubscriptionPlanId) => {
-    activateSubscription(plan, `AUTO-${Date.now().toString().slice(-6)}`, 'bkash');
+  const planNameBangla =
+    selectedPlan === 'pro'
+      ? 'প্রো বাড়িওয়ালা (১৫টি ফ্ল্যাট)'
+      : selectedPlan === 'samiti'
+      ? 'এপার্টমেন্ট সমিতি (আনলিমিটেড)'
+      : 'ফ্রি ট্রায়াল';
+
+  const planPrice = selectedPlan === 'pro' ? 399 : selectedPlan === 'samiti' ? 999 : 0;
+
+  // WhatsApp Pre-filled Link Builder
+  const buildWhatsAppPaymentUrl = () => {
+    const text =
+      `আসসালামু আলাইকুম, আমি ‘ভাড়া খাতা’ সফটওয়্যারের প্যাকেজের জন্য পেমেন্ট করেছি:\n\n` +
+      `📋 পেমেন্টের বিবরণ:\n` +
+      `• বাড়িওয়ালার নাম: ${currentUser?.name || 'বাড়ির মালিক'}\n` +
+      `• ভবনের নাম: ${activeProperty?.name || 'আমার ভবন'}\n` +
+      `• মোবাইল নম্বর: ${senderPhone || currentUser?.phone || 'দেওয়া হয়নি'}\n` +
+      `• প্যাকেজ: ${planNameBangla}\n` +
+      `• প্রদেয় ফি: ৳${planPrice}\n` +
+      `• পেমেন্ট মাধ্যম: ${selectedMethod.toUpperCase()}\n` +
+      `• ট্রানজেকশন আইডি (TrxID): ${trxId.trim() || 'সংযুক্ত স্ক্রিনশটে দেখুন'}\n\n` +
+      `📷 নিচে আমার পেমেন্টের স্ক্রিনশটটি পাঠাচ্ছি। অনুগ্রহ করে যাচাই করে প্যাকেজটি সক্রিয় করে দিন। ধন্যবাদ!`;
+
+    return `https://wa.me/8801721838990?text=${encodeURIComponent(text)}`;
+  };
+
+  const handleSendViaWhatsApp = (e: React.FormEvent) => {
+    e.preventDefault();
+    submitSubscriptionRequest({
+      planId: selectedPlan,
+      method: selectedMethod,
+      senderPhone: senderPhone || currentUser?.phone || '01700000000',
+      trxId: trxId.trim() || 'WhatsApp-এ স্ক্রিনশট দেখুন',
+      userName: currentUser?.name || 'বাড়ির মালিক',
+      userPhone: currentUser?.phone || senderPhone,
+      propertyName: activeProperty?.name || 'আমার ভবন',
+    });
+
+    const url = buildWhatsAppPaymentUrl();
+    window.open(url, '_blank');
     setSuccessMsg(true);
-    setTimeout(() => {
-      handleClose();
-    }, 1200);
+  };
+
+  const handleSubmitOnly = (e: React.FormEvent) => {
+    e.preventDefault();
+    submitSubscriptionRequest({
+      planId: selectedPlan,
+      method: selectedMethod,
+      senderPhone: senderPhone || currentUser?.phone || '01700000000',
+      trxId: trxId.trim() || `TXN${Math.floor(100000 + Math.random() * 900000)}`,
+      userName: currentUser?.name || 'বাড়ির মালিক',
+      userPhone: currentUser?.phone || senderPhone,
+      propertyName: activeProperty?.name || 'আমার ভবন',
+    });
+    setSuccessMsg(true);
   };
 
   return (
@@ -128,12 +191,18 @@ export default function SubscriptionModal() {
               </strong>
               <span
                 className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
-                  !isExpired
+                  isPending
+                    ? 'bg-amber-100 text-amber-900 border border-amber-300 animate-pulse'
+                    : !isExpired
                     ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
                     : 'bg-rose-100 text-rose-800 border border-rose-200 animate-pulse'
                 }`}
               >
-                {!isExpired ? '✓ সক্রিয় (Active)' : '✕ মেয়াদ শেষ (Expired)'}
+                {isPending
+                  ? '⏳ পেমেন্ট যাচাই চলছে (In Processing)'
+                  : !isExpired
+                  ? '✓ সক্রিয় (Active)'
+                  : '✕ মেয়াদ শেষ (Expired)'}
               </span>
             </div>
             <p className="text-[11px] text-slate-500 mt-1">
@@ -152,13 +221,44 @@ export default function SubscriptionModal() {
           </div>
         </div>
 
+        {/* If In Processing (Pending Approval) Notice Card */}
+        {isPending && (
+          <div className="mt-4 p-4 bg-amber-50/80 border border-amber-300 rounded-2xl text-xs text-amber-950 space-y-2">
+            <div className="flex items-center gap-2 font-bold text-amber-900 text-sm">
+              <Clock className="w-4 h-4 text-amber-600 animate-spin" />
+              <span>আপনার পেমেন্ট বর্তমানে যাচাইকরণ প্রক্রিয়ায় রয়েছে (In Processing)</span>
+            </div>
+            <p className="text-[11px] text-amber-800 leading-relaxed font-medium">
+              আপনার পেমেন্টের তথ্য গৃহীত হয়েছে। আমাদের অ্যাডমিন টিম বিকাশ/নগদ স্টেটমেন্ট চেক করার সাথে সাথেই (সর্বোচ্চ ৫–১৫ মিনিটের মধ্যে) আপনার প্যাকেজটি চালু করে দেবে।
+            </p>
+            <div className="pt-1 flex flex-wrap items-center gap-2">
+              <a
+                href={buildWhatsAppPaymentUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition"
+              >
+                <MessageCircle className="w-3.5 h-3.5" />
+                <span>হোয়াটসঅ্যাপে তাগাদা বা স্ক্রিনশট দিন</span>
+              </a>
+              <button
+                type="button"
+                onClick={() => activateSubscription(selectedPlan)}
+                className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-bold text-[11px] transition"
+              >
+                টেস্ট মোড: এখনই সচল করুন
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Success Alert */}
         {successMsg && (
           <div className="mt-4 p-4 bg-emerald-50 border border-emerald-300 rounded-2xl flex items-center gap-3 text-xs text-emerald-900 font-bold animate-in fade-in">
             <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
             <div>
-              <p className="text-sm font-black text-emerald-950">অভিনন্দন! প্যাকেজ সফলভাবে সক্রিয় হয়েছে।</p>
-              <p className="text-[11px] text-emerald-800 font-medium">আপনার সকল ফিচার এখন সম্পূর্ণ আনলক করা হয়েছে।</p>
+              <p className="text-sm font-black text-emerald-950">পেমেন্ট রিকোয়েস্ট সফলভাবে জমা হয়েছে!</p>
+              <p className="text-[11px] text-emerald-800 font-medium">অ্যাডমিন টিম বিকাশ/নগদ যাচাই করার সাথে সাথেই প্যাকেজ চালু হয়ে যাবে।</p>
             </div>
           </div>
         )}
@@ -236,7 +336,7 @@ export default function SubscriptionModal() {
 
         {/* Payment Channels and Form (Only if paid plan chosen) */}
         {selectedPlan !== 'free' ? (
-          <form onSubmit={handlePaymentSubmit} className="mt-5 space-y-4 pt-4 border-t border-slate-100">
+          <form className="mt-5 space-y-4 pt-4 border-t border-slate-100">
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1.5">
                 পেমেন্ট মাধ্যম বেছে নিন:
@@ -289,53 +389,95 @@ export default function SubscriptionModal() {
               </div>
             </div>
 
-            {/* Payment Details Box */}
-            <div className="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-3.5 text-xs text-slate-800 space-y-1.5">
+            {/* Official Payment Number Box with 1-Click Copy */}
+            <div className="bg-emerald-50/80 border border-emerald-200 rounded-2xl p-4 text-xs text-slate-800 space-y-2">
               <div className="flex justify-between items-center">
-                <span>আমাদের অফিসিয়াল নম্বর:</span>
-                <strong className="text-emerald-950 font-black text-sm select-all">01721-838990</strong>
+                <span className="font-semibold text-slate-700">আমাদের অফিশিয়াল বিকাশ/নগদ নম্বর:</span>
+                <div className="flex items-center gap-2">
+                  <strong className="text-emerald-950 font-black text-sm select-all">
+                    {DISPLAY_PAYMENT_NUMBER}
+                  </strong>
+                  <button
+                    type="button"
+                    onClick={handleCopyNumber}
+                    className="px-2 py-1 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-[10px] transition flex items-center gap-1 shadow-2xs"
+                  >
+                    {copiedNumber ? <Check className="w-3 h-3 text-white" /> : <Copy className="w-3 h-3 text-white" />}
+                    <span>{copiedNumber ? 'কপি হয়েছে' : 'কপি করুন'}</span>
+                  </button>
+                </div>
               </div>
               <div className="flex justify-between items-center">
-                <span>প্রদেয় মোট পরিমাণ:</span>
-                <strong className="text-emerald-800 font-black text-sm">
-                  {selectedPlan === 'pro' ? '৳ ৩৯৯ (১ মাস)' : '৳ ৯৯৯ (১ মাস)'}
+                <span className="font-semibold text-slate-700">প্রদেয় মোট পরিমাণ:</span>
+                <strong className="text-emerald-800 font-black text-base">
+                  ৳ {planPrice} <span className="text-xs font-normal text-slate-600">(১ মাস)</span>
                 </strong>
               </div>
-              <p className="text-[11px] text-slate-500 pt-1 border-t border-emerald-200/60">
-                * বিকাশ/নগদে Send Money বা Payment করে প্রাপ্ত ট্রানজেকশন আইডি (TrxID) নিচের বক্সে দিন।
+            </div>
+
+            {/* User Requested Simple 1-2 Line Instruction Box */}
+            <div className="bg-amber-50/80 border border-amber-200/90 rounded-2xl p-3.5 text-xs text-amber-950 space-y-1">
+              <div className="flex items-center gap-1.5 font-bold text-amber-900">
+                <Sparkles className="w-4 h-4 text-amber-600 shrink-0" />
+                <span>পেমেন্ট ও সক্রিয়করণের সহজ নিয়ম:</span>
+              </div>
+              <p className="text-[11.5px] leading-relaxed text-amber-900 font-medium">
+                বিকাশ বা নগদে টাকা পাঠিয়ে নিচের বোতামে চাপ দিয়ে হোয়াটসঅ্যাপে স্ক্রিনশট ও ট্রানজেকশন আইডি পাঠান। আমাদের অ্যাডমিন টিম সর্বোচ্চ ৫-১০ মিনিটের মধ্যে পেমেন্ট যাচাই করে প্যাকেজটি চালু করে দেবে।
               </p>
             </div>
 
-            <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
-                ট্রানজেকশন আইডি (TrxID)
-              </label>
-              <input
-                type="text"
-                placeholder="যেমন: 9M8A2B7K1X (ঐচ্ছিক)"
-                value={trxId}
-                onChange={(e) => setTrxId(e.target.value)}
-                className="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-emerald-500 focus:outline-none uppercase"
-              />
+            {/* Input Fields */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">
+                  যে নম্বর থেকে টাকা পাঠিয়েছেন <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <Phone className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-3" />
+                  <input
+                    type="text"
+                    required
+                    placeholder="যেমন: 017xxxxxxxx"
+                    value={senderPhone}
+                    onChange={(e) => setSenderPhone(e.target.value)}
+                    className="w-full pl-9 pr-3.5 py-2.5 border border-slate-300 rounded-xl text-xs font-bold focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">
+                  ট্রানজেকশন আইডি (TrxID)
+                </label>
+                <input
+                  type="text"
+                  placeholder="যেমন: 9M8A2B7K1X (ঐচ্ছিক)"
+                  value={trxId}
+                  onChange={(e) => setTrxId(e.target.value)}
+                  className="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-xs font-bold focus:ring-2 focus:ring-emerald-500 focus:outline-none uppercase"
+                />
+              </div>
             </div>
 
+            {/* Action Buttons: WhatsApp Send & Submit */}
             <div className="flex flex-col sm:flex-row gap-2.5 pt-2">
               <button
-                type="submit"
-                className="flex-1 py-3 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2"
+                type="button"
+                onClick={handleSendViaWhatsApp}
+                className="flex-1 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2"
+                title="হোয়াটসঅ্যাপে সরাসরি স্ক্রিনশট ও বিবরণ পাঠান"
               >
-                <CheckCircle2 className="w-4 h-4" />
-                <span>পেমেন্ট নিশ্চিত ও সচল করুন</span>
+                <MessageCircle className="w-4 h-4 text-white" />
+                <span>WhatsApp-এ পেমেন্ট স্ক্রিনশট পাঠান</span>
               </button>
 
               <button
                 type="button"
-                onClick={() => handleInstantActivate(selectedPlan)}
+                onClick={handleSubmitOnly}
                 className="py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs shadow-sm transition flex items-center justify-center gap-1.5 whitespace-nowrap"
-                title="টেস্ট করার জন্য তাৎক্ষণিক আনলক করুন"
               >
-                <Zap className="w-3.5 h-3.5 text-amber-300" />
-                <span>১-ক্লিক ইনস্ট্যান্ট অ্যাক্টিভেশন (টেস্ট)</span>
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                <span>পেমেন্ট তথ্য সাবমিট করুন</span>
               </button>
             </div>
           </form>
@@ -367,7 +509,7 @@ export default function SubscriptionModal() {
               }}
               className="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-700 border border-rose-200 font-bold hover:bg-rose-100 transition"
             >
-              টেস্ট: মেয়াদ শেষ (Expire) করুন
+              টেস্ট: মেয়াদ শেষ (Expire)
             </button>
             <button
               type="button"
@@ -377,7 +519,7 @@ export default function SubscriptionModal() {
               }}
               className="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold hover:bg-emerald-100 transition"
             >
-              টেস্ট: আনলক করুন
+              টেস্ট: অনুমোদন (Approve)
             </button>
           </div>
         </div>

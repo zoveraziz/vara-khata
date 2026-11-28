@@ -208,11 +208,22 @@ export default function Navbar() {
                 {/* Subscription Badge */}
                 {(() => {
                   const isExpired = subscription.status === 'expired';
+                  const isPending = subscription.status === 'pending';
                   return (
                     <button
-                      onClick={() => triggerSubscriptionPrompt(isExpired ? 'আপনার সাবস্ক্রিপশন মেয়াদ শেষ হয়েছে। অবিলম্বে রিনিউ করুন।' : '')}
+                      onClick={() =>
+                        triggerSubscriptionPrompt(
+                          isPending
+                            ? 'আপনার পেমেন্ট রিকোয়েস্টটি বর্তমানে এডমিন কর্তৃক যাচাইকরণ প্রক্রিয়াধীন (Processing) রয়েছে।'
+                            : isExpired
+                            ? 'আপনার সাবস্ক্রিপশন মেয়াদ শেষ হয়েছে। অবিলম্বে রিনিউ করুন।'
+                            : ''
+                        )
+                      }
                       className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold border transition shadow-2xs ${
-                        isExpired
+                        isPending
+                          ? 'bg-amber-50 text-amber-900 border-amber-300 hover:bg-amber-100 animate-pulse'
+                          : isExpired
                           ? 'bg-rose-50 text-rose-800 border-rose-300 hover:bg-rose-100 animate-pulse'
                           : subscription.planId === 'pro'
                           ? 'bg-emerald-50 text-emerald-900 border-emerald-300 hover:bg-emerald-100'
@@ -222,12 +233,24 @@ export default function Navbar() {
                       }`}
                       title="সাবস্ক্রিপশন ও প্যাকেজ বিস্তারিত"
                     >
-                      <Crown className={`w-3.5 h-3.5 ${isExpired ? 'text-rose-600' : 'text-amber-600'}`} />
+                      <Crown
+                        className={`w-3.5 h-3.5 ${
+                          isPending
+                            ? 'text-amber-600'
+                            : isExpired
+                            ? 'text-rose-600'
+                            : 'text-amber-600'
+                        }`}
+                      />
                       <span className="hidden md:inline">
-                        {isExpired ? 'মেয়াদ শেষ (রিনিউ করুন)' : subscription.planName}
+                        {isPending
+                          ? 'পেমেন্ট যাচাই চলছে (Processing)'
+                          : isExpired
+                          ? 'মেয়াদ শেষ (রিনিউ করুন)'
+                          : subscription.planName}
                       </span>
                       <span className="md:hidden">
-                        {isExpired ? 'রিনিউ' : 'প্যাকেজ'}
+                        {isPending ? 'প্রসেসিং' : isExpired ? 'রিনিউ' : 'প্যাকেজ'}
                       </span>
                     </button>
                   );
