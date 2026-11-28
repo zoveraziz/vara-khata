@@ -651,7 +651,7 @@ export default function HomePage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <XCircle className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
-                  <span><strong>রশিদের কাগুজে ক্যাচাল:</strong> কাঁচা কাগজের রসিদ ভাড়াটিয়া হারিয়ে ফেললে কোনো লেনদেনের প্রমাণ থাকে না।</span>
+                  <span><strong>রশিদের কাগজের ক্যাচাল:</strong> কাঁচা কাগজের রসিদ ভাড়াটিয়া হারিয়ে ফেললে কোনো লেনদেনের প্রমাণ থাকে না।</span>
                 </li>
               </ul>
             </div>
