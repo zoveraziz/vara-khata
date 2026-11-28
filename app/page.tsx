@@ -23,7 +23,6 @@ import {
 } from 'lucide-react';
 import { useSiteContent } from '@/context/SiteContentContext';
 import BrandLogo from '@/components/BrandLogo';
-import ArchitecturalBackground from '@/components/ArchitecturalBackground';
 
 export default function HomePage() {
   const { content: siteContent } = useSiteContent();
@@ -37,8 +36,7 @@ export default function HomePage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   return (
-    <div className="min-h-screen w-full bg-[#f8fafc] text-slate-900 font-sans selection:bg-emerald-100 selection:text-emerald-900 antialiased overflow-x-hidden relative">
-      <ArchitecturalBackground />
+    <div className="min-h-screen w-full bg-[#f8fafc] text-slate-900 font-sans selection:bg-emerald-100 selection:text-emerald-900 antialiased overflow-x-hidden">
       
       {/* 1. Header (Clean White, Subtle Slate Border, Mobile Responsive Dropdown) */}
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-2xs transition-all">
