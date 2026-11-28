@@ -241,13 +241,6 @@ export default function SubscriptionModal() {
                 <MessageCircle className="w-3.5 h-3.5" />
                 <span>হোয়াটসঅ্যাপে তাগাদা বা স্ক্রিনশট দিন</span>
               </a>
-              <button
-                type="button"
-                onClick={() => activateSubscription(selectedPlan)}
-                className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-bold text-[11px] transition"
-              >
-                টেস্ট মোড: এখনই সচল করুন
-              </button>
             </div>
           </div>
         )}
@@ -496,33 +489,6 @@ export default function SubscriptionModal() {
             </button>
           </div>
         )}
-
-        {/* Developer / Testing Controls Strip */}
-        <div className="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500">
-          <span className="font-semibold text-slate-600">লক ও আনলক টেস্ট টুলস:</span>
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => {
-                expireSubscription();
-                alert('সাবস্ক্রিপশন মেয়াদ শেষ (Expired) করা হয়েছে! এখন ফিচারগুলো লক থাকবে।');
-              }}
-              className="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-700 border border-rose-200 font-bold hover:bg-rose-100 transition"
-            >
-              টেস্ট: মেয়াদ শেষ (Expire)
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                activateSubscription('pro');
-                alert('প্রো বাড়িওয়ালা প্ল্যান ৩০ দিনের জন্য সফলভাবে সক্রিয় করা হয়েছে!');
-              }}
-              className="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold hover:bg-emerald-100 transition"
-            >
-              টেস্ট: অনুমোদন (Approve)
-            </button>
-          </div>
-        </div>
 
       </div>
     </div>
