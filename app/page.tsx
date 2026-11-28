@@ -132,63 +132,55 @@ export default function HomePage() {
 
         {/* Mobile Dropdown Panel */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-slate-200 bg-white/98 backdrop-blur-md px-4 py-4 space-y-3 shadow-xl animate-in slide-in-from-top-2 duration-150">
-            {/* Mobile Navigation Anchor Links */}
-            <div className="space-y-1 pb-3 border-b border-slate-100">
-              <Link
-                href="#features"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-bold text-slate-800 hover:bg-emerald-50 hover:text-emerald-800 transition-colors"
-              >
-                <span>সুবিধাসমূহ</span>
-                <span className="text-slate-400 text-xs">→</span>
-              </Link>
-              <Link
-                href="#pricing"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-bold text-slate-800 hover:bg-emerald-50 hover:text-emerald-800 transition-colors"
-              >
-                <span>প্যাকেজ ও খরচ</span>
-                <span className="text-slate-400 text-xs">→</span>
-              </Link>
-              <Link
-                href="#faq"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-bold text-slate-800 hover:bg-emerald-50 hover:text-emerald-800 transition-colors"
-              >
-                <span>সাধারণ প্রশ্নোত্তর</span>
-                <span className="text-slate-400 text-xs">→</span>
-              </Link>
-              
-              {/* Mobile Language Switcher Tab */}
-              <button
-                onClick={() => {
-                  toggleLanguage();
-                  setMobileMenuOpen(false);
-                }}
-                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-bold text-slate-800 hover:bg-emerald-50 hover:text-emerald-800 transition-colors"
-              >
-                <div className="flex items-center gap-2">
-                  <Globe className="w-4 h-4 text-emerald-700" />
-                  <span>ভাষা পরিবর্তন (Translate)</span>
-                </div>
-                <span className="text-xs px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-800 font-bold border border-emerald-200">
-                  {lang === 'bn' ? 'English' : 'বাংলা'}
-                </span>
-              </button>
-            </div>
+          <div className="lg:hidden border-t border-slate-200 bg-white/98 backdrop-blur-md px-4 py-4 space-y-2.5 shadow-xl animate-in slide-in-from-top-2 duration-150">
+            {/* Tab 1: সুবিধাসমূহ */}
+            <Link
+              href="#features"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full px-4 py-2.5 rounded-xl text-sm font-bold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 transition-all flex items-center justify-center shadow-2xs hover:border-slate-400"
+            >
+              সুবিধাসমূহ
+            </Link>
 
-            {/* Mobile Action Button */}
-            <div className="pt-1">
-              <Link
-                href="/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full px-4 py-3 rounded-xl text-sm font-bold text-white bg-emerald-800 hover:bg-emerald-900 flex items-center justify-center gap-2 shadow-sm"
-              >
-                <span>লগইন</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
+            {/* Tab 2: প্যাকেজ */}
+            <Link
+              href="#pricing"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full px-4 py-2.5 rounded-xl text-sm font-bold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 transition-all flex items-center justify-center shadow-2xs hover:border-slate-400"
+            >
+              প্যাকেজ
+            </Link>
+
+            {/* Tab 3: প্রশ্নোত্তর */}
+            <Link
+              href="#faq"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full px-4 py-2.5 rounded-xl text-sm font-bold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 transition-all flex items-center justify-center shadow-2xs hover:border-slate-400"
+            >
+              প্রশ্নোত্তর
+            </Link>
+
+            {/* Tab 4: Language Switcher Tab (Exact same wording as desktop: বাং | EN) */}
+            <button
+              onClick={() => {
+                toggleLanguage();
+                setMobileMenuOpen(false);
+              }}
+              className="w-full px-4 py-2.5 rounded-xl text-sm font-bold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 transition-all flex items-center justify-center gap-1.5 shadow-2xs hover:border-slate-400 cursor-pointer"
+            >
+              <Globe className="w-4 h-4 text-emerald-700" />
+              <span>{lang === 'bn' ? 'বাং | EN' : 'EN | বাং'}</span>
+            </button>
+
+            {/* Tab 5: Login Button */}
+            <Link
+              href="/login"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-emerald-800 hover:bg-emerald-900 transition-all shadow-sm flex items-center justify-center gap-1.5 group"
+            >
+              <span>লগইন</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            </Link>
           </div>
         )}
       </header>
