@@ -13,7 +13,6 @@ import {
   Receipt,
   CreditCard,
   FileSpreadsheet,
-  Plus,
   Menu,
   X,
   Sparkles,
@@ -196,24 +195,6 @@ export default function Navbar() {
                     {occupiedCount}/{propertyFlats.length} ভাড়া
                   </span>
                 </div>
-
-                {/* Add Property Button (Hidden on Mobile to keep header clean next to logo) */}
-                {isOwner && (
-                  <button
-                    onClick={() => {
-                      const check = canPerformAction('add_property');
-                      if (!check.allowed) {
-                        triggerSubscriptionPrompt(check.reason || 'নতুন বাড়ি যোগ করতে প্যাকেজ সক্রিয় করুন।');
-                        return;
-                      }
-                      setShowAddPropertyModal(true);
-                    }}
-                    className="hidden sm:flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs sm:text-sm font-bold px-3 py-1.5 rounded-xl shadow-sm transition active:scale-95 whitespace-nowrap"
-                  >
-                    <Plus className="w-4 h-4" />
-                    <span>নতুন বাড়ি</span>
-                  </button>
-                )}
 
                 {/* Role Switcher Pill */}
                 {FEATURE_ROLES_ENABLED && (
