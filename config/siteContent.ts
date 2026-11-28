@@ -24,7 +24,7 @@ export const siteContent = {
   // ২. হেডার ও মেনু অ্যাকশন
   header: {
     demoButton: 'লাইভ ডেমো',
-    loginButton: 'লগইন / শুরু করুন',
+    loginButton: 'লগইন',
     mobileMenuAria: 'মেনু খুলুন',
   },
 

@@ -71,3 +71,29 @@ body {
     background: #ffffff !important;
   }
 }
+
+/* ==============================================================================
+   Google Translate Bar & Banner Cleanup
+   ============================================================================== */
+.goog-te-banner-frame.skiptranslate,
+.skiptranslate iframe {
+  display: none !important;
+  visibility: hidden !important;
+}
+body {
+  top: 0px !important;
+}
+#google_translate_element {
+  display: none !important;
+}
+.goog-tooltip {
+  display: none !important;
+}
+.goog-tooltip:hover {
+  display: none !important;
+}
+.goog-text-highlight {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}

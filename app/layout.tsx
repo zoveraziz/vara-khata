@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import Script from 'next/script';
 import { Hind_Siliguri } from 'next/font/google';
 import { AuthProvider } from '@/context/AuthContext';
 import { AppProvider } from '@/context/AppContext';
@@ -35,6 +36,30 @@ export default function RootLayout({
             </SiteContentProvider>
           </AppProvider>
         </AuthProvider>
+
+        {/* Hidden Google Translate Element & Loader */}
+        <div id="google_translate_element" style={{ display: 'none' }} />
+        <Script
+          id="google-translate-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.googleTranslateElementInit = function() {
+                if (window.google && window.google.translate) {
+                  new window.google.translate.TranslateElement({
+                    pageLanguage: 'bn',
+                    includedLanguages: 'en,bn',
+                    autoDisplay: false
+                  }, 'google_translate_element');
+                }
+              };
+            `,
+          }}
+        />
+        <Script
+          src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

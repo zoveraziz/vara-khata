@@ -35,6 +35,24 @@ export default function HomePage() {
   // 3. FAQ Accordion State
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
+  // 4. Language Translation State
+  const [lang, setLang] = useState<'bn' | 'en'>('bn');
+
+  const toggleLanguage = () => {
+    const nextLang = lang === 'bn' ? 'en' : 'bn';
+    setLang(nextLang);
+    if (typeof window !== 'undefined') {
+      const select = document.querySelector('.goog-te-combo') as HTMLSelectElement | null;
+      if (select) {
+        select.value = nextLang;
+        select.dispatchEvent(new Event('change'));
+      } else {
+        document.cookie = `googtrans=/bn/${nextLang}; path=/;`;
+        window.location.reload();
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen w-full bg-[#f8fafc] text-slate-900 font-sans selection:bg-emerald-100 selection:text-emerald-900 antialiased overflow-x-clip">
       
@@ -42,54 +60,66 @@ export default function HomePage() {
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-2xs transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
           
-          {/* Brand Logo */}
+          {/* Brand Logo on the Left */}
           <Link href="/" className="flex items-center group shrink-0">
             <BrandLogo size="md" showSubtitle={true} />
           </Link>
 
-          {/* Desktop Center Navigation Links */}
-          <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-bold text-slate-700">
+          {/* Desktop Right-Aligned Tabs Group */}
+          <div className="hidden lg:flex items-center gap-2 sm:gap-2.5 ml-auto">
+            {/* Tab 1: সুবিধাসমূহ */}
             <Link
               href="#features"
-              className="hover:text-emerald-800 transition-colors py-1 hover:-translate-y-0.5 transform duration-150"
+              className="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 transition-all flex items-center shadow-2xs hover:border-slate-400"
             >
               সুবিধাসমূহ
             </Link>
+
+            {/* Tab 2: প্যাকেজ */}
             <Link
               href="#pricing"
-              className="hover:text-emerald-800 transition-colors py-1 hover:-translate-y-0.5 transform duration-150"
+              className="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 transition-all flex items-center shadow-2xs hover:border-slate-400"
             >
               প্যাকেজ
             </Link>
+
+            {/* Tab 3: প্রশ্নোত্তর */}
             <Link
               href="#faq"
-              className="hover:text-emerald-800 transition-colors py-1 hover:-translate-y-0.5 transform duration-150"
+              className="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 transition-all flex items-center shadow-2xs hover:border-slate-400"
             >
               প্রশ্নোত্তর
             </Link>
-          </nav>
 
-          {/* Desktop Action Buttons */}
-          <div className="hidden sm:flex items-center gap-2.5 sm:gap-3">
-            <Link
-              href="/dashboard"
-              className="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 transition-all flex items-center gap-1.5 shadow-2xs hover:border-slate-400"
+            {/* Tab 4: Language Switcher Tab */}
+            <button
+              onClick={toggleLanguage}
+              className="px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 transition-all flex items-center gap-1.5 shadow-2xs hover:border-slate-400 cursor-pointer"
+              title="ভাষা পরিবর্তন / Translate (বাংলা / English)"
             >
-              <Sparkles className="w-4 h-4 text-emerald-700" />
-              <span>{siteContent.header.demoButton}</span>
-            </Link>
+              <Globe className="w-4 h-4 text-emerald-700" />
+              <span>{lang === 'bn' ? 'বাং | EN' : 'EN | বাং'}</span>
+            </button>
 
+            {/* Tab 5: Login Button */}
             <Link
               href="/login"
-              className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-emerald-800 hover:bg-emerald-900 transition-all shadow-sm flex items-center gap-1.5 group"
+              className="px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold text-white bg-emerald-800 hover:bg-emerald-900 transition-all shadow-sm flex items-center gap-1.5 group ml-1"
             >
-              <span>{siteContent.header.loginButton}</span>
+              <span>লগইন</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </div>
 
-          {/* Mobile Hamburger Toggle Button */}
-          <div className="md:hidden flex items-center">
+          {/* Medium Screens (md) & Mobile Actions */}
+          <div className="lg:hidden flex items-center gap-2">
+            <Link
+              href="/login"
+              className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-white bg-emerald-800 hover:bg-emerald-900 transition-all shadow-sm flex items-center gap-1"
+            >
+              <span>লগইন</span>
+            </Link>
+
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-xl text-slate-800 hover:bg-slate-100 border border-slate-200 transition-colors"
@@ -102,7 +132,7 @@ export default function HomePage() {
 
         {/* Mobile Dropdown Panel */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-slate-200 bg-white/98 backdrop-blur-md px-4 py-4 space-y-3 shadow-xl animate-in slide-in-from-top-2 duration-150">
+          <div className="lg:hidden border-t border-slate-200 bg-white/98 backdrop-blur-md px-4 py-4 space-y-3 shadow-xl animate-in slide-in-from-top-2 duration-150">
             {/* Mobile Navigation Anchor Links */}
             <div className="space-y-1 pb-3 border-b border-slate-100">
               <Link
@@ -129,24 +159,33 @@ export default function HomePage() {
                 <span>সাধারণ প্রশ্নোত্তর</span>
                 <span className="text-slate-400 text-xs">→</span>
               </Link>
+              
+              {/* Mobile Language Switcher Tab */}
+              <button
+                onClick={() => {
+                  toggleLanguage();
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-bold text-slate-800 hover:bg-emerald-50 hover:text-emerald-800 transition-colors"
+              >
+                <div className="flex items-center gap-2">
+                  <Globe className="w-4 h-4 text-emerald-700" />
+                  <span>ভাষা পরিবর্তন (Translate)</span>
+                </div>
+                <span className="text-xs px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-800 font-bold border border-emerald-200">
+                  {lang === 'bn' ? 'English' : 'বাংলা'}
+                </span>
+              </button>
             </div>
 
-            {/* Mobile Action Buttons */}
-            <div className="space-y-2 pt-1">
-              <Link
-                href="/dashboard"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full px-4 py-3 rounded-xl text-sm font-bold text-slate-800 bg-slate-50 hover:bg-slate-100 border border-slate-200 flex items-center justify-center gap-2"
-              >
-                <Sparkles className="w-4 h-4 text-emerald-700" />
-                <span>{siteContent.header.demoButton}</span>
-              </Link>
+            {/* Mobile Action Button */}
+            <div className="pt-1">
               <Link
                 href="/login"
                 onClick={() => setMobileMenuOpen(false)}
                 className="w-full px-4 py-3 rounded-xl text-sm font-bold text-white bg-emerald-800 hover:bg-emerald-900 flex items-center justify-center gap-2 shadow-sm"
               >
-                <span>{siteContent.header.loginButton}</span>
+                <span>লগইন</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -192,7 +231,7 @@ export default function HomePage() {
 
               <Link
                 href="/dashboard"
-                className="w-full sm:w-auto px-6 py-3.5 rounded-2xl font-bold text-base text-slate-900 bg-white hover:bg-slate-50 border border-slate-300 shadow-2xs transition-all flex items-center justify-center gap-2 hover:border-slate-400"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-2xl font-bold text-base text-emerald-950 bg-emerald-50/90 hover:bg-emerald-100/90 border-2 border-emerald-600/80 shadow-xs hover:border-emerald-700 transition-all flex items-center justify-center gap-2"
               >
                 <Sparkles className="w-5 h-5 text-emerald-700" />
                 <span>{siteContent.hero.secondaryCta}</span>
