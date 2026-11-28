@@ -447,12 +447,15 @@ export default function HomePage() {
             {siteContent.howItWorks.steps.map((step, idx) => (
               <div
                 key={idx}
-                className="relative rounded-2xl p-5 sm:p-6 bg-slate-50/80 border border-slate-200/90 hover:border-emerald-300 hover:bg-white hover:shadow-md transition-all group flex flex-col justify-between space-y-4"
+                className="relative rounded-2xl p-6 bg-white border border-slate-200/90 shadow-xs hover:shadow-md hover:border-emerald-400 transition-all group flex flex-col justify-between space-y-4 overflow-hidden"
               >
+                {/* Top Subtle Emerald Accent Line */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-600 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+
                 <div>
                   {/* Step Number on the Left of Title in the same line */}
-                  <div className="flex items-center gap-3 mb-2.5">
-                    <span className="w-8 h-8 rounded-xl bg-white text-emerald-800 border border-slate-200/90 shadow-2xs flex items-center justify-center font-black text-sm shrink-0 group-hover:bg-emerald-800 group-hover:text-white group-hover:border-emerald-800 transition-all">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200/80 shadow-2xs flex items-center justify-center font-black text-sm shrink-0 group-hover:bg-emerald-800 group-hover:text-white group-hover:border-emerald-800 transition-all">
                       {step.stepNumber}
                     </span>
                     <h3 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
@@ -465,7 +468,7 @@ export default function HomePage() {
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-slate-200/80 flex items-center gap-2 text-xs font-bold text-emerald-800">
+                <div className="pt-3 border-t border-slate-100 flex items-center gap-2 text-xs font-bold text-emerald-800">
                   <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
                   <span>{step.featureBadge}</span>
                 </div>
@@ -601,14 +604,14 @@ export default function HomePage() {
             )}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch pt-2">
             {siteContent.pricing.plans.map((plan, idx) => (
               <div
                 key={idx}
-                className={`rounded-3xl p-8 flex flex-col justify-between space-y-6 relative transition-all ${
+                className={`rounded-3xl p-7 sm:p-8 flex flex-col justify-between space-y-6 relative transition-all ${
                   plan.isPopular
-                    ? 'bg-white border-2 border-emerald-600 shadow-md ring-4 ring-emerald-50'
-                    : 'bg-slate-50 border border-slate-200 hover:border-slate-300 shadow-sm hover:shadow-md'
+                    ? 'bg-white border-2 border-emerald-600 shadow-lg ring-4 ring-emerald-100/70 lg:-translate-y-2.5 z-10'
+                    : 'bg-white border border-slate-200/90 hover:border-slate-300 shadow-xs hover:shadow-md'
                 }`}
               >
                 <div
@@ -624,7 +627,7 @@ export default function HomePage() {
                     className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${
                       plan.isPopular
                         ? 'bg-emerald-50 text-emerald-800 border border-emerald-200/60'
-                        : 'bg-white text-slate-800 border border-slate-200'
+                        : 'bg-slate-100 text-slate-800 border border-slate-200'
                     }`}
                   >
                     {plan.audience}
@@ -656,7 +659,11 @@ export default function HomePage() {
 
                 <Link
                   href="/register"
-                  className="w-full py-3.5 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-center text-sm block transition-all shadow-xs"
+                  className={`w-full py-3.5 rounded-xl font-bold text-center text-sm block transition-all ${
+                    plan.isPopular
+                      ? 'bg-emerald-800 hover:bg-emerald-900 text-white shadow-sm hover:shadow-md font-black'
+                      : 'bg-white hover:bg-emerald-50 text-emerald-900 border-2 border-slate-300 hover:border-emerald-700 shadow-2xs'
+                  }`}
                 >
                   {plan.ctaText}
                 </Link>
