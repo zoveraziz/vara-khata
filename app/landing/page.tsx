@@ -36,7 +36,7 @@ export default function HomePage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   return (
-    <div className="min-h-screen w-full bg-[#f8fafc] text-slate-900 font-sans selection:bg-emerald-100 selection:text-emerald-900 antialiased overflow-x-hidden">
+    <div className="min-h-screen w-full bg-[#f8fafc] text-slate-900 font-sans selection:bg-emerald-100 selection:text-emerald-900 antialiased overflow-x-clip">
       
       {/* 1. Header (Clean White, Subtle Slate Border, Mobile Responsive Dropdown) */}
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-2xs transition-all">
@@ -46,6 +46,28 @@ export default function HomePage() {
           <Link href="/" className="flex items-center group shrink-0">
             <BrandLogo size="md" showSubtitle={true} />
           </Link>
+
+          {/* Desktop Center Navigation Links */}
+          <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-bold text-slate-700">
+            <Link
+              href="#features"
+              className="hover:text-emerald-800 transition-colors py-1 hover:-translate-y-0.5 transform duration-150"
+            >
+              সুবিধাসমূহ
+            </Link>
+            <Link
+              href="#pricing"
+              className="hover:text-emerald-800 transition-colors py-1 hover:-translate-y-0.5 transform duration-150"
+            >
+              প্যাকেজ
+            </Link>
+            <Link
+              href="#faq"
+              className="hover:text-emerald-800 transition-colors py-1 hover:-translate-y-0.5 transform duration-150"
+            >
+              প্রশ্নোত্তর
+            </Link>
+          </nav>
 
           {/* Desktop Action Buttons */}
           <div className="hidden sm:flex items-center gap-2.5 sm:gap-3">
@@ -67,7 +89,7 @@ export default function HomePage() {
           </div>
 
           {/* Mobile Hamburger Toggle Button */}
-          <div className="sm:hidden flex items-center">
+          <div className="md:hidden flex items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-xl text-slate-800 hover:bg-slate-100 border border-slate-200 transition-colors"
@@ -80,23 +102,54 @@ export default function HomePage() {
 
         {/* Mobile Dropdown Panel */}
         {mobileMenuOpen && (
-          <div className="sm:hidden border-t border-slate-200 bg-white px-4 py-4 space-y-2.5 shadow-lg animate-in slide-in-from-top-2 duration-150">
-            <Link
-              href="/dashboard"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full px-4 py-3 rounded-xl text-sm font-bold text-slate-800 bg-slate-50 hover:bg-slate-100 border border-slate-200 flex items-center justify-center gap-2"
-            >
-              <Sparkles className="w-4 h-4 text-emerald-700" />
-              <span>{siteContent.header.demoButton}</span>
-            </Link>
-            <Link
-              href="/login"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full px-4 py-3 rounded-xl text-sm font-bold text-white bg-emerald-800 hover:bg-emerald-900 flex items-center justify-center gap-2 shadow-sm"
-            >
-              <span>{siteContent.header.loginButton}</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+          <div className="md:hidden border-t border-slate-200 bg-white/98 backdrop-blur-md px-4 py-4 space-y-3 shadow-xl animate-in slide-in-from-top-2 duration-150">
+            {/* Mobile Navigation Anchor Links */}
+            <div className="space-y-1 pb-3 border-b border-slate-100">
+              <Link
+                href="#features"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-bold text-slate-800 hover:bg-emerald-50 hover:text-emerald-800 transition-colors"
+              >
+                <span>সুবিধাসমূহ</span>
+                <span className="text-slate-400 text-xs">→</span>
+              </Link>
+              <Link
+                href="#pricing"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-bold text-slate-800 hover:bg-emerald-50 hover:text-emerald-800 transition-colors"
+              >
+                <span>প্যাকেজ ও খরচ</span>
+                <span className="text-slate-400 text-xs">→</span>
+              </Link>
+              <Link
+                href="#faq"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-bold text-slate-800 hover:bg-emerald-50 hover:text-emerald-800 transition-colors"
+              >
+                <span>সাধারণ প্রশ্নোত্তর</span>
+                <span className="text-slate-400 text-xs">→</span>
+              </Link>
+            </div>
+
+            {/* Mobile Action Buttons */}
+            <div className="space-y-2 pt-1">
+              <Link
+                href="/dashboard"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full px-4 py-3 rounded-xl text-sm font-bold text-slate-800 bg-slate-50 hover:bg-slate-100 border border-slate-200 flex items-center justify-center gap-2"
+              >
+                <Sparkles className="w-4 h-4 text-emerald-700" />
+                <span>{siteContent.header.demoButton}</span>
+              </Link>
+              <Link
+                href="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full px-4 py-3 rounded-xl text-sm font-bold text-white bg-emerald-800 hover:bg-emerald-900 flex items-center justify-center gap-2 shadow-sm"
+              >
+                <span>{siteContent.header.loginButton}</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
           </div>
         )}
       </header>

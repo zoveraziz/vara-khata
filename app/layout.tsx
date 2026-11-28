@@ -24,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="bn" className={hindSiliguri.variable}>
+    <html lang="bn" className={`${hindSiliguri.variable} scroll-smooth`}>
       <body
         className={`${hindSiliguri.className} bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col selection:bg-emerald-100 selection:text-emerald-900`}
       >
