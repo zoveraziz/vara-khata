@@ -343,7 +343,7 @@ export default function PaymentsPage() {
                         </span>
                       </td>
 
-                      <td className="py-3.5 px-4 text-slate-500 italic max-w-xs truncate whitespace-nowrap">
+                      <td className="py-3.5 px-4 text-xs font-bold text-slate-700 max-w-xs truncate whitespace-nowrap">
                         {pay.remarks || '—'}
                       </td>
 
