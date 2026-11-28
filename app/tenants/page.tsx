@@ -22,7 +22,7 @@ import TenantStatementModal from '@/components/TenantStatementModal';
 import ReceiptModal from '@/components/ReceiptModal';
 
 export default function TenantsPage() {
-  const { properties, activePropertyId, flats, tenants, bills, payments, deleteTenant } = useApp();
+  const { properties, activePropertyId, flats, tenants, bills, payments, deleteTenant, canPerformAction, triggerSubscriptionPrompt } = useApp();
   const { isManager } = useAuth();
   const [selectedTenantForPoliceForm, setSelectedTenantForPoliceForm] = useState<Tenant | null>(null);
   const [selectedTenantForStatement, setSelectedTenantForStatement] = useState<Tenant | null>(null);
@@ -69,13 +69,20 @@ export default function TenantsPage() {
             />
           </div>
 
-          <Link
-            href="/tenants/new"
+          <button
+            onClick={() => {
+              const check = canPerformAction('add_tenant');
+              if (!check.allowed) {
+                triggerSubscriptionPrompt(check.reason || 'নতুন ভাড়াটিয়া যোগ করতে প্যাকেজ সক্রিয় করুন।');
+                return;
+              }
+              window.location.href = '/tenants/new';
+            }}
             className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2 rounded-xl text-xs sm:text-sm shadow-md transition whitespace-nowrap"
           >
             <Plus className="w-4 h-4" />
             <span>নতুন ভাড়াটিয়া এন্ট্রি</span>
-          </Link>
+          </button>
         </div>
       </div>
 

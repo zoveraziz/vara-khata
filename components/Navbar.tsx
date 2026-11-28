@@ -23,6 +23,7 @@ import {
   ShieldCheck,
   Check,
   ChevronDown,
+  Crown,
 } from 'lucide-react';
 
 // Modular Role Toggle: Set to false to keep UI 100% clean and simple until landlord requests activation
@@ -42,7 +43,7 @@ export default function Navbar() {
     saveManagerStaff,
   } = useAuth();
 
-  const { properties, activePropertyId, setActivePropertyId, flats, addProperty } = useApp();
+  const { properties, activePropertyId, setActivePropertyId, flats, addProperty, subscription, triggerSubscriptionPrompt } = useApp();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showAddPropertyModal, setShowAddPropertyModal] = useState(false);
   const [showRoleModal, setShowRoleModal] = useState(false);
@@ -203,6 +204,34 @@ export default function Navbar() {
                     <ChevronDown className="w-3.5 h-3.5 opacity-60" />
                   </button>
                 )}
+
+                {/* Subscription Badge */}
+                {(() => {
+                  const isExpired = subscription.status === 'expired';
+                  return (
+                    <button
+                      onClick={() => triggerSubscriptionPrompt(isExpired ? 'আপনার সাবস্ক্রিপশন মেয়াদ শেষ হয়েছে। অবিলম্বে রিনিউ করুন।' : '')}
+                      className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold border transition shadow-2xs ${
+                        isExpired
+                          ? 'bg-rose-50 text-rose-800 border-rose-300 hover:bg-rose-100 animate-pulse'
+                          : subscription.planId === 'pro'
+                          ? 'bg-emerald-50 text-emerald-900 border-emerald-300 hover:bg-emerald-100'
+                          : subscription.planId === 'samiti'
+                          ? 'bg-purple-50 text-purple-900 border-purple-300 hover:bg-purple-100'
+                          : 'bg-slate-100 text-slate-800 border-slate-300 hover:bg-slate-200'
+                      }`}
+                      title="সাবস্ক্রিপশন ও প্যাকেজ বিস্তারিত"
+                    >
+                      <Crown className={`w-3.5 h-3.5 ${isExpired ? 'text-rose-600' : 'text-amber-600'}`} />
+                      <span className="hidden md:inline">
+                        {isExpired ? 'মেয়াদ শেষ (রিনিউ করুন)' : subscription.planName}
+                      </span>
+                      <span className="md:hidden">
+                        {isExpired ? 'রিনিউ' : 'প্যাকেজ'}
+                      </span>
+                    </button>
+                  );
+                })()}
 
                 {/* User Profile & Logout */}
                 <div className="flex items-center gap-2 pl-2 border-l border-slate-200">

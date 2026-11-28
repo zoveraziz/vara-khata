@@ -4,9 +4,14 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Navbar from './Navbar';
+import SubscriptionModal from './SubscriptionModal';
+import { useApp } from '@/context/AppContext';
+import { AlertTriangle } from 'lucide-react';
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const { subscription, triggerSubscriptionPrompt } = useApp();
+
   const isPublicPage =
     pathname === '/' ||
     pathname === '/landing' ||
@@ -19,9 +24,32 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     return <main className="flex-1 w-full">{children}</main>;
   }
 
+  const isExpired = subscription.status === 'expired';
+
   return (
     <>
+      {/* Expired Subscription Alert Banner */}
+      {isExpired && subscription.planId !== 'free' && (
+        <div className="bg-rose-600 text-white text-xs font-bold py-2.5 px-4 text-center flex items-center justify-center gap-2 print:hidden shadow-sm">
+          <AlertTriangle className="w-4 h-4 animate-bounce shrink-0" />
+          <span>
+            আপনার বাড়িওয়ালা সাবস্ক্রিপশনের মেয়াদ শেষ হয়েছে! নতুন মাসের বিল ও রসিদ তৈরি সাময়িকভাবে লক রয়েছে—
+          </span>
+          <button
+            onClick={() =>
+              triggerSubscriptionPrompt(
+                'আপনার সাবস্ক্রিপশনের মেয়াদ শেষ হয়েছে। অবিলম্বে রিনিউ করে সকল ফিচার সচল রাখুন।'
+              )
+            }
+            className="underline ml-1 bg-white text-rose-700 px-2.5 py-0.5 rounded-full hover:bg-rose-50 transition shadow-xs text-[11px] font-black"
+          >
+            এখনই রিনিউ করুন
+          </button>
+        </div>
+      )}
+
       <Navbar />
+      <SubscriptionModal />
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
         {children}
       </main>

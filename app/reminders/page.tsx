@@ -40,6 +40,8 @@ export default function RemindersPage() {
     reminderLogs,
     rechargeSms,
     sendBulkReminders,
+    canPerformAction,
+    triggerSubscriptionPrompt,
   } = useApp();
 
   const [activeTab, setActiveTab] = useState<'pending' | 'settings' | 'logs'>('pending');
@@ -121,12 +123,22 @@ ${customNote ? `\nবিশেষ দ্রষ্টব্য: ${customNote}` : 
 
   // Send single reminder
   const handleSendSingle = (item: { tenant: Tenant; flat: Flat; bill: Bill }, targetChannel: ReminderChannel) => {
+    const check = canPerformAction('send_sms');
+    if (!check.allowed) {
+      triggerSubscriptionPrompt(check.reason || 'অটো রিমাইন্ডার সেবা পেতে সাবস্ক্রিপশন সচল করুন।');
+      return;
+    }
     sendBulkReminders([item]);
     showToast(`${item.tenant.name} (${item.flat.name})-কে রিমাইন্ডার পাঠানো সম্পন্ন হয়েছে!`);
   };
 
   // Send bulk reminders to all unpaid tenants
   const handleSendAll = () => {
+    const check = canPerformAction('send_sms');
+    if (!check.allowed) {
+      triggerSubscriptionPrompt(check.reason || 'অটো রিমাইন্ডার সেবা পেতে সাবস্ক্রিপশন সচল করুন।');
+      return;
+    }
     if (unpaidList.length === 0) {
       showToast('কোনো বকেয়া ভাড়াটিয়া নেই!');
       return;

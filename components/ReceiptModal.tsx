@@ -2,7 +2,8 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import { Bill, Tenant, Flat, Property, PaymentRecord } from '@/types';
-import { X, Printer, CheckCircle2, MessageCircle, ShieldCheck, Upload, Trash2, Copy, Check } from 'lucide-react';
+import { useApp } from '@/context/AppContext';
+import { X, Printer, CheckCircle2, MessageCircle, ShieldCheck, Upload, Trash2, Copy, Check, AlertTriangle } from 'lucide-react';
 
 interface ReceiptModalProps {
   bill: Bill;
@@ -21,6 +22,7 @@ export default function ReceiptModal({
   payment,
   onClose,
 }: ReceiptModalProps) {
+  const { canPerformAction, triggerSubscriptionPrompt } = useApp();
   const receiptRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -38,6 +40,11 @@ export default function ReceiptModal({
   }, []);
 
   const handlePrint = () => {
+    const check = canPerformAction('print_receipt');
+    if (!check.allowed) {
+      triggerSubscriptionPrompt(check.reason || 'রসিদ প্রিন্ট করতে সাবস্ক্রিপশন রিনিউ করুন।');
+      return;
+    }
     window.print();
   };
 
@@ -162,6 +169,26 @@ export default function ReceiptModal({
             </button>
           </div>
         </div>
+
+        {/* Expired Subscription Warning Banner */}
+        {!canPerformAction('print_receipt').allowed && (
+          <div className="mt-3 p-3 bg-rose-50 border border-rose-300 rounded-xl flex items-center justify-between text-xs text-rose-900 font-bold print:hidden">
+            <span className="flex items-center gap-1.5">
+              <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0" />
+              <span>সাবস্ক্রিপশনের মেয়াদ শেষ হওয়ায় রসিদ প্রিন্ট লক রয়েছে।</span>
+            </span>
+            <button
+              onClick={() =>
+                triggerSubscriptionPrompt(
+                  'সাবস্ক্রিপশনের মেয়াদ শেষ হয়েছে। অবিলম্বে রিনিউ করে রসিদ প্রিন্ট ও ডাউনলোড সচল করুন।'
+                )
+              }
+              className="bg-rose-700 hover:bg-rose-800 text-white px-2.5 py-1 rounded-lg transition text-[11px] whitespace-nowrap shadow-xs font-bold"
+            >
+              এখনই রিনিউ করুন
+            </button>
+          </div>
+        )}
 
         {/* Printable Receipt Body (Strict 1-Page A4 Guarantee) */}
         <div

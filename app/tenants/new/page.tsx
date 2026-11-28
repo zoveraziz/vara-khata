@@ -22,7 +22,7 @@ function NewTenantForm() {
   const searchParams = useSearchParams();
   const preSelectedFlatId = searchParams.get('flatId') || '';
 
-  const { properties, activePropertyId, flats, addTenant } = useApp();
+  const { properties, activePropertyId, flats, addTenant, canPerformAction, triggerSubscriptionPrompt } = useApp();
 
   const propertyFlats = flats.filter((f) => f.propertyId === activePropertyId);
 
@@ -49,6 +49,12 @@ function NewTenantForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !phone.trim() || !flatId) return;
+
+    const check = canPerformAction('add_tenant');
+    if (!check.allowed) {
+      triggerSubscriptionPrompt(check.reason || 'নতুন ভাড়াটিয়া যোগ করতে প্যাকেজ সক্রিয় করুন।');
+      return;
+    }
 
     addTenant({
       propertyId: activePropertyId,

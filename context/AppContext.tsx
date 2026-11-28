@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Property, Flat, Tenant, Bill, PaymentRecord, PaymentMethod, PaymentStatus, ReminderSettings, ReminderLog } from '@/types';
+import { Property, Flat, Tenant, Bill, PaymentRecord, PaymentMethod, PaymentStatus, ReminderSettings, ReminderLog, Subscription, SubscriptionPlanId, SubscriptionStatus } from '@/types';
 import {
   initialProperties,
   initialFlats,
@@ -68,6 +68,18 @@ interface AppContextType {
   reminderLogs: ReminderLog[];
   rechargeSms: (count: number) => void;
   sendBulkReminders: (items: { tenant: Tenant; flat: Flat; bill: Bill }[]) => number;
+
+  // Subscription Actions & State
+  subscription: Subscription;
+  activateSubscription: (planId: SubscriptionPlanId, trxId?: string, method?: string) => void;
+  expireSubscription: () => void;
+  resetToFreePlan: () => void;
+  showSubscriptionModal: boolean;
+  setShowSubscriptionModal: (show: boolean) => void;
+  subscriptionModalReason: string;
+  setSubscriptionModalReason: (reason: string) => void;
+  triggerSubscriptionPrompt: (reason: string) => void;
+  canPerformAction: (action: 'add_flat' | 'add_tenant' | 'generate_bill' | 'print_receipt' | 'send_sms') => { allowed: boolean; reason?: string };
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -133,6 +145,23 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [reminderSettings, setReminderSettings] = useState<ReminderSettings>(initialReminderSettings);
   const [reminderLogs, setReminderLogs] = useState<ReminderLog[]>(initialReminderLogs);
 
+  const defaultSubscription: Subscription = {
+    planId: 'pro',
+    planName: 'প্রো বাড়িওয়ালা',
+    status: 'active',
+    startDate: '2026-11-01T00:00:00.000Z',
+    validUntil: '2026-12-31T23:59:59.000Z',
+    maxFlats: 15,
+    price: 399,
+    paymentMethod: 'bkash',
+    trxId: '9M8A2B7K1X',
+    lastPaymentDate: '2026-11-01T00:00:00.000Z',
+  };
+
+  const [subscription, setSubscription] = useState<Subscription>(defaultSubscription);
+  const [showSubscriptionModal, setShowSubscriptionModal] = useState<boolean>(false);
+  const [subscriptionModalReason, setSubscriptionModalReason] = useState<string>('');
+
   // Sync with LocalStorage after mount
   useEffect(() => {
     try {
@@ -170,6 +199,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
       const savedReminderLogs = localStorage.getItem('vk_reminder_logs');
       if (savedReminderLogs) setReminderLogs(JSON.parse(savedReminderLogs));
+
+      const savedSub = localStorage.getItem('vk_subscription_v1');
+      if (savedSub) {
+        setSubscription(JSON.parse(savedSub));
+      } else {
+        localStorage.setItem('vk_subscription_v1', JSON.stringify(defaultSubscription));
+      }
     } catch (e) {
       console.warn('LocalStorage load error', e);
     }
@@ -561,6 +597,136 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     return items.length;
   };
 
+  // Subscription Handlers
+  const activateSubscription = (planId: SubscriptionPlanId, trxId?: string, method: string = 'bkash') => {
+    const planNames: Record<SubscriptionPlanId, string> = {
+      free: 'ফ্রি ট্রায়াল (৩টি ফ্ল্যাট পর্যন্ত)',
+      pro: 'প্রো বাড়িওয়ালা (১৫টি ফ্ল্যাট পর্যন্ত)',
+      samiti: 'এপার্টমেন্ট সমিতি (আনলিমিটেড ফ্ল্যাট)',
+    };
+    const maxFlatsMap: Record<SubscriptionPlanId, number> = {
+      free: 3,
+      pro: 15,
+      samiti: 999,
+    };
+    const priceMap: Record<SubscriptionPlanId, number> = {
+      free: 0,
+      pro: 399,
+      samiti: 999,
+    };
+
+    const newSub: Subscription = {
+      planId,
+      planName: planNames[planId],
+      status: 'active',
+      startDate: new Date().toISOString(),
+      validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+      maxFlats: maxFlatsMap[planId],
+      price: priceMap[planId],
+      trxId: trxId || `TXN${Math.floor(100000 + Math.random() * 900000)}`,
+      paymentMethod: method,
+      lastPaymentDate: new Date().toISOString(),
+    };
+
+    setSubscription(newSub);
+    saveToStorage('vk_subscription_v1', newSub);
+  };
+
+  const expireSubscription = () => {
+    setSubscription((prev) => {
+      const expired: Subscription = {
+        ...prev,
+        status: 'expired',
+        validUntil: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+      };
+      saveToStorage('vk_subscription_v1', expired);
+      return expired;
+    });
+  };
+
+  const resetToFreePlan = () => {
+    const freeSub: Subscription = {
+      planId: 'free',
+      planName: 'ফ্রি ট্রায়াল (৩টি ফ্ল্যাট পর্যন্ত)',
+      status: 'active',
+      startDate: new Date().toISOString(),
+      validUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
+      maxFlats: 3,
+      price: 0,
+    };
+    setSubscription(freeSub);
+    saveToStorage('vk_subscription_v1', freeSub);
+  };
+
+  const triggerSubscriptionPrompt = (reason: string) => {
+    setSubscriptionModalReason(reason);
+    setShowSubscriptionModal(true);
+  };
+
+  const canPerformAction = (action: 'add_flat' | 'add_tenant' | 'generate_bill' | 'print_receipt' | 'send_sms'): { allowed: boolean; reason?: string } => {
+    const isExpired = subscription.status === 'expired' || new Date(subscription.validUntil).getTime() < Date.now();
+    
+    if (isExpired && subscription.planId !== 'free') {
+      return {
+        allowed: false,
+        reason: 'আপনার সাবস্ক্রিপশনের মেয়াদ শেষ হয়েছে। নিরবচ্ছিন্ন সেবা ও ফিচার সচল করতে রিনিউ করুন।',
+      };
+    }
+
+    if (action === 'add_flat') {
+      if (isExpired) {
+        return { allowed: false, reason: 'সাবস্ক্রিপশনের মেয়াদ শেষ হয়েছে। নতুন ফ্ল্যাট যোগ করতে প্যাকেজ রিনিউ করুন।' };
+      }
+      if (subscription.planId === 'free' && flats.length >= 3) {
+        return {
+          allowed: false,
+          reason: 'ফ্রি প্ল্যানে সর্বোচ্চ ৩টি ফ্ল্যাট ব্যবহার করা যায়। আপনার কোটা পূর্ণ হয়েছে, অতিরিক্ত ফ্ল্যাট যোগ করতে ‘প্রো বাড়িওয়ালা’ প্ল্যান অ্যাক্টিভ করুন।',
+        };
+      }
+      if (subscription.planId === 'pro' && flats.length >= 15) {
+        return {
+          allowed: false,
+          reason: 'প্রো প্ল্যানে সর্বোচ্চ ১৫টি ফ্ল্যাট অন্তর্ভুক্ত। আরও বেশি ফ্ল্যাটের জন্য ‘এপার্টমেন্ট সমিতি’ প্ল্যানে আপগ্রেড করুন।',
+        };
+      }
+    }
+
+    if (action === 'add_tenant') {
+      if (isExpired) {
+        return { allowed: false, reason: 'সাবস্ক্রিপশনের মেয়াদ শেষ হওয়ায় নতুন ভাড়াটিয়া যুক্ত করা সাময়িকভাবে স্থগিত। রিনিউ করুন।' };
+      }
+      if (subscription.planId === 'free' && flats.length > 3) {
+        return { allowed: false, reason: 'ফ্রি কোটা অতিক্রান্ত হয়েছে। নতুন ভাড়াটিয়া যোগ করতে প্রো প্ল্যান সক্রিয় করুন।' };
+      }
+    }
+
+    if (action === 'generate_bill') {
+      if (isExpired) {
+        return { allowed: false, reason: 'সাবস্ক্রিপশন মেয়াদোত্তীর্ণ হওয়ায় নতুন মাসের বিল ও রসিদ তৈরি সাময়িকভাবে স্থগিত রাখা হয়েছে।' };
+      }
+      if (subscription.planId === 'free' && flats.length > 3) {
+        return { allowed: false, reason: '৩টির বেশি ফ্ল্যাটের বিল তৈরি করতে প্রো বাড়িওয়ালা প্ল্যান চালু করুন।' };
+      }
+    }
+
+    if (action === 'print_receipt') {
+      if (isExpired) {
+        return { allowed: false, reason: 'সাবস্ক্রিপশন মেয়াদ শেষ হওয়ায় মানি রিসিট প্রিন্ট সাময়িকভাবে লক করা হয়েছে। প্যাকেজ রিনিউ করলেই সচল হবে।' };
+      }
+    }
+
+    if (action === 'send_sms') {
+      if (isExpired) {
+        return { allowed: false, reason: 'সাবস্ক্রিপশন মেয়াদ শেষ থাকায় অটো এসএমএস রিমাইন্ডার বন্ধ আছে। সচল করতে রিনিউ করুন।' };
+      }
+      if (subscription.planId === 'free' && flats.length > 3) {
+        return { allowed: false, reason: 'এসএমএস সেবা সচল রাখতে প্রো প্যাকেজ সক্রিয় করুন।' };
+      }
+    }
+
+    return { allowed: true };
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -589,6 +755,16 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         reminderLogs,
         rechargeSms,
         sendBulkReminders,
+        subscription,
+        activateSubscription,
+        expireSubscription,
+        resetToFreePlan,
+        showSubscriptionModal,
+        setShowSubscriptionModal,
+        subscriptionModalReason,
+        setSubscriptionModalReason,
+        triggerSubscriptionPrompt,
+        canPerformAction,
       }}
     >
       {children}

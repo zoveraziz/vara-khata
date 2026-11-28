@@ -31,6 +31,8 @@ export default function BillsPage() {
     payments,
     generateMonthlyBills,
     deleteBill,
+    canPerformAction,
+    triggerSubscriptionPrompt,
   } = useApp();
 
   const [selectedBillForPayment, setSelectedBillForPayment] = useState<Bill | null>(null);
@@ -96,7 +98,14 @@ export default function BillsPage() {
           </button>
 
           <button
-            onClick={() => setShowGenModal(true)}
+            onClick={() => {
+              const check = canPerformAction('generate_bill');
+              if (!check.allowed) {
+                triggerSubscriptionPrompt(check.reason || 'নতুন মাসের বিল তৈরি করতে প্যাকেজ রিনিউ করুন।');
+                return;
+              }
+              setShowGenModal(true);
+            }}
             className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2 rounded-xl text-xs sm:text-sm shadow-md transition"
           >
             <Plus className="w-4 h-4" />

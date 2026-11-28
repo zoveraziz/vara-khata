@@ -19,7 +19,7 @@ import {
 import Link from 'next/link';
 
 export default function FlatsPage() {
-  const { properties, activePropertyId, flats, tenants, addFlat, updateFlat, deleteFlat } = useApp();
+  const { properties, activePropertyId, flats, tenants, addFlat, updateFlat, deleteFlat, canPerformAction, triggerSubscriptionPrompt } = useApp();
   const { isManager } = useAuth();
   const [showAddModal, setShowAddModal] = useState(false);
   const [filterStatus, setFilterStatus] = useState<'all' | 'occupied' | 'vacant'>('all');
@@ -48,6 +48,12 @@ export default function FlatsPage() {
   const handleAddFlat = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !rent) return;
+
+    const check = canPerformAction('add_flat');
+    if (!check.allowed) {
+      triggerSubscriptionPrompt(check.reason || 'নতুন ফ্ল্যাট যোগ করতে প্যাকেজ সক্রিয় করুন।');
+      return;
+    }
 
     addFlat({
       propertyId: activePropertyId,
@@ -86,7 +92,14 @@ export default function FlatsPage() {
         </div>
 
         <button
-          onClick={() => setShowAddModal(true)}
+          onClick={() => {
+            const check = canPerformAction('add_flat');
+            if (!check.allowed) {
+              triggerSubscriptionPrompt(check.reason || 'নতুন ফ্ল্যাট যোগ করতে প্যাকেজ সক্রিয় করুন।');
+              return;
+            }
+            setShowAddModal(true);
+          }}
           className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-md transition"
         >
           <Plus className="w-4 h-4" />

@@ -129,3 +129,19 @@ export interface CashHandoverRecord {
   note?: string;
   status: 'completed';
 }
+
+export type SubscriptionPlanId = 'free' | 'pro' | 'samiti';
+export type SubscriptionStatus = 'active' | 'expired';
+
+export interface Subscription {
+  planId: SubscriptionPlanId;
+  planName: string;
+  status: SubscriptionStatus;
+  startDate: string;
+  validUntil: string;
+  maxFlats: number;
+  price: number;
+  trxId?: string;
+  paymentMethod?: string;
+  lastPaymentDate?: string;
+}
