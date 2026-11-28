@@ -189,50 +189,91 @@ export default function HomePage() {
       <section className="relative pt-12 pb-16 lg:pt-20 lg:pb-28 overflow-hidden z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Eyebrow Pill */}
-          <div className="flex justify-center mb-6">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 text-slate-800 text-xs sm:text-sm font-bold shadow-2xs">
-              <Sparkles className="w-4 h-4 text-emerald-700" />
-              <span>{siteContent.hero.trustPill}</span>
+          {/* Main Hero Split Grid: Left Content (7 cols), Right Visual (5 cols) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-12 lg:mb-16">
+            
+            {/* Left Column: Headlines, Trust Marks & Action Buttons */}
+            <div className="lg:col-span-7 space-y-5 text-center lg:text-left">
+              
+              {/* Eyebrow Pill */}
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 text-slate-800 text-xs sm:text-sm font-bold shadow-2xs">
+                <Sparkles className="w-4 h-4 text-emerald-700" />
+                <span>{siteContent.hero.trustPill}</span>
+              </div>
+
+              {/* Headline */}
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.24] text-slate-900">
+                {siteContent.hero.titleLine1}{' '}
+                <span className="text-emerald-800 block sm:inline">
+                  {siteContent.hero.titleHighlight}
+                </span>
+              </h1>
+
+              {/* Subtitle */}
+              <p className="text-sm sm:text-base lg:text-lg text-slate-700 leading-relaxed max-w-2xl font-medium">
+                {siteContent.hero.subtitle}
+              </p>
+
+              {/* CTAs */}
+              <div className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5">
+                <Link
+                  href="/register"
+                  className="w-full sm:w-auto px-6 sm:px-7 py-3.5 rounded-2xl font-bold text-sm sm:text-base text-white bg-emerald-800 hover:bg-emerald-900 shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 group"
+                >
+                  <span>{siteContent.hero.primaryCta}</span>
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+
+                <Link
+                  href="/dashboard"
+                  className="w-full sm:w-auto px-5 sm:px-6 py-3.5 rounded-2xl font-bold text-sm sm:text-base text-emerald-950 bg-emerald-50/90 hover:bg-emerald-100/90 border-2 border-emerald-600/80 shadow-xs hover:border-emerald-700 transition-all flex items-center justify-center gap-2"
+                >
+                  <Sparkles className="w-5 h-5 text-emerald-700" />
+                  <span>{siteContent.hero.secondaryCta}</span>
+                </Link>
+              </div>
+
+              {/* Micro Trust Checklist below CTAs */}
+              <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3.5 sm:gap-5 text-xs font-bold text-slate-600">
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-700" />
+                  <span>কোনো ক্রেডিট কার্ড লাগে না</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-700" />
+                  <span>৩টি ইউনিট সম্পূর্ণ ফ্রি</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-700" />
+                  <span>১ মিনিটে রেডি</span>
+                </div>
+              </div>
             </div>
-          </div>
 
-          {/* Headline */}
-          <div className="text-center max-w-4xl mx-auto space-y-4 sm:space-y-6">
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.28] sm:leading-[1.2] text-slate-900">
-              {siteContent.hero.titleLine1}{' '}
-              <br className="hidden sm:inline" />
-              <span className="text-emerald-800">
-                {siteContent.hero.titleHighlight}
-              </span>
-            </h1>
-
-            <p className="text-sm sm:text-base lg:text-lg text-slate-700 leading-relaxed max-w-2xl mx-auto font-medium">
-              {siteContent.hero.subtitle}
-            </p>
-
-            {/* CTAs */}
-            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4">
-              <Link
-                href="/register"
-                className="w-full sm:w-auto px-7 py-3.5 rounded-2xl font-bold text-base text-white bg-emerald-800 hover:bg-emerald-900 shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 group"
-              >
-                <span>{siteContent.hero.primaryCta}</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-
-              <Link
-                href="/dashboard"
-                className="w-full sm:w-auto px-6 py-3.5 rounded-2xl font-bold text-base text-emerald-950 bg-emerald-50/90 hover:bg-emerald-100/90 border-2 border-emerald-600/80 shadow-xs hover:border-emerald-700 transition-all flex items-center justify-center gap-2"
-              >
-                <Sparkles className="w-5 h-5 text-emerald-700" />
-                <span>{siteContent.hero.secondaryCta}</span>
-              </Link>
+            {/* Right Column: High-Impact Visual Card (Building, Smart Landlord & Collection Badges) */}
+            <div className="lg:col-span-5 relative flex items-center justify-center">
+              <div className="relative w-full max-w-md sm:max-w-lg lg:max-w-none rounded-3xl overflow-hidden border border-slate-200/90 shadow-md bg-gradient-to-br from-emerald-50/60 via-white to-slate-50 p-2 sm:p-2.5 group">
+                <div className="relative rounded-2xl overflow-hidden shadow-inner bg-slate-100">
+                  <img
+                    src="/hero-landlord-building.png"
+                    alt="ভাড়া খাতা - আধুনিক প্রপার্টি ম্যানেজমেন্ট ও স্মার্ট বাড়িওয়ালা"
+                    className="w-full h-auto object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                    width={624}
+                    height={610}
+                  />
+                  {/* Subtle live badge overlay in bottom-left corner */}
+                  <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-200/90 shadow-xs flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-pulse" />
+                    <span className="text-[11px] font-bold text-slate-800">লাইভ প্রপার্টি কালেকশন</span>
+                  </div>
+                </div>
+              </div>
             </div>
+
           </div>
 
           {/* 3. Centerpiece Interactive Showcase */}
-          <div className="mt-12 max-w-5xl mx-auto">
+          <div className="mt-8 max-w-5xl mx-auto">
             
             {/* View Selector Tabs (Segment-Control Style, Zero Glare) */}
             <div className="flex justify-center mb-5">
