@@ -20,6 +20,7 @@ import {
   X,
   Mail,
   Globe,
+  Calendar,
 } from 'lucide-react';
 import { useSiteContent } from '@/context/SiteContentContext';
 import BrandLogo from '@/components/BrandLogo';
@@ -250,23 +251,57 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right Column: High-Impact Visual Card (Building, Smart Landlord & Collection Badges) */}
-            <div className="lg:col-span-5 relative flex items-center justify-center">
-              <div className="relative w-full max-w-md sm:max-w-lg lg:max-w-none rounded-3xl overflow-hidden border border-slate-200/90 shadow-md bg-gradient-to-br from-emerald-50/60 via-white to-slate-50 p-2 sm:p-2.5 group">
-                <div className="relative rounded-2xl overflow-hidden shadow-inner bg-slate-100">
-                  <img
-                    src="/hero-landlord-building.png"
-                    alt="ভাড়া খাতা - আধুনিক প্রপার্টি ম্যানেজমেন্ট ও স্মার্ট বাড়িওয়ালা"
-                    className="w-full h-auto object-cover group-hover:scale-[1.02] transition-transform duration-500"
-                    width={624}
-                    height={610}
-                  />
-                  {/* Subtle live badge overlay in bottom-left corner */}
-                  <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-200/90 shadow-xs flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-pulse" />
-                    <span className="text-[11px] font-bold text-slate-800">লাইভ প্রপার্টি কালেকশন</span>
+            {/* Right Column: High-Impact Custom Visual Card */}
+            <div className="lg:col-span-5 relative flex items-center justify-center pt-4 lg:pt-0">
+              <div className="relative w-full max-w-md sm:max-w-lg lg:max-w-none">
+                
+                {/* Floating Badge 1 (Top Left): 5th of Month Automated Collection */}
+                <div className="absolute -top-3.5 -left-2 sm:-top-5 sm:-left-4 z-20 bg-white/95 backdrop-blur-md px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-2xl border border-slate-200/90 shadow-lg flex items-center gap-3 animate-in fade-in duration-300">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-black shrink-0">
+                    <Calendar className="w-5 h-5 text-emerald-700" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                      <p className="text-[10px] sm:text-[11px] font-bold text-emerald-800">৫ তারিখ • অটো রিমাইন্ডার</p>
+                    </div>
+                    <p className="text-xs sm:text-sm font-black text-slate-900">ভাড়ার রসিদ রেডি ✓</p>
                   </div>
                 </div>
+
+                {/* Main Visual Image Box */}
+                <div className="relative rounded-3xl overflow-hidden border border-slate-200/90 shadow-xl bg-gradient-to-br from-emerald-50/60 via-white to-slate-50 p-2 sm:p-2.5 group">
+                  <div className="relative rounded-2xl overflow-hidden shadow-inner bg-slate-100 aspect-[4/3] sm:aspect-[4/3]">
+                    <img
+                      src="/hero-landlord-building.jpg"
+                      alt="ভাড়া খাতা - আধুনিক প্রপার্টি ম্যানেজমেন্ট ও স্মার্ট বাড়িওয়ালা"
+                      className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                      width={1200}
+                      height={896}
+                    />
+                    
+                    {/* Floating Pill on image bottom-left */}
+                    <div className="absolute bottom-3 left-3 bg-slate-900/90 backdrop-blur-md text-white px-3 py-1.5 rounded-xl shadow-md flex items-center gap-2 border border-slate-700/80">
+                      <MessageCircle className="w-4 h-4 text-emerald-400" />
+                      <span className="text-[11px] font-bold">হোয়াটসঅ্যাপে রসিদ সেন্ড</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Floating Badge 2 (Bottom Right): Total Rent Collection */}
+                <div className="absolute -bottom-3.5 -right-2 sm:-bottom-5 sm:-right-4 z-20 bg-white/95 backdrop-blur-md px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-2xl border border-slate-200/90 shadow-lg flex items-center gap-3 animate-in fade-in duration-300">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-800 text-white flex items-center justify-center font-black text-base shrink-0 shadow-xs">
+                    ৳
+                  </div>
+                  <div>
+                    <p className="text-[10px] sm:text-[11px] font-bold text-slate-500">মাসিক ভাড়া আদায়</p>
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-sm sm:text-base font-black text-slate-900">৳ ১,৮৫,০০০</span>
+                      <span className="text-[10px] font-extrabold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-200/60">১০০% পেইড</span>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
 
